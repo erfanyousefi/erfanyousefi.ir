@@ -21,6 +21,8 @@ const courseSchema = new Schema({
     category: { type: mongoose.Types.ObjectId, ref: "category", required: true },
     img: { type: String, required: true },
     type: { type: String, required: true },
+    price: { type: Number, required: true },
+    discount: { type: Number, required: true },
     chapters: [chapterSchema]
 }, {
     timestamps: true

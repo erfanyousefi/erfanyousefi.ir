@@ -6,7 +6,7 @@ const http = require("http")
 require("dotenv").config();
 const Routes = require("app/router/api/index");
 const { autoLogin } = require("./http/middleware/auth");
-
+const cors = require("cors")
 module.exports = class Server {
     constructor() {
         this.createHttpServer();
@@ -44,6 +44,7 @@ module.exports = class Server {
         app.use(express.json());
         app.use(express.urlencoded({ extended: false }))
         app.use(require("app/http/middleware/auth").autoLogin)
+        app.use(cors())
     }
     routingConfiguration() {
         app.use(Routes)
