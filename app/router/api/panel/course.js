@@ -5,7 +5,7 @@ const courseController = require(`${process.env.API}/course`);
 const upload = require("app/http/middleware/uploadImage");
 router.post("/insertCourse", upload.single("img"), courseValidator.insert(), courseController.insertCourse)
 router.get("/all", courseController.courses)
-router.put("/:id", courseController.updateCourse);
+router.put("/:id", upload.single("img"), courseController.updateCourse);
 router.get("/:id", courseController.findCourse);
 router.delete("/:id", courseController.removeCourse);
 //-------------------------------------------------------

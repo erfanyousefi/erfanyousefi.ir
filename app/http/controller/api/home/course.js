@@ -5,23 +5,39 @@ let validator = {}
 class courseController extends controller {
 
     async courses(req, res, next) {
-        const courses = await courseModel.find({})
+        const courses = await courseModel.find({}).populate(["teacher", "tags", "category"])
         return res.json({
             status: true,
             courses
         })
     }
     async lastCourses(req, res, next) {
-        const courses = await courseModel.find({}, {}, { sort: { 'createdAt': -1 } }).limit(3)
+        const courses = await courseModel.find({}, {}, { sort: { 'createdAt': -1 } }).limit(3).populate(["teacher", "tags", "category"])
         return res.json({
             status: true,
             courses
         })
     }
     async findCourse(req, res, next) {
-            const id = req.params.id;
-            if (this.isObjectID(id)) {
-                const course = await courseModel.findById(id);
+        const id = req.params.id;
+        if (this.isObjectID(id)) {
+            const course = await courseModel.findById(id);
+            return res.json({
+                status: true,
+                course
+            })
+        } else {
+            return res.json({
+                status: false,
+                message: "Not-Found"
+            })
+
+        }
+    }
+    async slugCourse(req, res, next) {
+            let slug = new RegExp(this.xssAttak(req.params.slug), "gi");
+            if (slug) {
+                const course = await courseModel.findOne({ slug }).populate(["teacher", "tags", "category"])
                 return res.json({
                     status: true,
                     course

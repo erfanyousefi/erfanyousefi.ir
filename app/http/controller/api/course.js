@@ -24,6 +24,7 @@ class courseController extends controller {
             req.body.img = image
             this.fetchDataFromBody(req.body, data);
             data.teacher = req.user._id
+            data.slug = this.slug(data.title)
             courseModel.create({...data }).then(course => {
                 if (course) {
                     console.log(course);
@@ -52,16 +53,26 @@ class courseController extends controller {
         })
     }
     async updateCourse(req, res, next) {
+        let image = ""
+        if (req.file) {
+            image = this.checkReqFile(req.file)
+        }
+        console.log(image);
         const id = req.params.id;
         if (this.isObjectID(id)) {
             let data = {};
             this.fetchDataFromBody(req.body, data)
+            data.img = image
+            data.slug = this.slug(data.title)
             await courseModel.findByIdAndUpdate(id, { $set: {...data } }, (err, course) => {
                 if (course) {
                     return res.json({
                         status: true,
                         message: "به روزرسانی با موفقیت انجام شد"
                     })
+                }
+                if (req.file) {
+                    this.removeFile(image)
                 }
                 return res.json({
                     status: false,
@@ -70,6 +81,9 @@ class courseController extends controller {
 
             })
         } else {
+            if (req.file) {
+                this.removeFile(image)
+            }
             return res.json({
                 status: false,
                 message: "Not-Found"

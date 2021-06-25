@@ -1,5 +1,6 @@
 const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
+const slug = require("mongoose-slug-generator");
 const episodeSchema = new Schema({
     number: { type: Number, required: true },
     title: { type: String, required: true },
@@ -23,9 +24,28 @@ const courseSchema = new Schema({
     type: { type: String, required: true },
     price: { type: Number, required: true },
     discount: { type: Number, required: true },
+    slug: { type: String, required: false },
     chapters: [chapterSchema]
 }, {
-    timestamps: true
+    timestamps: true,
+    toJSON: {
+        virtuals: true
+    }
+})
+courseSchema.virtual("teachers", {
+    ref: "user",
+    localField: "_id",
+    foreignField: "teacher",
+})
+courseSchema.virtual("tag", {
+    ref: "tag",
+    localField: "_id",
+    foreignField: "tags",
+})
+courseSchema.virtual("categories", {
+    ref: "category",
+    localField: "_id",
+    foreignField: "category",
 })
 const courseModel = mongoose.model("course", courseSchema);
 module.exports = courseModel;

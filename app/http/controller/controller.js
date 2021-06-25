@@ -5,6 +5,8 @@ const fs = require("fs")
 const xss = require("xss")
 const path = require("path")
 const mongoose = require("mongoose")
+const slug = require("slug");
+
 module.exports = class controllers {
     constructor() {
         autoBind(this);
@@ -26,6 +28,7 @@ module.exports = class controllers {
         const result = bcrypt.compareSync(string, hashedString);
         return result
     }
+
     errorHandlerValidator(errors, errorList) {
         Object.values(errors).forEach(err => {
             errorList[err.param] = err.msg;
@@ -138,5 +141,8 @@ module.exports = class controllers {
     }
     englishNumberToPersianNumber(str) {
         return str.replace(/\d/g, d => '۰۱۲۳۴۵۶۷۸۹' [d]);
+    }
+    slug(title) {
+        return title.replace(/([^۰-۹آ-یa-zA-Z0-9]|-)+/g, "-")
     }
 }
