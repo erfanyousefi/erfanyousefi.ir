@@ -15,7 +15,8 @@ const storage = multer.diskStorage({
         mkdirp(directory).then(dir => cb(null, directory))
     },
     filename: (req, file, cb) => {
-        const newName = new Date.now();
+        req.body.img = file.originalname;
+        const newName = Date.now();
         const dir = getPath();
         if (!fs.existsSync(dir + "/" + file.originalname)) {
             cb(null, file.originalname)
@@ -27,4 +28,4 @@ const storage = multer.diskStorage({
 
 const imgStorage = multer({ storage })
 
-module.exports = storage;
+module.exports = imgStorage;

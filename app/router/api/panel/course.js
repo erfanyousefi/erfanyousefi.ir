@@ -2,7 +2,8 @@ const { Router } = require("express");
 const router = Router();
 const courseValidator = require("app/validator/course");
 const courseController = require(`${process.env.API}/course`);
-router.post("/insertCourse", courseValidator.insert(), courseController.insertCourse)
+const upload = require("app/http/middleware/uploadImage");
+router.post("/insertCourse", upload.single("img"), courseValidator.insert(), courseController.insertCourse)
 router.get("/all", courseController.courses)
 router.put("/:id", courseController.updateCourse);
 router.get("/:id", courseController.findCourse);

@@ -4,8 +4,15 @@ const { validationResult } = require("express-validator");
 let validator = {}
 class courseController extends controller {
     async insertCourse(req, res, next) {
+        let image = ""
+        if (req.file) {
+            image = this.checkReqFile(req.file)
+        }
         let result = await validationResult(req);
         if (!result.isEmpty()) {
+            if (req.file) {
+                this.removeFile(image)
+            }
             validator = {}
             this.errorHandlerValidator(result.errors, validator);
             return res.json({
@@ -14,14 +21,20 @@ class courseController extends controller {
             })
         } else {
             let data = {};
+            req.body.img = image
             this.fetchDataFromBody(req.body, data);
+            data.teacher = req.user._id
             courseModel.create({...data }).then(course => {
                 if (course) {
+                    console.log(course);
                     return res.json({
                         status: true,
                         message: "افزودن دوره با موفقیت انجام شد"
                     })
                 } else {
+                    if (req.file) {
+                        this.removeFile(image)
+                    }
                     return res.json({
                         status: true,
                         message: "افزودن دوره انجام نشد لطفا بعدا یا مجددا تلاش بفرمائید"

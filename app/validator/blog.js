@@ -15,9 +15,6 @@ class courseValidator {
             body("category")
             .notEmpty()
             .withMessage("یک دسته بندی را انتخاب کنید"),
-            body("type")
-            .notEmpty()
-            .withMessage("نوع دوره نمیتواند خالی باشد"),
             body("img").custom((value, req) => {
                 console.log(value);
                 if (value) {

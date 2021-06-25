@@ -19,6 +19,9 @@ module.exports = class controllers {
         const hashString = bcrypt.hashSync(string, salt);
         return hashString;
     }
+    checkReqFile(requestFile) {
+        return (`${requestFile.destination}/${requestFile.originalname}`).substr(6)
+    }
     compareHashString(string, hashedString) {
         const result = bcrypt.compareSync(string, hashedString);
         return result
