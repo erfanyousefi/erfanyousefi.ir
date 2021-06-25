@@ -9,7 +9,7 @@
           : ""
       }}
     </span>
-    <img src="@/assets/dist/img/js.png" alt="" srcset="" />
+    <img :src="'http://localhost:3000'+course.img" alt="" srcset="" />
     <div class="card-body">
       <router-link to="" class="card-title p-2">{{ course.title }}</router-link>
       <div class="card-text p-2 mt-2 mb-3 text-sm opacity-70">

@@ -1,4 +1,4 @@
-# client
+# coffeelearn
 
 ## Project setup
 ```

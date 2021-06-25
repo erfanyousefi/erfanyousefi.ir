@@ -1,26 +1,23 @@
 <template>
-  <img alt="Vue logo" src="./assets/logo.png">
-  <HelloWorld msg="Welcome to Your Vue.js App"/>
+<router-view></router-view>
 </template>
 
 <script>
-import HelloWorld from './components/HelloWorld.vue'
-
+import ("bootstrap/dist/css/bootstrap.min.css")
+import ("bootstrap/dist/js/bootstrap.bundle.js")
+import("@/assets/dist/fonts/font-awesome/css/font-awesome.min.css")
+import { loadProgressBar } from 'x-axios-progress-bar'
+ import("x-axios-progress-bar/dist/nprogress.css")
 export default {
   name: 'App',
   components: {
-    HelloWorld
+  },
+  setup(){
+  loadProgressBar()
   }
 }
 </script>
 
 <style>
-#app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-  margin-top: 60px;
-}
+
 </style>

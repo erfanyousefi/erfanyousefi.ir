@@ -9,44 +9,24 @@
 
 <script>
 import Course from "@/components/client/course/Course.vue"
-import {reactive} from "vue"
+import {ref} from "vue";
+import axios from "axios";
 export default {
     components : {
         Course
     },
     setup(){
-        const courses = reactive([
-            {
-                title : "آموزش صفر تا صد جاوا اسکریپت",
-                type : "free",
-                text : `در طی دوره آموزش جاوا اسکریپت es۷ و es۸ ما سعی داریم در چند جلسه موارد جدید از ویژگی‌های که در این ورژن از ecma script معرفی شده را به شما آموزش دهیم.`,
-                tags : ["vue.js", "node.js", "nest.js", "javascript"],
-                discount : 20,
-                price : 150000
-
-            },
-            {
-                title : "آموزش صفر تا صد جاوا اسکریپت",
-                type : "cash",
-                text : `در طی دوره آموزش جاوا اسکریپت es۷ و es۸ ما سعی داریم در چند جلسه موارد جدید از ویژگی‌های که در این ورژن از ecma script معرفی شده را به شما آموزش دهیم.`,
-                tags : ["vue.js", "node.js", "nest.js", "javascript"],
-                discount : 20,
-                price : 150000
-
-            },
-            {
-                title : "آموزش صفر تا صد جاوا اسکریپت",
-                type : "free",
-                text : `در طی دوره آموزش جاوا اسکریپت es۷ و es۸ ما سعی داریم در چند جلسه موارد جدید از ویژگی‌های که در این ورژن از ecma script معرفی شده را به شما آموزش دهیم.`,
-                tags : ["vue.js", "node.js", "nest.js", "javascript"],
-                discount : 20,
-                price : 150000
-
-            }
-        ])
-        
+        let courses = ref(null)
+        let json = ref(null)
+        const getCourse = async () => {
+            json.value =  await axios.get("http://localhost:3000/lastCourses");
+            courses.value = json.value.data.courses
+        }
+        getCourse()
+        console.log(courses);
         return {
-            courses
+            courses,
+
         }
     }
 }

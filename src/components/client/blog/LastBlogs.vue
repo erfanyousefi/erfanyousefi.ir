@@ -1,7 +1,7 @@
 
 <template>
   <div class="row lastBlogs my-2">
-    <div v-for:="(blog, index) in blogs" class="col-md-4 col-sm-6 col-xs-12 my-5">
+    <div v-for:="(blog, index) in blogs" class="col-lg-4 col-md-6 col-sm-12 col-xs-12 my-5">
       <Blog :blog="blog" />
     </div>
   </div>
