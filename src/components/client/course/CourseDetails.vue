@@ -1,5 +1,5 @@
 <template>
-  <div v-if="details.teacher.username" class="col-12">
+  <div class="col-12">
     <div class="course-details">
       <div class="courseInfo">
         <div class="priceBox">
