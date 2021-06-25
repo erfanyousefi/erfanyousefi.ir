@@ -23,10 +23,8 @@ export default {
             courses.value = json.value.data.courses
         }
         getCourse()
-        console.log(courses);
         return {
             courses,
-
         }
     }
 }

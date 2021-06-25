@@ -1,5 +1,5 @@
 <template>
-  <div class="card">
+  <router-link :to="{name : 'coursePage', params : {slug : course.slug}}" class="card">
     <span class="priceInfo type">
       {{
         course.type === "free"
@@ -9,13 +9,13 @@
           : ""
       }}
     </span>
-    <img :src="'http://localhost:3000'+course.img" alt="" srcset="" />
+    <img :src="'http://localhost:3000' + course.img" alt="" />
     <div class="card-body">
       <router-link to="" class="card-title p-2">{{ course.title }}</router-link>
       <div class="card-text p-2 mt-2 mb-3 text-sm opacity-70">
-        {{ course.text }}
+        {{ course.text.substr(1, 200) + "..." }}
       </div>
-      <router-link to="" class="footerCard">
+      <router-link :to="{name : 'coursePage', params : {slug : course.slug}}" class="footerCard">
         <span v-if="course.type === 'cash'" class="cash">
           <div class="price" v-if="course.discount > 0">
             <div>
@@ -29,7 +29,12 @@
               </div>
             </div>
           </div>
-          <div v-else>{{ course.price }} تومان</div>
+          <div v-else class="price">
+           <strong> {{ course.price }} تومان</strong>
+            <div>
+              <button class="btn bg-blue">مشاهده دوره</button>
+            </div>
+          </div>
         </span>
         <div v-else-if="course.type === 'free'" class="price">
           <div><strong class="text-success"> رایگان </strong></div>
@@ -39,7 +44,7 @@
         </div>
       </router-link>
     </div>
-  </div>
+  </router-link>
 </template>
 
 <script>
@@ -49,7 +54,7 @@ export default {
   },
   setup() {
     const computDiscount = (price, discount) => {
-      return price - ((price * discount) / 100);
+      return price - (price * discount) / 100;
     };
     return {
       computDiscount,
