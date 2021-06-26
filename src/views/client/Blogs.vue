@@ -1,12 +1,13 @@
 
 <template>
   <Loading v-if="loading" />
-  <div v-else >
+  <div v-else>
     <Title title="همه ی مقالات" />
     <div class="row lastBlogs my-5">
       <div
         v-for:="(blog, index) in blogs"
-        class="col-lg-4 col-md-6 col-sm-12 col-xs-12 my-4">
+        class="col-lg-4 col-md-6 col-sm-12 col-xs-12 my-4"
+      >
         <Blog :blog="blog" />
       </div>
     </div>
@@ -19,12 +20,12 @@ import Loading from "@/components/partials/Loading.vue";
 import Title from "@/components/partials/client/Title.vue";
 import { onBeforeMount, ref } from "vue";
 import axios from "axios";
-import { useRouter } from 'vue-router';
+import { useRouter } from "vue-router";
 export default {
   components: {
     Blog,
     Loading,
-    Title
+    Title,
   },
   setup() {
     let blogs = ref(null);
@@ -34,9 +35,6 @@ export default {
       json.value = await axios.get("http://localhost:3000/blogs");
       blogs.value = json.value.data.blogs;
       if (blogs.value) {
-        if(blogs.value.status === false && blogs.value.message === "Not-Found"){
-          useRouter().push({name : "PageNotFound"})
-        }
         loading.value = false;
       }
     };

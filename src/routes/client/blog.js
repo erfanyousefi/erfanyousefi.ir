@@ -14,6 +14,6 @@ export default [{
         path: "/blogs/lesson/:slug",
         name: "lessonPage",
         component: () =>
-            import ("@/views/client/BlogPage.vue")
+            import ("@/views/client/LessonPage.vue")
     }
 ]

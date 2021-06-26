@@ -1,8 +1,8 @@
-<template>
+<template >
   <Loading v-if="loading" />
   <div v-else>
     <div class="row my-4">
-      <Title :title="blog.title" />
+      <Title :title="lesson.title" />
     </div>
 
     <div class="row my-5">
@@ -10,8 +10,7 @@
         <BlogInfo :blog="blog" />
       </div>
       <div class="col-lg-8 col-md-8 col-sm-12 col-cs-12">
-        <BlogContent v-if="lesson" :blog="lesson" />
-        <BlogContent v-else :blog="blog" />
+        <BlogContent :blog="lesson" />
       </div>
     </div>
     <BlogControls />
@@ -24,9 +23,9 @@ import BlogInfo from "@/components/client/blog/BlogInfo.vue";
 import BlogContent from "@/components/client/blog/BlogContent.vue";
 import BlogControls from "@/components/client/blog/BlogControls.vue";
 import Loading from "@/components/partials/Loading.vue";
-import { computed, onBeforeMount, ref, watch } from "vue";
+import { onBeforeMount, ref, watch } from "vue";
 import axios from "axios";
-import { useRoute, useRouter } from "vue-router";
+import { useRoute } from "vue-router";
 export default {
   components: {
     Title,
@@ -36,44 +35,33 @@ export default {
     BlogControls,
   },
   setup() {
-    let router = useRouter().currentRoute.value.name;
-    let slug = useRoute().params.slug;
     let loading = ref(true);
-    let blog = ref(null);
     let json = ref(null);
     let lesson = ref(null);
-    async function getBlog() {
-      json.value = await (
-        await axios.get(`http://localhost:3000/blog/${slug}`)
-      ).data.blog;
-      blog.value = json.value;
-      if (blog.value) {
-        loading.value = false;
-      }
-    }
-    async function getBlogSession() {
+    let blog = ref(null);
+    let route = useRoute();
+    let slug = ref(null);
+    async function getBlogLesson(slug) {
+      loading.value = true;
       json.value = await (
         await axios.get(`http://localhost:3000/blog/lesson/${slug}`)
-      ).data.blog;
-      lesson.value = json.value;
-      blog.value = lesson.value.blog;
-      if (lesson.value) {
+      ).data;
+      lesson.value = json.value.lesson;
+      blog.value = json.value.blog;
+      if (lesson.value && blog.value) {
         loading.value = false;
       }
     }
-    router = computed(() => useRouter().currentRoute.value.name);
-    watch(() => console.log(router))
-    onBeforeMount(() => {
-      if (router === "lessonPage") {
-        getBlogSession();
-      } else {
-        getBlog();
-      }
+    watch(() => {
+      slug.value = route.params.slug;
+      getBlogLesson(slug.value);
     });
+    onBeforeMount(() => getBlogLesson(slug.value));
+
     return {
       loading,
-      blog,
       lesson,
+      blog,
     };
   },
 };

@@ -9,7 +9,7 @@
           </a>
           <ul class="collapse" id="collapseUl1">
             <li v-for:="(lesson, lessonIndex) in chapter.lessons">
-                <router-link :to="{name : 'blogPage', params : {slug : lesson.slug}}" exact-active-class="active">{{lesson.title}}</router-link>
+                <router-link :to="{name : 'lessonPage', params : {slug : lesson.slug}}" exact-active-class="active">{{lesson.title}}</router-link>
             </li>
           </ul>
         </li>
