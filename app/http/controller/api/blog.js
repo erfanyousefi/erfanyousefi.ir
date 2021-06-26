@@ -1,9 +1,9 @@
-const courseModel = require("app/models/course");
+const blogModel = require("app/models/blog");
 const controller = require("app/http/controller/controller");
 const { validationResult } = require("express-validator");
 let validator = {}
-class courseController extends controller {
-    async insertCourse(req, res, next) {
+class blogController extends controller {
+    async insertBlog(req, res, next) {
         let image = ""
         if (req.file) {
             image = this.checkReqFile(req.file)
@@ -23,13 +23,13 @@ class courseController extends controller {
             let data = {};
             req.body.img = image
             this.fetchDataFromBody(req.body, data);
-            data.teacher = req.user._id
+            data.author = req.user._id
             data.slug = this.slug(data.title)
-            courseModel.create({...data }).then(course => {
-                if (course) {
+            blogModel.create({...data }).then(blog => {
+                if (blog) {
                     return res.json({
                         status: true,
-                        message: "افزودن دوره با موفقیت انجام شد"
+                        message: "افزودن مقاله  با موفقیت انجام شد"
                     })
                 } else {
                     if (req.file) {
@@ -37,46 +37,47 @@ class courseController extends controller {
                     }
                     return res.json({
                         status: true,
-                        message: "افزودن دوره انجام نشد لطفا بعدا یا مجددا تلاش بفرمائید"
+                        message: "افزودن مقاله  انجام نشد لطفا بعدا یا مجددا تلاش بفرمائید"
                     })
                 }
             })
         }
 
     }
-    async courses(req, res, next) {
-        const courses = await courseModel.find({})
+    async blogs(req, res, next) {
+        const blogs = await blogModel.find({})
         return res.json({
             status: true,
-            courses
+            blogs
         })
     }
-    async updateCourse(req, res, next) {
+    async updateBlog(req, res, next) {
         let image = ""
         if (req.file) {
             image = this.checkReqFile(req.file)
         }
-        console.log(image);
         const id = req.params.id;
         if (this.isObjectID(id)) {
             let data = {};
             this.fetchDataFromBody(req.body, data)
             data.img = image
             data.slug = this.slug(data.title)
-            await courseModel.findByIdAndUpdate(id, { $set: {...data } }, (err, course) => {
-                if (course) {
+            await blogModel.findByIdAndUpdate(id, { $set: {...data } }, (err, blog) => {
+                if (blog) {
                     return res.json({
                         status: true,
                         message: "به روزرسانی با موفقیت انجام شد"
                     })
+                } else {
+                    if (req.file) {
+                        this.removeFile(image)
+                    }
+                    return res.json({
+                        status: false,
+                        message: "به روز رسانی انجام نشد لطفا مجددا یا بعدا تلاش بفرمائید"
+                    })
                 }
-                if (req.file) {
-                    this.removeFile(image)
-                }
-                return res.json({
-                    status: false,
-                    message: "به روز رسانی انجام نشد لطفا مجددا یا بعدا تلاش بفرمائید"
-                })
+
 
             })
         } else {
@@ -89,13 +90,13 @@ class courseController extends controller {
             })
         }
     }
-    async findCourse(req, res, next) {
+    async findBlog(req, res, next) {
         const id = req.params.id;
         if (this.isObjectID(id)) {
-            const course = await courseModel.findById(id);
+            const blog = await blogModel.findById(id);
             return res.json({
                 status: true,
-                course
+                blog
             })
         } else {
             return res.json({
@@ -105,19 +106,19 @@ class courseController extends controller {
 
         }
     }
-    async removeCourse(req, res, next) {
+    async removeBlog(req, res, next) {
             const id = req.params.id;
             if (this.isObjectID(id)) {
-                await courseModel.findByIdAndDelete(id, (err, course) => {
-                    if (course) {
+                await blogModel.findByIdAndDelete(id, (err, blog) => {
+                    if (blog) {
                         return res.json({
                             status: true,
-                            message: "حدف دوره با موفقیت انجام شد"
+                            message: "حدف مقاله  با موفقیت انجام شد"
                         })
                     } else {
                         return res.json({
                             status: false,
-                            message: "حذف دوره انجام نشد لطفا بعدا یا مجددا تلاش بفرمائید"
+                            message: "حذف مقاله  انجام نشد لطفا بعدا یا مجددا تلاش بفرمائید"
                         })
                     }
                 });
@@ -144,14 +145,14 @@ class courseController extends controller {
             if (this.isObjectID(id)) {
                 let data = {}
                 this.fetchDataFromBody(req.body, data);
-                const course = await courseModel.findById(id);
-                if (course) {
-                    course.chapters.push({...data })
-                    course.save().then(course => {
-                        if (course) {
+                const blog = await blogModel.findById(id);
+                if (blog) {
+                    blog.chapters.push({...data })
+                    blog.save().then(blog => {
+                        if (blog) {
                             return res.json({
                                 status: true,
-                                message: "افزودن فصل دوره با موفقیت انجام شد"
+                                message: "افزودن فصل مقاله  با موفقیت انجام شد"
                             })
                         } else {
                             return res.json({
@@ -169,7 +170,7 @@ class courseController extends controller {
                 } else {
                     return res.json({
                         status: false,
-                        message: "دوره ای یافت نشد"
+                        message: "مقاله  ای یافت نشد"
                     })
                 }
             } else {
@@ -185,9 +186,9 @@ class courseController extends controller {
     async findChapter(req, res, next) {
         const id = req.params.id;
         if (this.isObjectID(id)) {
-            const course = await courseModel.findOne({ 'chapters._id': id });
-            if (course) {
-                const chapter = course.chapters.find(chapter => chapter._id == id)
+            const blog = await blogModel.findOne({ 'chapters._id': id });
+            if (blog) {
+                const chapter = blog.chapters.find(chapter => chapter._id == id)
                 return res.json({
                     status: true,
                     chapter
@@ -209,9 +210,9 @@ class courseController extends controller {
     async chapters(req, res, next) {
         const id = req.params.id;
         if (this.isObjectID(id)) {
-            const course = await courseModel.findById(id);
-            if (course) {
-                const chapters = course.chapters
+            const blog = await blogModel.findById(id);
+            if (blog) {
+                const chapters = blog.chapters
                 return res.json({
                     status: true,
                     chapters
@@ -219,7 +220,7 @@ class courseController extends controller {
             } else {
                 return res.json({
                     status: false,
-                    message: "دوره ای یافت نشد"
+                    message: "مقاله  ای یافت نشد"
                 })
             }
 
@@ -236,11 +237,11 @@ class courseController extends controller {
         if (this.isObjectID(id)) {
             let data = {};
             this.fetchDataFromBody(req.body, data)
-            const course = await courseModel.findOne({ 'chapters._id': id });
-            if (course) {
-                const chapter = course.chapters.find(chapter => chapter._id == id)
+            const blog = await blogModel.findOne({ 'chapters._id': id });
+            if (blog) {
+                const chapter = blog.chapters.find(chapter => chapter._id == id)
                 chapter.title = data.title;
-                course.save().then(chapter => {
+                blog.save().then(chapter => {
                     if (chapter) {
                         return res.json({
                             status: true,
@@ -271,17 +272,17 @@ class courseController extends controller {
     async removeChapter(req, res, next) {
             const id = req.params.id;
             if (this.isObjectID(id)) {
-                const course = await courseModel.findOne({ 'chapters._id': id });
-                if (course) {
-                    const chapter = course.chapters.find(chapter => chapter._id == id)
-                    if (chapter.episodes.length > 0) {
+                const blog = await blogModel.findOne({ 'chapters._id': id });
+                if (blog) {
+                    const chapter = blog.chapters.find(chapter => chapter._id == id)
+                    if (chapter.lessons.length > 0) {
                         return res.json({
                             status: false,
-                            message: "این فصل دارای تعدادی اپیزود میباشد و نمیتوان آن را حذف کرد لطفا ابتدا اپیزود ها را حذف کنید"
+                            message: "این فصل دارای تعدادی بخش  میباشد و نمیتوان آن را حذف کرد لطفا ابتدا بخش  ها را حذف کنید"
                         })
                     } else {
-                        course.chapters = course.chapters.filter(chapter => chapter._id != id)
-                        course.save().then(chapter => {
+                        blog.chapters = blog.chapters.filter(chapter => chapter._id != id)
+                        blog.save().then(chapter => {
                             if (chapter) {
                                 return res.json({
                                     status: true,
@@ -311,9 +312,16 @@ class courseController extends controller {
             }
         }
         //--------------------------------------------------
-    async insertEpisode(req, res, next) {
+    async insertLesson(req, res, next) {
+        let image = ""
+        if (req.file) {
+            image = this.checkReqFile(req.file)
+        }
         const result = await validationResult(req);
         if (!result.isEmpty()) {
+            if (req.file) {
+                this.removeFile(image)
+            }
             validator = {}
             this.errorHandlerValidator(result.errors, validator)
             return res.json({
@@ -324,33 +332,35 @@ class courseController extends controller {
             const id = req.params.id;
             if (this.isObjectID(id)) {
                 let data = {}
+                req.body.img = image
                 this.fetchDataFromBody(req.body, data);
-                const course = await courseModel.findOne({ 'chapters._id': id });
-                if (course) {
-                    course.chapters.forEach(chapter => chapter._id == id ? chapter.episodes.push({...data }) : chapter)
-                    course.save().then(course => {
-                        if (course) {
+                data.slug = this.slug(data.title)
+                const blog = await blogModel.findOne({ 'chapters._id': id });
+                if (blog) {
+                    blog.chapters.forEach(chapter => chapter._id == id ? chapter.lessons.push({...data }) : chapter)
+                    blog.save().then(blog => {
+                        if (blog) {
                             return res.json({
                                 status: true,
-                                message: "افزودن اپیزود دوره با موفقیت انجام شد"
+                                message: "افزودن بخش  مقاله  با موفقیت انجام شد"
                             })
                         } else {
                             return res.json({
                                 status: false,
-                                message: "افزودن اپیزود انجام نشد لطفا بعدا یا مجددا تلاش بفرمائید"
+                                message: "افزودن بخش  انجام نشد لطفا بعدا یا مجددا تلاش بفرمائید"
                             })
                         }
                     }).catch(err => {
                         return res.json({
                             status: false,
                             err: err.message,
-                            message: "افزودن اپیزود انجام نشد لطفا بعدا یا مجددا تلاش بفرمائید"
+                            message: "افزودن بخش  انجام نشد لطفا بعدا یا مجددا تلاش بفرمائید"
                         })
                     })
                 } else {
                     return res.json({
                         status: false,
-                        message: "دوره ای یافت نشد"
+                        message: "مقاله  ای یافت نشد"
                     })
                 }
             } else {
@@ -363,21 +373,21 @@ class courseController extends controller {
         }
 
     }
-    async episodes(req, res, next) {
+    async Lessons(req, res, next) {
         const id = req.params.id;
         if (this.isObjectID(id)) {
-            const course = await courseModel.findOne({ 'chapters._id': id });
-            if (course) {
-                const chapter = course.chapters.find(chapter => chapter._id == id)
-                const episodes = chapter.episodes
+            const blog = await blogModel.findOne({ 'chapters._id': id });
+            if (blog) {
+                const chapter = blog.chapters.find(chapter => chapter._id == id)
+                const lessons = chapter.lessons
                 return res.json({
                     status: true,
-                    episodes
+                    lessons
                 })
             } else {
                 return res.json({
                     status: false,
-                    message: "دوره ای یافت نشد"
+                    message: "مقاله  ای یافت نشد"
                 })
             }
         } else {
@@ -387,17 +397,17 @@ class courseController extends controller {
             })
         }
     }
-    async findEpisode(req, res, next) {
+    async findLesson(req, res, next) {
         const id = req.params.id;
         if (this.isObjectID(id)) {
-            const course = await courseModel.findOne({ 'chapters.episodes._id': id });
-            if (course) {
-                course.chapters.find(chapter => {
-                    chapter.episodes.forEach(episode => {
-                        if (episode._id == id) {
+            const blog = await blogModel.findOne({ 'chapters.lessons._id': id });
+            if (blog) {
+                blog.chapters.find(chapter => {
+                    chapter.lessons.forEach(lesson => {
+                        if (lesson._id == id) {
                             return res.json({
                                 status: true,
-                                episode
+                                lesson
                             })
                         }
 
@@ -406,7 +416,7 @@ class courseController extends controller {
             } else {
                 return res.json({
                     status: false,
-                    message: "دوره ای یافت نشد"
+                    message: "مقاله  ای یافت نشد"
                 })
             }
         } else {
@@ -416,48 +426,65 @@ class courseController extends controller {
             })
         }
     }
-    async updateEpisode(req, res, next) {
+    async updateLesson(req, res, next) {
+        let image = "";
+        if (req.file) {
+            image = this.checkReqFile(req.file);
+        }
         const id = req.params.id;
         if (this.isObjectID(id)) {
+            req.body.img = image
             let data = {}
             this.fetchDataFromBody(req.body, data);
-            const course = await courseModel.findOne({ 'chapters.episodes._id': id });
-            if (course) {
-                course.chapters.forEach(chapter => {
-                    chapter.episodes.forEach(episode => {
-                        if (episode._id == id) {
+            const blog = await blogModel.findOne({ 'chapters.lessons._id': id });
+            if (blog) {
+                blog.chapters.forEach(chapter => {
+                    chapter.lessons.forEach(lesson => {
+                        if (lesson._id == id) {
                             Object.keys(data).forEach(key => {
-                                episode[key] = data[key]
+                                lesson[key] = data[key]
                             })
                         }
                     })
                 })
-                course.save().then(course => {
-                    if (course) {
+                blog.save().then(blog => {
+                    if (blog) {
                         return res.json({
                             status: true,
-                            message: "به روزرسانی اپیزود با موفقیت انجام شد"
+                            message: "به روزرسانی بخش  با موفقیت انجام شد"
                         })
                     } else {
+                        if (req.file) {
+                            this.removeFile(image)
+                        }
                         return res.json({
                             status: false,
-                            message: "به روزرسانی اپیزود انجام نشد لطفا بعدا یا مجددا تلاش بفرمائید"
+                            message: "به روزرسانی بخش  انجام نشد لطفا بعدا یا مجددا تلاش بفرمائید"
                         })
                     }
                 }).catch(err => {
+                    if (req.file) {
+                        this.removeFile(image)
+                    }
                     return res.json({
                         status: false,
                         err: err.message,
-                        message: "به روزرسانی اپیزود انجام نشد لطفا بعدا یا مجددا تلاش بفرمائید"
+                        message: "به روزرسانی بخش  انجام نشد لطفا بعدا یا مجددا تلاش بفرمائید"
                     })
                 })
             } else {
+                if (req.file) {
+                    this.removeFile(image)
+                }
                 return res.json({
                     status: false,
-                    message: "دوره ای یافت نشد"
+                    message: "مقاله  ای یافت نشد"
                 })
             }
         } else {
+            if (req.file) {
+                this.removeFile(image)
+            }
             return res.json({
                 status: false,
                 message: "Not-Found"
@@ -465,35 +492,35 @@ class courseController extends controller {
 
         }
     }
-    async removeEpisode(req, res, next) {
+    async removeLesson(req, res, next) {
         const id = req.params.id;
         if (this.isObjectID(id)) {
-            const course = await courseModel.findOne({ 'chapters.episodes._id': id });
-            if (course) {
-                course.chapters.forEach(chapter => chapter.episodes = chapter.episodes.filter(episode => episode._id != id))
-                course.save().then(course => {
-                    if (course) {
+            const blog = await blogModel.findOne({ 'chapters.lessons._id': id });
+            if (blog) {
+                blog.chapters.forEach(chapter => chapter.lessons = chapter.lessons.filter(lesson => lesson._id != id))
+                blog.save().then(blog => {
+                    if (blog) {
                         return res.json({
                             status: true,
-                            message: "حذف اپیزود با موفقیت انجام شد"
+                            message: "حذف بخش  با موفقیت انجام شد"
                         })
                     } else {
                         return res.json({
                             status: false,
-                            message: "حذف اپیزود انجام نشد لطفا بعدا یا مجددا تلاش بفرمائید"
+                            message: "حذف بخش  انجام نشد لطفا بعدا یا مجددا تلاش بفرمائید"
                         })
                     }
                 }).catch(err => {
                     return res.json({
                         status: false,
                         err: err.message,
-                        message: "حذف اپیزود انجام نشد لطفا بعدا یا مجددا تلاش بفرمائید"
+                        message: "حذف بخش  انجام نشد لطفا بعدا یا مجددا تلاش بفرمائید"
                     })
                 })
             } else {
                 return res.json({
                     status: false,
-                    message: "دوره ای یافت نشد"
+                    message: "مقاله  ای یافت نشد"
                 })
             }
         } else {
@@ -505,4 +532,4 @@ class courseController extends controller {
     }
 }
 
-module.exports = new courseController();
+module.exports = new blogController();
