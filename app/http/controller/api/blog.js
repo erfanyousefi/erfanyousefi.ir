@@ -23,8 +23,7 @@ class blogController extends controller {
             let data = {};
             req.body.img = image
             this.fetchDataFromBody(req.body, data);
-            data.author = req.user._id
-            data.slug = this.slug(data.title)
+            data.author = req.user._id;
             blogModel.create({...data }).then(blog => {
                 if (blog) {
                     return res.json({
@@ -61,7 +60,6 @@ class blogController extends controller {
             let data = {};
             this.fetchDataFromBody(req.body, data)
             data.img = image
-            data.slug = this.slug(data.title)
             await blogModel.findByIdAndUpdate(id, { $set: {...data } }, (err, blog) => {
                 if (blog) {
                     return res.json({
@@ -334,7 +332,6 @@ class blogController extends controller {
                 let data = {}
                 req.body.img = image
                 this.fetchDataFromBody(req.body, data);
-                data.slug = this.slug(data.title)
                 const blog = await blogModel.findOne({ 'chapters._id': id });
                 if (blog) {
                     blog.chapters.forEach(chapter => chapter._id == id ? chapter.lessons.push({...data }) : chapter)

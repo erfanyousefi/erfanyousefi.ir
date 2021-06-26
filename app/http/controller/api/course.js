@@ -24,7 +24,6 @@ class courseController extends controller {
             req.body.img = image
             this.fetchDataFromBody(req.body, data);
             data.teacher = req.user._id
-            data.slug = this.slug(data.title)
             courseModel.create({...data }).then(course => {
                 if (course) {
                     return res.json({
@@ -61,8 +60,7 @@ class courseController extends controller {
         if (this.isObjectID(id)) {
             let data = {};
             this.fetchDataFromBody(req.body, data)
-            data.img = image
-            data.slug = this.slug(data.title)
+            data.img = image;
             await courseModel.findByIdAndUpdate(id, { $set: {...data } }, (err, course) => {
                 if (course) {
                     return res.json({

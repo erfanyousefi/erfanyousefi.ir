@@ -46,6 +46,9 @@ module.exports = class controllers {
         if (data.tags) {
             data.tags = data.tags.split(",")
         }
+        if (data.title) {
+            data.slug = this.slug(data.title)
+        }
     }
     async jwtGenerator(user, dayExpire) {
         let jwtToken = await jwt.sign({
