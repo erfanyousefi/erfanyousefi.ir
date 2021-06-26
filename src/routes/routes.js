@@ -1,3 +1,4 @@
+import courseRoutes from "@/routes/client/course.js";
 export default [{
     path: "",
     name: "index",
@@ -11,20 +12,6 @@ export default [{
                 return import ("@/views/client/Home.vue")
             }
         },
-        {
-            path: "/course/:slug",
-            name: "coursePage",
-            component: () => {
-                return import ("@/views/client/CoursePage.vue")
-            }
-        },
-        {
-            path: "/courses",
-            name: "allCourse",
-            component: () => {
-                return import ("@/views/client/Courses.vue")
-            }
-        },
-
+        ...courseRoutes
     ]
 }]

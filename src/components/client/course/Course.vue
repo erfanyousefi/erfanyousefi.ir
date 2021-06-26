@@ -11,11 +11,11 @@
     </span>
     <img :src="'http://localhost:3000' + course.img" alt="" />
     <div class="card-body">
-      <router-link to="" class="card-title p-2">{{ course.title }}</router-link>
+      <h6 class="card-title p-2">{{ course.title }}</h6>
       <div class="card-text p-2 mt-2 mb-3 text-sm opacity-70">
         {{ course.text.substr(1, 200) + "..." }}
       </div>
-      <router-link :to="{name : 'coursePage', params : {slug : course.slug}}" class="footerCard">
+      <div class="footerCard">
         <span v-if="course.type === 'cash'" class="cash">
           <div class="price" v-if="course.discount > 0">
             <div>
@@ -42,7 +42,7 @@
             <button class="btn bg-blue">مشاهده دوره</button>
           </div>
         </div>
-      </router-link>
+      </div>
     </div>
   </router-link>
 </template>

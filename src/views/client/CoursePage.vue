@@ -28,7 +28,7 @@
       <Title title="سرفصل ها و عناوین دوره" />
     </div>
     <div class="row justify-content-center my-2">
-      <CourseChapter :chapters="[]" />
+      <CourseChapter :chapters="course.chapters" />
     </div>
   </div>
 </template>

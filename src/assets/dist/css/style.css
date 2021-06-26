@@ -1012,6 +1012,11 @@ span.cash {
     padding: 10px;
 }
 
+.header-chapter h3 {
+    font-size: 22px;
+    font-weight: bold;
+}
+
 .chapter .header-chapter .downList {
     width: 40px;
     height: 40px;

@@ -1,7 +1,6 @@
 <template>
-  <div>
-
-    <div v-if="chapters.length > 0" class="chapter" v-for:="(chapter, index) in chapters">
+  <div class="row my-3">
+    <div v-if="chapters.length > 0" class="chapter my-2" v-for:="(chapter, index) in chapters">
       <div class="header-chapter">
         <h3>{{ chapter.title }}</h3>
         <a
@@ -20,14 +19,14 @@
       >
         <div
           class="col-12 episode"
-          v-for:="(episode, epIndex) in chapter.index"
+          v-for:="(episode, epIndex) in chapter.episodes"
         >
           <div class="info-episod">
             <span class="number-episode">{{ episode.number }}</span>
             <h5 class="title-episod">{{ episode.title }}</h5>
             <div class="type-time-episode">
               <span class="time-episod">{{ episode.time }}</span>
-              <strong class="type-episod">{{ episode.type }}</strong>
+              <strong class="type-episod">{{ episode.type==="free"?"رایـگانــ" : episode.type==="cash"?"نقدی":"" }}</strong>
             </div>
           </div>
           <div class="controls-episod">

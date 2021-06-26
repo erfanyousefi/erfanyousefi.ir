@@ -68,17 +68,17 @@
               >کافه</router-link
             >
           </li>
-          <li><router-link to="" class="">بلاگ ها</router-link></li>
-          <li><router-link to="/courses" class="">دوره ها</router-link></li>
+          <li><router-link to="">بلاگ ها</router-link></li>
+          <li><router-link :to="{name : 'courses'}">دوره ها</router-link></li>
           <li>
-            <router-link to="" class="">سرریز قهوه</router-link>
+            <router-link to="">سرریز قهوه</router-link>
           </li>
-          <li><router-link to="" class="">ایده ها</router-link></li>
-          <li><router-link to="" class="">جملات</router-link></li>
+          <li><router-link to="">ایده ها</router-link></li>
+          <li><router-link to="">جملات</router-link></li>
           <li>
-            <router-link to="" class="">تماس با من</router-link>
+            <router-link to="">تماس با من</router-link>
           </li>
-          <li><router-link to="" class="">درباره من</router-link></li>
+          <li><router-link to="">درباره من</router-link></li>
         </ul>
       </nav>
     </header>
