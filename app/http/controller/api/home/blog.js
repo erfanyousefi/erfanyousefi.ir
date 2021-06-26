@@ -76,32 +76,31 @@ class blogController extends controller {
         }
     }
     async chapters(req, res, next) {
-        const id = req.params.id;
-        if (this.isObjectID(id)) {
-            const blog = await blogModel.findById(id);
-            if (blog) {
-                const chapters = blog.chapters
-                return res.json({
-                    status: true,
-                    chapters
-                })
+            const id = req.params.id;
+            if (this.isObjectID(id)) {
+                const blog = await blogModel.findById(id);
+                if (blog) {
+                    const chapters = blog.chapters
+                    return res.json({
+                        status: true,
+                        chapters
+                    })
+                } else {
+                    return res.json({
+                        status: false,
+                        message: "مقاله ای یافت نشد"
+                    })
+                }
+
             } else {
                 return res.json({
                     status: false,
-                    message: "مقاله ای یافت نشد"
+                    message: "Not-Found"
                 })
+
             }
-
-        } else {
-            return res.json({
-                status: false,
-                message: "Not-Found"
-            })
-
         }
-    }
-
-    //--------------------------------------------------
+        //--------------------------------------------------
 
     async lessons(req, res, next) {
         const id = req.params.id;
@@ -159,18 +158,19 @@ class blogController extends controller {
     async findLessonWithSlug(req, res, next) {
         const slug = req.params.slug;
         if (slug) {
-            const blog = await blogModel.findOne({ 'chapters.lessons.slug': slug });
+            const blog = await blogModel.findOne({ 'chapters.lessons.slug': slug }).populate(["author", "tags", "category"]);
             if (blog) {
                 blog.chapters.find(chapter => {
-                    chapter.lessons.forEach(lesson => {
+                    let lesson = chapter.lessons.find(lesson => {
                         if (lesson.slug == slug) {
-                            return res.json({
-                                status: true,
-                                lesson,
-                                blog
-                            })
+                            return lesson
                         }
 
+                    })
+                    return res.json({
+                        status: true,
+                        lesson,
+                        blog
                     })
                 })
             } else {
