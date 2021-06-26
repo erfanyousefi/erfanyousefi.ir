@@ -1,7 +1,11 @@
 
 <template>
-  <div class="row lastBlogs my-2">
-    <div v-for:="(blog, index) in blogs" class="col-lg-4 col-md-6 col-sm-12 col-xs-12 my-5">
+  <Loading v-if="loading" />
+  <div v-else class="row lastBlogs my-2">
+    <div
+      v-for:="(blog, index) in blogs"
+      class="col-lg-4 col-md-6 col-sm-12 col-xs-12 my-5"
+    >
       <Blog :blog="blog" />
     </div>
   </div>
@@ -9,41 +13,32 @@
 
 <script>
 import Blog from "@/components/client/blog/Blog.vue";
-import { reactive } from "vue";
+import Loading from "@/components/partials/Loading.vue";
+import { onBeforeMount, ref } from "vue";
+import axios from "axios"
 export default {
   components: {
     Blog,
+    Loading
   },
   setup() {
-    const blogs = reactive([
-      {
-        title: "آموزش صفر تا صد جاوا اسکریپت",
-        type: "free",
-        text: `در طی دوره آموزش جاوا اسکریپت es۷ و es۸ ما سعی داریم در چند جلسه موارد جدید از ویژگی‌های که در این ورژن از ecma script معرفی شده را به شما آموزش دهیم.`,
-        tags: ["vue.js", "node.js", "nest.js", "javascript"],
-        createdAt : "1400/10/14",
-        author : "عرفان یوسفی"
-      },
-      {
-        title: "آموزش صفر تا صد جاوا اسکریپت",
-        type: "cash",
-        text: `در طی دوره آموزش جاوا اسکریپت es۷ و es۸ ما سعی داریم در چند جلسه موارد جدید از ویژگی‌های که در این ورژن از ecma script معرفی شده را به شما آموزش دهیم.`,
-        tags: ["vue.js", "node.js", "nest.js", "javascript"],
-        createdAt : "1400/10/14",
-        author : "عرفان یوسفی"
-      },
-      {
-        title: "آموزش صفر تا صد جاوا اسکریپت",
-        type: "free",
-        text: `در طی دوره آموزش جاوا اسکریپت es۷ و es۸ ما سعی داریم در چند جلسه موارد جدید از ویژگی‌های که در این ورژن از ecma script معرفی شده را به شما آموزش دهیم.`,
-        tags: ["vue.js", "node.js", "nest.js", "javascript"],
-        createdAt : "1400/10/14",
-        author : "عرفان یوسفی"
-      },
-    ]);
+    let blogs = ref(null);
+    let loading = ref(true);
+    let json = ref(null);
+    const getBlogs = async () => {
+      json.value = await axios.get("http://localhost:3000/lastBlogs",{ progress: false });
+      blogs.value = json.value.data.blogs;
+      if (blogs.value) {
+        loading.value = false;
+      }
+    };
+    onBeforeMount(() => {
+      getBlogs();
+    });
 
     return {
       blogs,
+      loading,
     };
   },
 };

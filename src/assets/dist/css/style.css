@@ -1145,23 +1145,27 @@ span.cash {
     color: #059669;
     display: block;
     transition: 200ms;
+    font-size: 13px;
 }
 
 .sessions ul li a:hover {
-    font-size: 17px;
+    font-size: 13px;
     transition: 200ms;
     color: #3B82F6;
 }
 
 .sessions ul li a.active {
-    font-size: 17px;
+    font-size: 12px;
     transition: 200ms;
     color: #3B82F6;
+    background-color: rgb(80, 72, 72);
+    border-radius: 20px;
+    padding-right: 14px;
 }
 
 .sessions ul li a i {
-    width: 32px;
-    height: 32px;
+    width: 30px;
+    height: 30px;
     border: 1px solid #eee;
     display: inline-flex;
     justify-content: center;

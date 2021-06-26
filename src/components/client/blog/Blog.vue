@@ -1,16 +1,16 @@
 <template>
-  <router-link to="" class="card card-blog blogCard">
-        <img src="@/assets/dist/img/js.png" alt="" srcset="" />
+  <router-link :to="{name : 'blogPage', params :{slug : blog.slug}}" class="card card-blog blogCard">
+        <img :src="'http://localhost:3000'+blog.img" alt="" srcset="" />
         <div class="card-body">
           <div class="blogDetails">
-            <strong class="text-right">{{blog.author}}</strong>
-          <strong class="dateTime text-left">{{blog.createdAt}}</strong>
+            <strong class="text-right">{{blog.author.name || blog.author.username}}</strong>
+          <strong class="dateTime text-left">{{(new Date(blog.createdAt)).toLocaleDateString("fa")}}</strong>
           </div>
           <div class="card-title">{{blog.title}}</div>
           <div class="card-text">
-           {{blog.text}}
+           {{blog.text.substr(0, 200)+" ..."}}
             <div class="tags">
-              <span v-for:="tag in blog.tags">{{' #'+tag}}</span>
+              <span v-for:="tag in blog.tags">{{' #'+tag.title}}</span>
             </div>
           </div>
         </div>

@@ -68,7 +68,7 @@
               >کافه</router-link
             >
           </li>
-          <li><router-link to="">بلاگ ها</router-link></li>
+          <li><router-link :to="{name : 'blogs'}">بلاگ ها</router-link></li>
           <li><router-link :to="{name : 'courses'}">دوره ها</router-link></li>
           <li>
             <router-link to="">سرریز قهوه</router-link>
