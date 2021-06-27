@@ -19,11 +19,11 @@ baners.forEach(baner => {
     })
 })
 window.addEventListener("scroll", () => {
-    if (window.scrollY > 15) {
-        document.querySelector("header").style.boxShadow = "5px 5px 10px #333"
-    } else {
-        document.querySelector("header").style.boxShadow = "unset"
-    }
+    // if (window.scrollY > 15) {
+    //     document.querySelector("header").style.boxShadow = "5px 5px 10px #333"
+    // } else {
+    //     document.querySelector("header").style.boxShadow = "unset"
+    // }
 
     if (window.scrollY > 350) {
         document.querySelector(".moveUp").style.display = "flex"

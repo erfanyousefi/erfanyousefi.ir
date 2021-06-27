@@ -1,5 +1,5 @@
 <template>
-  <Loading v-if="loading" />
+  <Loading v-if="loading"  :loading="loading" />
   <div v-else>
     <div class="row my-4">
       <Title :title="blog.title" />

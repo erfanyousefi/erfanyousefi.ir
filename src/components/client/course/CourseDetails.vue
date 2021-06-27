@@ -26,7 +26,7 @@
       </div>
       <div class="courseInfo my-4">
         <a href="" class="teacher">
-          <div class="">{{ details.teacher.name || details.teacher.username }}</div>
+          <div class="">{{ details.teacher.name }}</div>
           <span class="teacher-details">
             {{ details.teacher.describe }}
           </span>

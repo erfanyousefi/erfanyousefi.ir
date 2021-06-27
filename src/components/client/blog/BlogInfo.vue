@@ -2,7 +2,7 @@
   <div class="course-details">
     <div class="courseInfo my-4">
       <a href="" class="teacher">
-        <div class="">{{blog.author.name || blog.author.username}}</div>
+        <div class="">{{blog.author.name}}</div>
         <span class="teacher-details"> {{blog.author.describe}} </span>
       </a>
     </div>

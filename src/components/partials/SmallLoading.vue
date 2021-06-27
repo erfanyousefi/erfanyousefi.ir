@@ -1,6 +1,6 @@
 <template>
-  <div v-if="loading" class="row loading">
-    <div class="spinner-border" role="status">
+  <div v-if="loading" class="d-inline mx-2 loading">
+    <div class="spinner-border spinner-border-sm" role="status">
     </div>
   </div>
 </template>

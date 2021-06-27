@@ -15,8 +15,12 @@
     "axios": "^0.21.1",
     "bootstrap": "^5.0.2",
     "core-js": "^3.6.5",
+    "jsonwebtoken": "^8.5.1",
+    "sweetalert2": "^11.0.18",
     "vue": "^3.0.0",
     "vue-router": "^4.0.10",
+    "vue-sweetalert2": "^4.3.1",
+    "vue3-cookies": "^1.0.1",
     "x-axios-progress-bar": "^1.2.2"
   },
   "devDependencies": {

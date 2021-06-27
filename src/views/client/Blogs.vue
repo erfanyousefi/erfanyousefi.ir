@@ -1,6 +1,6 @@
 
 <template>
-  <Loading v-if="loading" />
+  <Loading v-if="loading" :loading="loading" />
   <div v-else>
     <Title title="همه ی مقالات" />
     <div class="row lastBlogs my-5">
@@ -20,7 +20,6 @@ import Loading from "@/components/partials/Loading.vue";
 import Title from "@/components/partials/client/Title.vue";
 import { onBeforeMount, ref } from "vue";
 import axios from "axios";
-import { useRouter } from "vue-router";
 export default {
   components: {
     Blog,

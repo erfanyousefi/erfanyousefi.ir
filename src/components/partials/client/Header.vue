@@ -64,17 +64,16 @@
         <div class="titleUp">وبسایت آموزشی عرفان یوسفی</div>
         <ul>
           <li>
-            <router-link to="/" class="link"
-              >کافه</router-link
-            >
+            <router-link to="/" class="link">کافه</router-link>
           </li>
-          <li><router-link :to="{name : 'blogs'}">بلاگ ها</router-link></li>
-          <li><router-link :to="{name : 'courses'}">دوره ها</router-link></li>
+          <li><router-link :to="{ name: 'blogs' }">بلاگ ها</router-link></li>
+          <li><router-link :to="{ name: 'courses' }">دوره ها</router-link></li>
           <li>
-            <router-link to="">سرریز قهوه</router-link>
+            <router-link :to="{ name: 'signupPage' }">ثبت نام</router-link>
           </li>
-          <li><router-link to="">ایده ها</router-link></li>
-          <li><router-link to="">جملات</router-link></li>
+          <li>
+            <router-link :to="{ name: 'loginPage' }">ورود</router-link>
+          </li>
           <li>
             <router-link to="">تماس با من</router-link>
           </li>
