@@ -25,7 +25,25 @@ const blogSchema = new Schema({
     slug: { type: String, required: false },
     chapters: [chapterSchema]
 }, {
-    timestamps: true
+    timestamps: true,
+    toJSON: {
+        virtuals: true
+    }
+})
+blogSchema.virtual("authors", {
+    ref: "user",
+    localField: "_id",
+    foreignField: "author",
+})
+blogSchema.virtual("tag", {
+    ref: "tag",
+    localField: "_id",
+    foreignField: "tags",
+})
+blogSchema.virtual("categories", {
+    ref: "category",
+    localField: "_id",
+    foreignField: "category",
 })
 const blogModel = mongoose.model("blog", blogSchema);
 module.exports = blogModel;

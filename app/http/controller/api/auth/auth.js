@@ -16,11 +16,11 @@ class authController extends controller {
         } else {
             let data = {};
             this.fetchDataFromBody(req.body, data);
-            const user = await userModel.findOne({ username: data.username })
+            const user = await userModel.findOne({ email: data.email })
             if (user) {
                 return res.json({
                     status: false,
-                    message: "نام کاربری تکراری میباشد لطفا یک نام کاربری دیگر را برگزینید"
+                    message: " ایمیل قبلا استفاده شده لطفا یک  ایمیل دیگری را انتخاب کنید"
                 })
             } else {
                 data.password = await this.hashString(data.password);

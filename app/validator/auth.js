@@ -2,10 +2,14 @@ const { body } = require("express-validator");
 class authValidator {
     register() {
         return [
-            body("username")
+            body("name")
             .notEmpty()
-            .isLength({ min: 4 })
-            .withMessage("نام کاربری حداقل 4 و حداکثر 30 کاراکتر باشد"),
+            .isLength({ min: 3 })
+            .withMessage("نام و نام خانوادگی نمیتواند خالی باشد"),
+            body("email")
+            .notEmpty()
+            .isEmail()
+            .withMessage("لطفا ایمیل را با فرمت صحیح وارد کنید"),
             body("password")
             .notEmpty()
             .isLength({ min: 6, max: 16 })
