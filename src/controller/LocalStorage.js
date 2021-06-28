@@ -1,6 +1,6 @@
 class LocalStorageUtil {
     constructor() {
-        this.storage = localStorage;
+        this.storage = window.localStorage;
         this.expired = 1000 * 60 * 60 * 24 * 6;
     }
     set(key, value, expired) {

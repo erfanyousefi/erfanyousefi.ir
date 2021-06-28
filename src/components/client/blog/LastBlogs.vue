@@ -15,7 +15,8 @@
 import Blog from "@/components/client/blog/Blog.vue";
 import Loading from "@/components/partials/Loading.vue";
 import { onBeforeMount, ref } from "vue";
-import {HTTP} from "@/controller/http.js"
+import axios from "axios"
+import dotenv from "@/dotenv.js"
 export default {
   components: {
     Blog,
@@ -26,7 +27,7 @@ export default {
     let loading = ref(true);
     let json = ref(null);
     const getBlogs = async () => {
-      json.value = await HTTP.get("lastBlogs");
+      json.value = await axios.get(`${dotenv.baseURL}lastBlogs`,{progress: false})
       blogs.value = json.value.data.blogs;
       if (blogs.value) {
         loading.value = false;
