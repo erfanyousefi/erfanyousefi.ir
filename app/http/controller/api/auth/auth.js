@@ -58,7 +58,7 @@ class authController extends controller {
         } else {
             let data = {};
             this.fetchDataFromBody(req.body, data);
-            let user = await userModel.findOne({ username: data.username });
+            let user = await userModel.findOne({ email: data.email });
             if (user) {
                 const match = this.compareHashString(data.password, user.password);
                 if (match) {
@@ -68,6 +68,7 @@ class authController extends controller {
                         return res.json({
                             status: true,
                             message: "ورود به حساب با موفقیت انجام شد",
+                            user,
                             token: user.token,
                         })
                     })

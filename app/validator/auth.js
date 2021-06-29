@@ -16,6 +16,18 @@ class authValidator {
             .withMessage("رمز عبور حداقل 6 و حداکثر 16 کاراکتر باشد")
         ]
     }
+    login() {
+        return [
+            body("email")
+            .notEmpty()
+            .isEmail()
+            .withMessage("لطفا ایمیل را با فرمت صحیح وارد کنید"),
+            body("password")
+            .notEmpty()
+            .isLength({ min: 6, max: 16 })
+            .withMessage("رمز عبور حداقل 6 و حداکثر 16 کاراکتر باشد")
+        ]
+    }
 
 
 }
