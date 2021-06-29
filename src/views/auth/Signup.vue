@@ -38,7 +38,7 @@
             />
             <Button
               :setting="{
-                class: 'btn-primary',
+                class: 'btn-dark',
                 loading,
                 title: 'ایجاد حساب کاربری',
                 disabled,
@@ -46,7 +46,7 @@
               @click.prevent="sendData"
             />
             <hr class="my-4" />
-            <button class="btn btn-lg btn-secondary btn-block text-uppercase">
+            <button class="btn btn-lg btn-light btn-block text-uppercase">
               ورود
             </button>
             <br />
@@ -63,28 +63,29 @@
 <script>
 import Input from "@/components/partials/client/Input.vue";
 import Button from "@/components/partials/client/Button.vue";
-import { reactive, ref } from "vue";
-import storage from "@/controller/LocalStorage.js";
+import { reactive, ref, onBeforeMount } from "vue";
+// import storage from "@/controller/LocalStorage.js";
 import { HTTP } from "@/controller/http.js";
 import Alert from "@/controller/alertSystem.js";
 import Swal from "sweetalert2";
-import {useStore} from "vuex"
+import { useStore } from "vuex";
 import { useRouter } from "vue-router";
 export default {
   components: {
     Input,
     Button,
   },
-  beforeRouteEnter(to, from, next) {
-    let token = storage.get("user-token");
-    if (token) {
-      next({ name: "homePage" });
-    }
-    next();
-  },
+
   setup() {
     let store = useStore();
     let router = useRouter();
+    onBeforeMount(() => {
+      // let token = storage.get("user-token");
+      let isLoggedIn = store.getters.isLoggedIn
+      if (isLoggedIn) {
+        router.push({ name: "homePage" });
+      }
+    });
     let formData = reactive({
       name: "",
       email: "",
@@ -95,7 +96,7 @@ export default {
     function sendData() {
       loading.value = true;
       disabled.value = true;
-      if (formData.name && formData && formData.password) {
+      if (formData.name && formData.email && formData.password) {
         loading.value = true;
         HTTP.post("auth/register", { ...formData }).then((response) => {
           let text = "";
@@ -132,7 +133,7 @@ export default {
       Object.keys(value).forEach((key) => {
         formData[key] = value[key];
       });
-      if (formData.name && formData && formData.password) {
+      if (formData.name && formData.email && formData.password) {
         disabled.value = false;
       }
     }

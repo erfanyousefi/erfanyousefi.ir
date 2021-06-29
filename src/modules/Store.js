@@ -10,6 +10,7 @@ const store = createStore({
     mutations: {
         setToken: (state, token) => {
             state.token = token
+            Storage.set("user-token", token)
         },
         removeToken: (state) => {
             state.token = null
