@@ -1,67 +1,66 @@
 {
-  "name": "coffeelearn",
-  "version": "1.0.0",
-  "private": true,
-  "description": "## Project setup ``` npm install ```",
-  "author": "",
-  "scripts": {
-    "serve": "vue-cli-service serve",
-    "build": "vue-cli-service build",
-    "lint": "vue-cli-service lint",
-    "test": "echo \"Error: no test specified\" && exit 1"
-  },
-  "main": "babel.config.js",
-  "dependencies": {
-    "axios": "^0.21.1",
-    "bootstrap": "^5.0.2",
-    "core-js": "^3.6.5",
-    "dotenv": "^8.6.0",
-    "jsonwebtoken": "^8.5.1",
-    "sweetalert2": "^11.0.18",
-    "vue": "^3.0.0",
-    "vue-router": "^4.0.10",
-    "vue-sweetalert2": "^4.3.1",
-    "vue3-cookies": "^1.0.1",
-    "vuex": "^4.0.2",
-    "x-axios-progress-bar": "^1.2.2"
-  },
-  "devDependencies": {
-    "@vue/cli-plugin-babel": "~4.5.0",
-    "@vue/cli-plugin-eslint": "~4.5.0",
-    "@vue/cli-service": "~4.5.0",
-    "@vue/compiler-sfc": "^3.0.0",
-    "babel-eslint": "^10.1.0",
-    "eslint": "^6.7.2",
-    "eslint-plugin-vue": "^7.0.0"
-  },
-  "eslintConfig": {
-    "root": true,
-    "env": {
-      "node": true
+    "name": "coffeelearn",
+    "version": "1.0.0",
+    "private": true,
+    "description": "## Project setup ``` npm install ```",
+    "author": "",
+    "scripts": {
+        "serve": "vue-cli-service serve",
+        "build": "vue-cli-service build",
+        "lint": "vue-cli-service lint",
+        "test": "echo \"Error: no test specified\" && exit 1"
     },
-    "extends": [
-      "plugin:vue/vue3-essential",
-      "eslint:recommended"
+    "main": "babel.config.js",
+    "dependencies": {
+        "axios": "^0.21.1",
+        "bootstrap": "^5.0.2",
+        "core-js": "^3.6.5",
+        "dotenv": "^8.6.0",
+        "jsonwebtoken": "^8.5.1",
+        "sweetalert2": "^11.0.18",
+        "vue": "^3.0.0",
+        "vue-router": "^4.0.10",
+        "vue-sweetalert2": "^4.3.1",
+        "vuex": "^4.0.2",
+        "x-axios-progress-bar": "^1.2.2"
+    },
+    "devDependencies": {
+        "@vue/cli-plugin-babel": "~4.5.0",
+        "@vue/cli-plugin-eslint": "~4.5.0",
+        "@vue/cli-service": "~4.5.0",
+        "@vue/compiler-sfc": "^3.0.0",
+        "babel-eslint": "^10.1.0",
+        "eslint": "^6.7.2",
+        "eslint-plugin-vue": "^7.0.0"
+    },
+    "eslintConfig": {
+        "root": true,
+        "env": {
+            "node": true
+        },
+        "extends": [
+            "plugin:vue/vue3-essential",
+            "eslint:recommended"
+        ],
+        "parserOptions": {
+            "parser": "babel-eslint"
+        },
+        "rules": {}
+    },
+    "browserslist": [
+        "> 1%",
+        "last 2 versions",
+        "not dead"
     ],
-    "parserOptions": {
-      "parser": "babel-eslint"
+    "_id": "coffeelearn@1.0.0",
+    "bugs": {
+        "url": "https://github.com/coffeelearn/coffeelearn-website/issues"
     },
-    "rules": {}
-  },
-  "browserslist": [
-    "> 1%",
-    "last 2 versions",
-    "not dead"
-  ],
-  "_id": "coffeelearn@1.0.0",
-  "bugs": {
-    "url": "https://github.com/coffeelearn/coffeelearn-website/issues"
-  },
-  "homepage": "https://github.com/coffeelearn/coffeelearn-website#readme",
-  "license": "ISC",
-  "readme": "ERROR: No README data found!",
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/coffeelearn/coffeelearn-website.git"
-  }
+    "homepage": "https://github.com/coffeelearn/coffeelearn-website#readme",
+    "license": "ISC",
+    "readme": "ERROR: No README data found!",
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/coffeelearn/coffeelearn-website.git"
+    }
 }

@@ -8,6 +8,11 @@ export default [{
         name: "signupPage",
         component: () =>
             import ("@/views/auth/Signup.vue")
+    }, {
+        path: "/logout",
+        name: "logout",
+        component: () =>
+            import ("@/components/partials/Logout.vue")
     }
 
 ]

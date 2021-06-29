@@ -3,6 +3,7 @@
     <div class="col-sm-9 col-md-7 col-lg-5 mx-auto">
       <div class="card card-signin my-5">
         <div class="card-body">
+          {{ token }}
           <h5 class="card-title text-center">ایجاد حساب کاربری</h5>
           <div class="form-signin">
             <Input
@@ -63,9 +64,12 @@
 import Input from "@/components/partials/client/Input.vue";
 import Button from "@/components/partials/client/Button.vue";
 import { reactive, ref } from "vue";
-import Swal from "sweetalert2";
-import axios from "axios";
 import storage from "@/controller/LocalStorage.js";
+import { HTTP } from "@/controller/http.js";
+import Alert from "@/controller/alertSystem.js";
+import Swal from "sweetalert2";
+import {useStore} from "vuex"
+import { useRouter } from "vue-router";
 export default {
   components: {
     Input,
@@ -79,6 +83,8 @@ export default {
     next();
   },
   setup() {
+    let store = useStore();
+    let router = useRouter();
     let formData = reactive({
       name: "",
       email: "",
@@ -90,36 +96,36 @@ export default {
       loading.value = true;
       disabled.value = true;
       if (formData.name && formData && formData.password) {
-        axios
-          .post("http://localhost:3000/auth/register", { ...formData })
-          .then((response) => {
-            console.log(response);
-            if (!response.data.status) {
-              let text = "";
-              if (response.data.msg) {
-                Object.keys(response.data.msg).forEach((key) => {
-                  text += response.data.msg[key] + "<br/>";
-                });
-              } else {
-                text = response.data.message;
-              }
-              Swal.fire({
-                text,
-                icon: "error",
-                confirmButtonText: "باشه!",
+        loading.value = true;
+        HTTP.post("auth/register", { ...formData }).then((response) => {
+          let text = "";
+          if (!response.data.status) {
+            if (response.data.msg) {
+              Object.keys(response.data.msg).forEach((key) => {
+                text += response.data.msg[key] + "<br/>";
               });
               loading.value = false;
+              Alert.errorAlert({ text });
+            } else {
+              text = response.data.message;
             }
-            if (response.data.status) {
-              storage.set("user-token", response.data.token);
-              Swal.fire({
-                text: response.data.message,
-                icon: "success",
-                confirmButtonText: "باشه!",
-              });
-              loading.value = false;
-            }
-          });
+            loading.value = false;
+            Alert.errorAlert({ text });
+          }
+          if (response.data.status) {
+            store.commit("setToken", response.data.token);
+            loading.value = false;
+            text = response.data.message;
+            Swal.fire({
+              text: text,
+              icon: "success",
+              confirmButtonText: "باشه",
+            }).then((response) => {
+              console.log(response);
+              router.push({ name: "homePage" });
+            });
+          }
+        });
       }
     }
     function getData(value) {
@@ -130,6 +136,7 @@ export default {
         disabled.value = false;
       }
     }
+
     return {
       sendData,
       formData,

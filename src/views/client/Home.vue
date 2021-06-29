@@ -20,6 +20,7 @@ import Road from "@/components/partials/client/Road.vue";
 import Guid from "@/components/partials/client/Guid.vue";
 import LastCourses from "@/components/client/course/LastCourses.vue";
 import LastBlogs from "@/components/client/blog/LastBlogs.vue";
+
 export default {
   components: {
     Title,
@@ -27,7 +28,7 @@ export default {
     Road,
     Guid,
     LastCourses,
-    LastBlogs
+    LastBlogs,
   },
   setup() {
     const sentence = `لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ، و با استفاده از طراحان گرافیک است،
@@ -39,6 +40,8 @@ export default {
                         زمان مورد نیاز شامل حروفچینی دستاوردهای اصلی، و جوابگوی سوالات پیوسته اهل دنیای موجود طراحی
                         اساسا مورد استفاده قرار گیرد.`;
 
+
+
     return {
       sentence,
     };
@@ -46,5 +49,4 @@ export default {
 };
 </script>
 
-<style>
-</style>
+<style></style>

@@ -1,11 +1,25 @@
 import { createStore } from "vuex";
-import auth from "@/modules/auth/auth.js";
-createStore({
-    modules: {
-        auth
+import Storage from "@/controller/LocalStorage.js";
+const store = createStore({
+    state() {
+        return {
+            token: Storage.get("user-token"),
+            // isLoggedIn: !!Storage.get("user-token"),
+        }
     },
-    state() { return {} },
-    mutations: {},
-    getters: {},
+    mutations: {
+        setToken: (state, token) => {
+            state.token = token
+        },
+        removeToken: (state) => {
+            state.token = null
+            Storage.remove("user-token")
+        }
+    },
+    getters: {
+        isLoggedIn: state => !!state.token
+    },
     actions: {}
 })
+
+export default store

@@ -17,47 +17,27 @@
         <div class="hamburger hamburger--demo-6 js-hover">
           <div class="hamburger__line hamburger__line--01">
             <div
-              class="
-                hamburger__line-in
-                hamburger__line-in--01
-                hamburger__line-in--demo-5
-              "
+              class="hamburger__line-in hamburger__line-in--01 hamburger__line-in--demo-5"
             ></div>
           </div>
           <div class="hamburger__line hamburger__line--02">
             <div
-              class="
-                hamburger__line-in
-                hamburger__line-in--02
-                hamburger__line-in--demo-5
-              "
+              class="hamburger__line-in hamburger__line-in--02 hamburger__line-in--demo-5"
             ></div>
           </div>
           <div class="hamburger__line hamburger__line--03">
             <div
-              class="
-                hamburger__line-in
-                hamburger__line-in--03
-                hamburger__line-in--demo-5
-              "
+              class="hamburger__line-in hamburger__line-in--03 hamburger__line-in--demo-5"
             ></div>
           </div>
           <div class="hamburger__line hamburger__line--cross01">
             <div
-              class="
-                hamburger__line-in
-                hamburger__line-in--cross01
-                hamburger__line-in--demo-5
-              "
+              class="hamburger__line-in hamburger__line-in--cross01 hamburger__line-in--demo-5"
             ></div>
           </div>
           <div class="hamburger__line hamburger__line--cross02">
             <div
-              class="
-                hamburger__line-in
-                hamburger__line-in--cross02
-                hamburger__line-in--demo-5
-              "
+              class="hamburger__line-in hamburger__line-in--cross02 hamburger__line-in--demo-5"
             ></div>
           </div>
         </div>
@@ -68,16 +48,20 @@
           </li>
           <li><router-link :to="{ name: 'blogs' }">بلاگ ها</router-link></li>
           <li><router-link :to="{ name: 'courses' }">دوره ها</router-link></li>
-          <li>
-            <router-link :to="{ name: 'signupPage' }">ثبت نام</router-link>
-          </li>
-          <li>
-            <router-link :to="{ name: 'loginPage' }">ورود</router-link>
-          </li>
+
           <li>
             <router-link to="">تماس با من</router-link>
           </li>
           <li><router-link to="">درباره من</router-link></li>
+          <li v-if="!isLoggedIn">
+            <router-link :to="{ name: 'signupPage' }">ثبت نام</router-link>
+          </li>
+          <li v-if="!isLoggedIn">
+            <router-link :to="{ name: 'loginPage' }">ورود</router-link>
+          </li>
+          <li v-if="isLoggedIn">
+            <router-link to="/logout">خروج</router-link>
+          </li>
         </ul>
       </nav>
     </header>
@@ -85,7 +69,17 @@
 </template>
 
 <script>
-export default {};
+import { computed } from "@vue/runtime-core";
+import { useStore } from "vuex";
+export default {
+  setup() {
+    let store = useStore();
+    let isLoggedIn = computed(() => store.getters.isLoggedIn);
+    return {
+      isLoggedIn,
+    };
+  },
+};
 </script>
 
 <style scoped>

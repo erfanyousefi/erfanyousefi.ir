@@ -1,12 +1,13 @@
 import Swal from "sweetalert2";
 export default class Alert {
-    static successAlert(obj) {
+    static async successAlert(obj) {
         Swal.fire({
             title: obj.title || '',
             text: obj.text,
-            icon: "error",
+            icon: "success",
             confirmButtonText: "باشه",
         })
+
     }
     static errorAlert(obj) {
         Swal.fire({
