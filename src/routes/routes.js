@@ -19,6 +19,20 @@ export default [{
             ...authRoutes,
         ]
     },
+    {
+        path: "/dashboard",
+        name: "dashboard",
+        component: () => {
+            return import ("@/views/CmsTemplate.vue")
+        },
+        children: [{
+            path: "",
+            name: "dashboardIndexPage",
+            component: () => {
+                return import ("@/views/cms/Index.vue")
+            }
+        }, ]
+    },
     // {
     //     path: '/*',
     //     name: "PageNotFound",

@@ -1,4 +1,5 @@
 <template>
+
   <main id="container" class="container bg-white">
     <Header />
     <router-view></router-view>

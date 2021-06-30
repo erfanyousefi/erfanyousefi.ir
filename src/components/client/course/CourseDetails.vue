@@ -24,8 +24,8 @@
           <button class="registerCourseBtn">ثبت نام در دوره</button>
         </div>
       </div>
-      <div class="courseInfo my-4">
-        <a href="" class="teacher">
+      <div class="courseInfo my-4" v-if="details.teacher">
+        <a href="" class="teacher" v-if="details.teacher.name">
           <div class="">{{ details.teacher.name }}</div>
           <span class="teacher-details">
             {{ details.teacher.describe }}

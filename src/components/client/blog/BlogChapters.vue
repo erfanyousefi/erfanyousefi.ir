@@ -3,11 +3,11 @@
     <div class="sessions">
       <ul v-if="blog.chapters.length > 0">
         <li v-for:="(chapter, index) in blog.chapters">
-          <a data-bs-toggle="collapse" href="#collapseUl1" role="button" aria-expanded="false">
+          <a data-bs-toggle="collapse" :href="'#collapseUl'+index" role="button" aria-expanded="false">
             {{chapter.title}}
             <i class="fa fa-chevron-down collapseIcon"></i>
           </a>
-          <ul class="collapse" id="collapseUl1">
+          <ul class="collapse" :id="'collapseUl'+index">
             <li v-for:="(lesson, lessonIndex) in chapter.lessons">
                 <router-link :to="{name : 'lessonPage', params : {slug : lesson.slug}}" exact-active-class="active">{{lesson.title}}</router-link>
             </li>

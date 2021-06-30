@@ -12,6 +12,7 @@
     },
     "main": "babel.config.js",
     "dependencies": {
+        "@popperjs/core": "^2.9.2",
         "axios": "^0.21.1",
         "bootstrap": "^5.0.2",
         "core-js": "^3.6.5",
@@ -22,7 +23,9 @@
         "vue-router": "^4.0.10",
         "vue-sweetalert2": "^4.3.1",
         "vuex": "^4.0.2",
-        "x-axios-progress-bar": "^1.2.2"
+        "x-axios-progress-bar": "^1.2.2",
+        "jquery": "3.6.0",
+        "jquery.easing": "^1.4.1"
     },
     "devDependencies": {
         "@vue/cli-plugin-babel": "~4.5.0",

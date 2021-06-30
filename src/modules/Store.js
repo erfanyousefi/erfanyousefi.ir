@@ -4,7 +4,8 @@ const store = createStore({
     state() {
         return {
             token: Storage.get("user-token"),
-            // isLoggedIn: !!Storage.get("user-token"),
+            user: Storage.get("user")
+                // isLoggedIn: !!Storage.get("user-token"),
         }
     },
     mutations: {
@@ -15,10 +16,14 @@ const store = createStore({
         removeToken: (state) => {
             state.token = null
             Storage.remove("user-token")
+        },
+        setUser: (state, user) => {
+            Storage.set("user", user)
+            state.user = user
         }
     },
     getters: {
-        isLoggedIn: state => !!state.token
+        isLoggedIn: state => !!state.token,
     },
     actions: {}
 })

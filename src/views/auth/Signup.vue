@@ -115,6 +115,7 @@ export default {
           }
           if (response.data.status) {
             store.commit("setToken", response.data.token);
+            store.commit("setUser", response.data.user);
             loading.value = false;
             text = response.data.message;
             Swal.fire({
