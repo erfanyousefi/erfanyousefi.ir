@@ -33,6 +33,7 @@ class authController extends controller {
                                 status: true,
                                 message: "ایجاد حساب با موفقیت انجام شد",
                                 token: user.token,
+                                user,
                             })
                         })
                     } else {
