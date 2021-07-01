@@ -148,4 +148,35 @@ module.exports = class controllers {
     slug(title) {
         return title.replace(/([^۰-۹آ-یa-zA-Z0-9]|-)+/g, "-")
     }
+    getTime(chapters) {
+        let second = 0,
+            time, hour, minute;
+        chapters.forEach(chapter => {
+                chapter.episodes.forEach(episode => {
+                    if (episode.time) {
+                        time = episode.time.split(":");
+                    } else {
+                        time = "00:00:00"
+                    }
+                    if (time.length === 3) { //["00":"00":"00"]
+                        second += Number(time[0]) * 3600; //convert hour to seconds
+                        second += Number(time[1]) * 60; //convert minute to seconds
+                        second += Number(time[2]); //convert second to seconds
+                    } else if (time.length === 2) { //["00":"00"]
+                        second += Number(time[0] * 60); //convert minute to seconds
+                        second += Number(time[1]); //convert second to seconds
+                    }
+
+                })
+            })
+            // console.log(time, second);
+        hour = Math.floor(second / 3600); //convert seconds to hour
+        minute = Math.floor((second / 60) % 60); //convert seconds to minute
+        second = Math.floor(second % 60); //convert seconds to second
+        if (hour && minute && second) {
+            return `${hour}:${minute}:${second}`;
+        } else {
+            return "00:00:00"
+        }
+    }
 }

@@ -44,10 +44,15 @@ class courseController extends controller {
 
     }
     async courses(req, res, next) {
-        const courses = await courseModel.find({})
+        const data = {}
+        const courses = await courseModel.find({}).populate([{ path: "teacher", select: { name: 1, email: 1 } }])
+        data.courses = courses;
+        data.courses.forEach(course => {
+            course.totalTime = this.getTime(course.chapters)
+        })
         return res.json({
             status: true,
-            courses
+            courses: data.courses
         })
     }
     async updateCourse(req, res, next) {
