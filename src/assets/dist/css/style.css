@@ -10,6 +10,11 @@ body {
     margin: 30px auto;
 }
 
+pre {
+    background: #ddd;
+    padding: 10px
+}
+
 .bg-blue {
     background-color: rgb(21, 75, 175);
     color: white;

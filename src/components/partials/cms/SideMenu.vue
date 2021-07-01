@@ -19,9 +19,9 @@
 
     <!-- Nav Item - Dashboard -->
     <li class="nav-item active">
-      <a class="nav-link" href="">
+      <router-link to="/dashboard/" class="nav-link" href="">
         <i class="fas fa-fw fa-tachometer-alt"></i>
-        <span>داشبورد</span></a
+        <span>داشبورد</span></router-link
       >
     </li>
 
@@ -52,7 +52,7 @@
       >
         <div class="bg-white py-2 collapse-inner rounded">
           <h6 class="collapse-header">دوره ها</h6>
-          <a class="collapse-item" href=""> دوره ها</a>
+          <router-link to="/dashboard/courses" class="collapse-item" href=""> دوره ها</router-link>
           <a class="collapse-item" href="">فصل ها</a>
           <a class="collapse-item" href="">ویدئو ها</a>
         </div>
@@ -170,7 +170,7 @@
     <hr class="sidebar-divider d-none d-md-block" />
 
     <!-- Sidebar Toggler (Sidebar) -->
-    <div class="text-center d-none d-md-inline">
+    <div class="text-center m-auto d-none d-md-inline">
       <button class="rounded-circle border-0" id="sidebarToggle"></button>
     </div>
 

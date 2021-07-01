@@ -1,7 +1,6 @@
 <template>
   <router-view></router-view>
 </template>
-
 <script>
 import("bootstrap/dist/css/bootstrap.min.css");
 import("bootstrap/dist/js/bootstrap.bundle.js");
@@ -33,4 +32,10 @@ export default {
 </script>
 
 <style>
+#app{
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 100%;
+}
 </style>

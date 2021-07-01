@@ -1,9 +1,9 @@
 <template>
   <button
     :disabled="setting.disabled"
-    :class="'btn btn-lg btn-block ' + setting.class">
+    :class="'btn ' + setting.class">
     <SmallLoading :loading="setting.loading" />
-    <span class="d-inline">{{ setting.title }} </span>
+    <span class="">{{ setting.title }} </span>
   </button>
 </template>
 
@@ -25,8 +25,7 @@ export default {
 }
 button{
     display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
+    justify-content: space-around;
+    align-items: center; 
 }
 </style>

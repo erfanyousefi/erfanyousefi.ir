@@ -53,5 +53,4 @@ import jQuery from "jquery";
         }, 1000, 'easeInOutExpo');
         e.preventDefault();
     })
-
 })(jQuery)

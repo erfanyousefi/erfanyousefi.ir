@@ -60,6 +60,9 @@
             <router-link :to="{ name: 'loginPage' }">ورود</router-link>
           </li>
           <li v-if="isLoggedIn">
+            <router-link to="/dashboard">حساب کاربری</router-link>
+          </li>
+          <li v-if="isLoggedIn">
             <router-link to="/logout">خروج</router-link>
           </li>
         </ul>

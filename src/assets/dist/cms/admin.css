@@ -220,7 +220,7 @@ svg {
 }
 
 table {
-    border-collapse: collapse
+    border-collapse: collapse;
 }
 
 caption {
@@ -1592,8 +1592,11 @@ pre code {
 .table td,
 .table th {
     padding: .75rem;
-    vertical-align: top;
-    border-top: 1px solid #e3e6f0
+    vertical-align: middle;
+    border-top: 1px solid #e3e6f0;
+    text-align: center;
+    padding: 6px;
+    width: fit-content;
 }
 
 .table thead th {
@@ -1612,6 +1615,13 @@ pre code {
 
 .table-bordered {
     border: 1px solid #e3e6f0
+}
+
+.table tr td {
+    text-overflow: clip;
+    word-wrap: break-word;
+    font-size: 13px;
+    /* width: 10%; */
 }
 
 .table-bordered td,
@@ -11176,7 +11186,9 @@ a:focus {
 
 .btn-icon-split .icon {
     background: rgba(0, 0, 0, .15);
-    display: inline-block;
+    display: flex;
+    justify-content: center;
+    align-items: center;
     padding: .375rem .75rem
 }
 
