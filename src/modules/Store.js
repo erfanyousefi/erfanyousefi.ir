@@ -20,6 +20,10 @@ const store = createStore({
         setUser: (state, user) => {
             Storage.set("user", user)
             state.user = user
+        },
+        removeUser: (state) => {
+            Storage.remove("user")
+            state.user = null
         }
     },
     getters: {

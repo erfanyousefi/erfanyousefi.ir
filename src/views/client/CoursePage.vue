@@ -18,7 +18,7 @@
         </a>
         <div class="card-body">
           <div class="blog-singlePage-text">
-            {{ course.text }}
+            <div v-html="course.text"></div>
           </div>
           <div class="listOfCourse"></div>
         </div>

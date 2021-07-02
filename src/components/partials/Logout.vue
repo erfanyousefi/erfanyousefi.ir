@@ -12,6 +12,7 @@ export default {
     let router = useRouter();
     onBeforeMount(() => {
       store.commit("removeToken");
+      store.commit("removeUser");
       router.push({ name: "loginPage" });
     })
     return {

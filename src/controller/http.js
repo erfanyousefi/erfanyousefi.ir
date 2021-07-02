@@ -8,3 +8,12 @@ export const HTTP = axios.create({
     },
 
 })
+
+// export const MultPart = axios.create({
+//     baseURL: `http://localhost:3000/`,
+//     headers: {
+//         'Content-Type': 'multipart/form-data',
+//         Authorization: `Bearer ${token}`
+//     },
+
+// })

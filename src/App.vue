@@ -23,7 +23,6 @@ export default {
       }).then(response => {
         if(response.data.user){
           store.commit("setUser", response.data.user);
-          console.log(store.state.user);
         }
       })
     })

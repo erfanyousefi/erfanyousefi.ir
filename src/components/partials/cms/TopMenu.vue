@@ -214,7 +214,7 @@
           aria-expanded="false"
         >
           <img class="img-profile rounded-circle" src="@/assets/dist/cms/img/undraw_profile.svg" />
-          <span class="mr-2 d-none d-lg-inline text-gray-600 small">عرفان یوسفی</span>
+          <span class="mr-2 d-none d-lg-inline text-gray-600 small">{{user.name}}</span>
         </a>
         <!-- Dropdown - User Information -->
         <div
@@ -231,14 +231,14 @@
             <i class="fas fa-list fa-sm fa-fw mr-2 text-gray-400"></i> لاگ های فعال
           </a>
           <div class="dropdown-divider"></div>
-          <a
+          <router-link to="/logout"
             class="dropdown-item"
             href="#"
             data-toggle="modal"
             data-target="#logoutModal"
           >
             <i class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i> خروج
-          </a>
+          </router-link>
         </div>
       </li>
     </ul>
@@ -246,7 +246,16 @@
 </template>
 
 <script>
-export default {};
+import {useStore} from "vuex"
+export default {
+  setup(){
+    let store = useStore();
+    let user = store.state.user
+    return {
+      user
+    }
+  }
+};
 </script>
 
 <style></style>

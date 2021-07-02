@@ -3,7 +3,10 @@
     <div class="card shadow mb-4">
       <div class="card-header py-3 courseTable">
         <h6 class="m-0 font-weight-bold text-primary">لیست دوره ها</h6>
-        <router-link :to="{name : 'addCourse'}" class="btn btn-sm btn-primary btn-icon-split">
+        <router-link
+          :to="{ name: 'addCourse' }"
+          class="btn btn-sm btn-primary btn-icon-split"
+        >
           <span class="icon text-white">
             <i class="fas fa-plus"></i>
           </span>
@@ -58,9 +61,12 @@
                   <a class="btn btn-danger btn-sm btn-circle mx-1">
                     <i class="fas fa-trash"></i
                   ></a>
-                  <a class="btn btn-info btn-sm btn-circle mx-1">
-                    <i class="fas fa-pen"></i
-                  ></a>
+                  <router-link
+                    :to="{ name: 'editCourse', params: { id: course._id } }"
+                    class="btn btn-info btn-sm btn-circle mx-1"
+                  >
+                    <i class="fas fa-pen"></i>
+                  </router-link>
                   <a class="btn btn-success btn-sm btn-circle mx-1">
                     <i class="fas fa-eye"></i
                   ></a>
@@ -87,7 +93,7 @@ export default {
 </script>
 
 <style scoped>
-.courseTable{
+.courseTable {
   display: flex;
   justify-content: space-between;
   align-items: center;

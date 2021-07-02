@@ -1,12 +1,12 @@
 <template>
   <div class="form-label-group">
     <input
-      autocomplete="off"
       :type="rules.type"
       :id="rules.id"
       class="form-control"
       :placeholder="rules.placeholder"
       :required="rules.required"
+      autocomplete="off"
       v-model="input"
     />
     <label :for="rules.id">{{ rules.placeholder }}</label>
@@ -63,6 +63,7 @@ export default {
   font-size: 13px;
   font-weight: bold;
   margin: 3px;
+  width: 100%;
 }
 .form-label-group {
   position: relative;
