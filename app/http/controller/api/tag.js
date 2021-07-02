@@ -32,7 +32,9 @@ class tagController extends controller {
 
     }
     async list(req, res, next) {
-        const tags = await tagModel.find({})
+        const tags = await tagModel.aggregate([{
+            $addFields: { value: "$_id" }
+        }])
         return res.json({
             status: true,
             tags

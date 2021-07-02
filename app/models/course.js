@@ -26,6 +26,7 @@ const courseSchema = new Schema({
         discount: { type: Number, required: true },
         slug: { type: String, required: false },
         totalTime: { type: String, required: false },
+        introduction: { type: String, required: false },
         chapters: [chapterSchema]
     }, {
         timestamps: true,

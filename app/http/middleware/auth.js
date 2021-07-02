@@ -31,8 +31,7 @@ class auth extends controller {
         } else {
             return res.json({
                 status: false,
-                access: false,
-                logined: false,
+                statusCode: 403,
                 message: "شما باید ابتدا وارد حساب کاربری خود شوید"
             })
         }

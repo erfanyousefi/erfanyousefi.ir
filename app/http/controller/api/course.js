@@ -15,6 +15,7 @@ class courseController extends controller {
             }
             validator = {}
             this.errorHandlerValidator(result.errors, validator);
+            console.log(validator);
             return res.json({
                 status: false,
                 msg: {...validator }
@@ -24,6 +25,16 @@ class courseController extends controller {
             req.body.img = image
             this.fetchDataFromBody(req.body, data);
             data.teacher = req.user._id
+            data.price = Number(data.price)
+            data.discount = Number(data.discount)
+            if (isNaN(data.price)) {
+                data.price = 0;
+            }
+            if (isNaN(data.discount)) {
+                data.discount = 0
+            }
+            data.introduction = data.text.substr(0, 300);
+            data.text = req.body.text
             courseModel.create({...data }).then(course => {
                 if (course) {
                     return res.json({
@@ -66,6 +77,22 @@ class courseController extends controller {
             let data = {};
             this.fetchDataFromBody(req.body, data)
             data.img = image;
+            if (data.price) {
+                data.price = Number(data.price)
+                if (isNaN(data.price)) {
+                    data.price = 0;
+                }
+            }
+            if (data.discount) {
+                data.discount = Number(data.discount)
+                if (isNaN(data.discount)) {
+                    data.discount = 0
+                }
+            }
+            if (data.text) {
+                data.introduction = data.text.substr(0, 300);
+                data.text = req.body.text
+            }
             await courseModel.findByIdAndUpdate(id, { $set: {...data } }, (err, course) => {
                 if (course) {
                     return res.json({
