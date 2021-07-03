@@ -5,7 +5,7 @@ let validator = {}
 class courseController extends controller {
 
     async courses(req, res, next) {
-        const courses = await courseModel.find({}).populate(["teacher", "tags", "category"])
+        const courses = await courseModel.find({}).sort({ createdAt: -1 }).populate(["teacher", "tags", "category"])
         return res.json({
             status: true,
             courses

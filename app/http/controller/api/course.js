@@ -56,7 +56,7 @@ class courseController extends controller {
     }
     async courses(req, res, next) {
         const data = {}
-        const courses = await courseModel.find({}).populate([{ path: "teacher", select: { name: 1, email: 1 } }])
+        const courses = await courseModel.find({}).sort({ createdAt: -1 }).populate([{ path: "teacher", select: { name: 1, email: 1 } }])
         data.courses = courses;
         data.courses.forEach(course => {
             course.totalTime = this.getTime(course.chapters)
@@ -68,15 +68,14 @@ class courseController extends controller {
     }
     async updateCourse(req, res, next) {
         let image = ""
-        if (req.file) {
-            image = this.checkReqFile(req.file)
-        }
-        console.log(image);
+        let data = {};
         const id = req.params.id;
         if (this.isObjectID(id)) {
-            let data = {};
             this.fetchDataFromBody(req.body, data)
-            data.img = image;
+            if (req.file) {
+                image = this.checkReqFile(req.file)
+                data.img = image;
+            }
             if (data.price) {
                 data.price = Number(data.price)
                 if (isNaN(data.price)) {
@@ -160,6 +159,13 @@ class courseController extends controller {
             }
         }
         //**************************************** */
+    async listTitleCourses(req, res, next) {
+        let courses = await courseModel.find({}).sort({ createdAt: -1 }).select({ title: 1 })
+        return res.json({
+            status: true,
+            courses
+        })
+    }
     async insertChapter(req, res, next) {
         const result = await validationResult(req);
         if (!result.isEmpty()) {

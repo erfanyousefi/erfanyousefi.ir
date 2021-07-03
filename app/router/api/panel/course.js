@@ -3,6 +3,7 @@ const router = Router();
 const courseValidator = require("app/validator/course");
 const courseController = require(`${process.env.API}/course`);
 const upload = require("app/http/middleware/uploadImage");
+router.get("/title", courseController.listTitleCourses);
 router.post("/insertCourse", upload.single("img"), courseValidator.insert(), courseController.insertCourse)
 router.get("/all", courseController.courses)
 router.put("/:id", upload.single("img"), courseController.updateCourse);
