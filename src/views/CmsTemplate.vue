@@ -55,7 +55,6 @@ export default {
       HTTP.post("/user", {
         token
       }).then(response => {
-        console.log(response);
         if(response.data.user){
           store.commit("setUser", response.data.user);
           user.value =  response.data.user;

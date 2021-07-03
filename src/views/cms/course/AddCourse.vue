@@ -49,7 +49,7 @@
               <div class="col-md-6 my-3">
                 <div v-if="categories">
                   <select class="form-control" v-model="formData.category">
-                    <option v-for:="category in categories" value="">
+                    <option value="">
                       یک دسته بندی را انتخاب کنید
                     </option>
                     <option v-for:="category in categories" :value="category._id">
@@ -133,7 +133,7 @@ export default {
       type: "",
     });
     let router = useRouter();
-    let errorMessage ="";
+    let errorMessage = "";
     onBeforeMount(() => {
       HTTP.get("panel/tag/list").then((response) => {
         tags.value = response.data.tags;
@@ -169,21 +169,21 @@ export default {
             router.push({ name: "coursesList" });
           });
         } else {
-
           if (response.data.msg) {
             Object.keys(response.data.msg).forEach((key) => {
               errorMessage += response.data.msg[key] + "<br/>";
             });
             Swal.fire({
-              html : errorMessage,
-              icon : "warning"
+              html: errorMessage,
+              icon: "warning",
             }).then(() => {
-              errorMessage = ""
-            })
-          } else if (response.data) {
-            console.log(response.data);
+              errorMessage = "";
+            });
           } else {
-            console.log(response.data);
+            Swal.fire({
+              text: "افزودن دوره انجام نشد لطفا بعدا یا مجددا تلاش بفرمائید",
+              icon: "warning",
+            })
           }
         }
       });

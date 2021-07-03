@@ -13,7 +13,7 @@
     <div class="card-body">
       <h6 class="card-title p-2">{{ course.title }}</h6>
       <div class="card-text p-2 mt-2 mb-3 text-sm opacity-70">
-        {{ course.text.substr(1, 200) + "..." }}
+       <div v-html="course.introduction.substr(1, 200) + '...'"></div>
       </div>
       <div class="footerCard">
         <span v-if="course.type === 'cash'" class="cash">

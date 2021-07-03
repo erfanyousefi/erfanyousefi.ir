@@ -4,7 +4,8 @@ const store = createStore({
     state() {
         return {
             token: Storage.get("user-token"),
-            user: Storage.get("user")
+            user: Storage.get("user"),
+            chapterUpdated: false
                 // isLoggedIn: !!Storage.get("user-token"),
         }
     },
@@ -24,10 +25,14 @@ const store = createStore({
         removeUser: (state) => {
             Storage.remove("user")
             state.user = null
+        },
+        setChapterUpdate(state, status) {
+            state.chapterUpdated = status
         }
     },
     getters: {
         isLoggedIn: state => !!state.token,
+        isChapterUpdated: state => state.chapterUpdated
     },
     actions: {}
 })

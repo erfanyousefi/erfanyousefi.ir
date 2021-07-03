@@ -30,7 +30,7 @@
             </div>
           </div>
           <div class="controls-episod">
-            <a href="" class="download-episode">
+            <a :href="episode.file" class="download-episode">
               <i class="fa fa-download"></i>
             </a>
           </div>

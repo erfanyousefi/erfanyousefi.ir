@@ -12,7 +12,7 @@
 <script>
 import Loading from "@/components/partials/Loading.vue";
 import Title from "@/components/partials/cms/Title.vue";
-import CourseTable from "@/components/partials/cms/CourseTable.vue";
+import CourseTable from "@/components/cms/course/CourseTable.vue";
 import { ref } from "@vue/reactivity";
 import { HTTP } from "@/controller/http.js";
 import Swal from "sweetalert2";
