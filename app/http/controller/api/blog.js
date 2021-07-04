@@ -44,7 +44,7 @@ class blogController extends controller {
 
     }
     async blogs(req, res, next) {
-        const blogs = await blogModel.find({})
+        const blogs = await blogModel.find({}).populate([{ path: 'author', select: { name: 1 } }])
         return res.json({
             status: true,
             blogs
