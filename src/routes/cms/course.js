@@ -28,10 +28,10 @@ export default [{
         component: () =>
             import ("@/views/cms/course/AddEpisode.vue")
     },
-    // {
-    //     path: "/courses/:id",
-    //     name: "courseMange",
-    //     component: () =>
-    //         import ("@/views/cms/CoursePage.vue")
-    // }
+    {
+        path: "/dashboard/course/episode/edit/:id",
+        name: "editEpisode",
+        component: () =>
+            import ("@/views/cms/course/EditEpisode.vue")
+    },
 ]

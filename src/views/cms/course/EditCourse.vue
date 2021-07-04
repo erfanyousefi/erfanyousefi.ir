@@ -105,6 +105,16 @@
               <div class="col-12 my-3">
                 <editor
                   api-key="kmejpui4sop678znt638riic90zeeqnseey5gun4uupeuo78"
+                  :init="{
+                    menubar: false,
+                    plugins:
+                      'link image emoticons a11ychecker advcode casechange formatpainter linkchecker autolink lists checklist media mediaembed pageembed permanentpen powerpaste table advtable tinycomments tinymcespellchecker ',
+                    toolbar:
+                      'a11ycheck addcomment showcomments casechange checklist code formatpainter pageembed permanentpen table styleselect | bold italic | alignleft aligncenter alignright alignjustify | bullist numlist | link image emoticons',
+                    toolbar_mode: 'floating',
+                    tinycomments_mode: 'embedded',
+                    tinycomments_author: 'Author name',
+                  }"
                   v-model="formData.text"
                 />
               </div>
@@ -164,9 +174,9 @@ export default {
           if (response.data.course) {
             formData.value = response.data.course;
             store.commit("setChapterUpdate", false);
-          }else{
+          } else {
             Swal.fire("دوره ای یافت نشد").then(() =>
-              router.push({ name: "coursesList"})
+              router.push({ name: "coursesList" })
             );
           }
         });
@@ -184,10 +194,9 @@ export default {
         HTTP.get(`panel/course/${id}`).then((response) => {
           if (response.data.course) {
             formData.value = response.data.course;
-            console.log(formData);
           } else {
             Swal.fire("دوره ای یافت نشد").then(() =>
-              router.push({ name: "coursesList"})
+              router.push({ name: "coursesList" })
             );
           }
         });
@@ -197,10 +206,9 @@ export default {
         HTTP.get(`panel/course/${id}`).then((response) => {
           if (response.data.status) {
             formData.value = response.data.course;
-            console.log(formData);
           } else {
             Swal.fire("دوره ای یافت نشد").then(() =>
-              router.push({ name: "coursesList"})
+              router.push({ name: "coursesList" })
             );
           }
         });

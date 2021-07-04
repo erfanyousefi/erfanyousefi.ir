@@ -67,9 +67,9 @@
                   >
                     <i class="fas fa-pen"></i>
                   </router-link>
-                  <a class="btn btn-success btn-sm btn-circle mx-1">
+                  <router-link :to="{name : 'coursePage', params : {slug : course.slug}}" class="btn btn-success btn-sm btn-circle mx-1">
                     <i class="fas fa-eye"></i
-                  ></a>
+                  ></router-link>
                 </td>
               </tr>
             </tbody>
@@ -85,8 +85,7 @@ export default {
   props: {
     courses: Array,
   },
-  setup(props) {
-    console.log(props.courses);
+  setup() {
     return {};
   },
 };

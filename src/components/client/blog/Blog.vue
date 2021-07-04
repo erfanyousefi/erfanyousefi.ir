@@ -8,7 +8,7 @@
           </div>
           <div class="card-title">{{blog.title}}</div>
           <div class="card-text">
-           {{blog.text.substr(0, 200)+" ..."}}
+            <div class="card-text" v-html="blog.text.substr(0, 200)+' ...'"></div>
             <div class="tags">
               <span v-for:="tag in blog.tags">{{' #'+tag.title}}</span>
             </div>

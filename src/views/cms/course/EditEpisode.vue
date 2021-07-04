@@ -6,7 +6,7 @@
         <div class="card shadow mb-4">
           <div class="card-header py-3">
             <router-link
-              :to="{ name: 'editCourse', params: { id } }"
+              :to="{ name: 'editCourse', params: { id : course } }"
               class="btn btn-sm btn-danger btn-icon-split"
             >
               <span class="icon text-white">
@@ -70,7 +70,7 @@
               </div>
               <div class="col-12 my-2">
                 <Button
-                  :setting="{ title: 'افزودن فصل', loading, class: 'btn-dark' }"
+                  :setting="{ title: 'به روز رسانی فصل', loading, class: 'btn-dark' }"
                   @click.prevent="saveEpisode"
                 />
               </div>
@@ -99,18 +99,9 @@ export default {
     let router = useRouter();
     let id = route.params.id;
     let chapters = ref(null);
+    let episode = ref(null);
+    let course = ref(null);
     let loading = ref(false);
-    onBeforeMount(() => {
-      HTTP.get(`panel/course/chapters/${id}`).then((response) => {
-        if (response.data.status) {
-          chapters.value = response.data.chapters;
-        } else {
-          Swal.fire("دوره ای یافت نشد").then(() =>
-            router.push({ name: "editCourse", params: { id } })
-          );
-        }
-      });
-    });
     let formData = reactive({
       title: "",
       number: "",
@@ -119,7 +110,27 @@ export default {
       time: "",
       chapter: "",
     });
-    watch(formData, (value) => {
+    onBeforeMount(() => {
+      HTTP.get(`panel/course/episode/${id}`).then((response) => {
+        console.log(response);
+        if (response.data.status) {
+          episode.value = response.data.episode;
+          episode.value.chapter = response.data.chapter;
+          course.value = response.data.course
+          HTTP.get(`panel/course/chapters/${response.data.course}`).then((response) => {
+            if (response.data.status) {
+              chapters.value = response.data.chapters;
+            }
+          });
+        } else {
+          Swal.fire({
+            text: "اپیزود یافت نشد",
+            icon: "warning",
+          }).then(() => router.push(router.back()));
+        }
+      });
+    });
+    watch(episode, (value) => {
       formData.title = value.title;
       formData.time = value.time;
       formData.type = value.type;
@@ -137,21 +148,23 @@ export default {
           formData.type &&
           formData.number
         ) {
-          HTTP.post(`panel/course/episode/${formData.chapter}`, {
+          HTTP.put(`panel/course/episode/${id}`, {
             title: formData.title,
             time: formData.time,
             type: formData.type,
+            chapter: formData.chapter,
             number: formData.number,
             file: formData.file,
           }).then((response) => {
+            console.log(response);
             if (response.data.status) {
               Swal.fire({
-                text: "افزودن اپیزود با موفقیت انجام شد",
+                text: "به روز رسانی اپیزود با موفقیت انجام شد",
                 icon: "success",
               }).then(() => router.push(router.back()));
             } else {
               Swal.fire({
-                text: "افزودن ویدئو انجام نشد لطفا مجددا تلاش کنید",
+                text: "به روزرسانی اپیزود  انجام نشد لطفا مجددا تلاش کنید",
                 icon: "warning",
               });
             }
@@ -176,6 +189,7 @@ export default {
       formData,
       id,
       chapters,
+      course
     };
   },
 };

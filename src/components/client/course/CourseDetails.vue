@@ -38,6 +38,10 @@
         </div>
       </div>
       <div class="courseInfo">
+        <h4>برچسب ها</h4>
+        <div v-for:="(tag, key) in details.tags" class="tag">{{tag.title}}</div>
+      </div>
+      <!-- <div class="courseInfo">
         <div class="chart">
           <strong>بازدید : 140</strong>
           <strong>نظرات : 140</strong>
@@ -54,7 +58,7 @@
             <i class="fa fa-bookmark"></i>
           </a>
         </div>
-      </div>
+      </div> -->
     </div>
   </div>
 </template>

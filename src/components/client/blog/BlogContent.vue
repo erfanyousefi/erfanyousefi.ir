@@ -4,9 +4,7 @@
       <img :src="dotenv.baseURL + blog.img" alt="" srcset="" />
     </a>
     <div class="card-body">
-      <div class="blog-singlePage-text">
-        {{ blog.text }}
-      </div>
+      <div class="blog-singlePage-text" v-html="blog.text"></div>
     </div>
   </div>
 </template>

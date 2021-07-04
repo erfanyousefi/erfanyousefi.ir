@@ -39,7 +39,6 @@
                     v-model="formData.tags"
                     mode="tags"
                     :searchable="true"
-                    :createTag="true"
                     :options="tags"
                     label="title"
                     placeholder="یک یا چند برچسب را انتخاب کنید"
@@ -49,9 +48,7 @@
               <div class="col-md-6 my-3">
                 <div v-if="categories">
                   <select class="form-control" v-model="formData.category">
-                    <option value="">
-                      یک دسته بندی را انتخاب کنید
-                    </option>
+                    <option value="">یک دسته بندی را انتخاب کنید</option>
                     <option v-for:="category in categories" :value="category._id">
                       {{ category.title }}
                     </option>
@@ -84,6 +81,16 @@
               <div class="col-12">
                 <editor
                   api-key="kmejpui4sop678znt638riic90zeeqnseey5gun4uupeuo78"
+                  :init="{
+                    menubar: false,
+                    plugins:
+                      'link image emoticons a11ychecker advcode casechange formatpainter linkchecker autolink lists checklist media mediaembed pageembed permanentpen powerpaste table advtable tinycomments tinymcespellchecker ',
+                    toolbar:
+                      'a11ycheck addcomment showcomments casechange checklist code formatpainter pageembed permanentpen table styleselect | bold italic | alignleft aligncenter alignright alignjustify | bullist numlist | link image emoticons',
+                    toolbar_mode: 'floating',
+                    tinycomments_mode: 'embedded',
+                    tinycomments_author: 'Author name',
+                  }"
                   v-model="formData.text"
                 />
               </div>
@@ -183,7 +190,7 @@ export default {
             Swal.fire({
               text: "افزودن دوره انجام نشد لطفا بعدا یا مجددا تلاش بفرمائید",
               icon: "warning",
-            })
+            });
           }
         }
       });

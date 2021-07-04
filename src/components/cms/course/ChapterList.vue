@@ -57,7 +57,7 @@
                 </div>
               </div>
               <router-link
-                :to="{ name: 'coursesList' }"
+                :to="{ name: 'editEpisode', params : {id : episode._id} }"
                 class="btn btn-sm btn-dark btn-icon-split mx-1"
               >
                 <span class="icon text-white">

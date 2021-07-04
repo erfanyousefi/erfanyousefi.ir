@@ -11727,3 +11727,30 @@ body.sidebar-toggled footer.sticky-footer {
         right: -!important;
     }
 }
+
+.multiselect-placeholder {
+    text-align: center;
+    width: 100%;
+    padding-right: 10px;
+}
+
+.multiselect-caret {
+    margin-left: 10px;
+}
+
+.multiselect-tag {
+    background-color: #4068dd;
+    color: #eee;
+    font-weight: lighter;
+    padding: 2px 5px;
+}
+
+.btn {
+    pointer-events: all !important;
+}
+
+a.disabled,
+button:disabled,
+.btn.disabled {
+    cursor: not-allowed !important;
+}

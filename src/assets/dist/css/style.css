@@ -1019,11 +1019,10 @@ span.cash {
     align-items: center;
     width: 100%;
     margin: 10px auto;
-    padding: 10px;
 }
 
 .header-chapter h3 {
-    font-size: 22px;
+    font-size: 20px;
     font-weight: bold;
 }
 
@@ -1043,7 +1042,7 @@ span.cash {
     display: flex;
     justify-content: space-between;
     justify-items: center;
-    padding: 10px;
+    padding: 5px;
     width: 90%;
     margin: 10px auto;
     border: 2px dashed #777;
@@ -1057,27 +1056,35 @@ span.cash {
     align-items: center;
     font-size: 14px;
     line-height: 50px;
+    width: 100%;
+    ;
 }
 
 .episode .info-episod .number-episode {
     border: 1px solid #888;
     border-radius: 50%;
-    padding: 7px;
-    width: 40px;
-    height: 40px;
+    padding: 6px;
+    width: 37px;
+    height: 37px;
     display: flex;
     justify-content: center;
     align-items: center;
     color: #777;
     background-color: #fff;
     position: absolute;
-    right: -33px;
-    top: 3px;
+    right: -17px;
+    top: 18%;
+}
+
+.episode .controls-episod {
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
 .episode .info-episod .title-episod {
     font-size: 16px;
-    margin: 0 15px;
+    margin: 0 25px;
 }
 
 .episode .info-episod .time-episod {
@@ -1672,4 +1679,15 @@ button.disabled,
     overflow: hidden;
     clip: rect(0, 900px, 0, 0);
     animation: noise-anim-2 3s infinite linear alternate-reverse
+}
+
+.tag {
+    display: inline-block;
+    margin: 4px;
+    background-color: rgb(0, 231, 200);
+    padding: 3px;
+    border-radius: 5px;
+    border: 1px dashed #777;
+    color: rgb(100, 97, 97);
+    font-size: 14px;
 }

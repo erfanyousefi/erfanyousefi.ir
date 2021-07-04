@@ -38,7 +38,6 @@ export default {
           router.push({ name: "loginPage" });
         });
       } else {
-        console.log(data.value);
         courses.value = data.value.courses
         if (courses.value.length > 0) {
           loading.value = false;
