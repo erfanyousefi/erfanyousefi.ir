@@ -15,7 +15,7 @@ class courseValidator {
             body("category")
             .notEmpty()
             .withMessage("یک دسته بندی را انتخاب کنید"),
-            body("img").custom((value, req) => {
+            body("img").custom((value) => {
                 if (value) {
                     let ext = path.extname(value);
                     let exts = ['.png', '.jpg', '.jpeg', '.webp', '.gif', '.svg'];

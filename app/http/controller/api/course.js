@@ -433,6 +433,8 @@ class courseController extends controller {
                         if (episode._id == id) {
                             return res.json({
                                 status: true,
+                                chapter: chapter._id,
+                                course: course._id,
                                 episode
                             })
                         }
@@ -457,41 +459,70 @@ class courseController extends controller {
         if (this.isObjectID(id)) {
             let data = {}
             this.fetchDataFromBody(req.body, data);
-            const course = await courseModel.findOne({ 'chapters.episodes._id': id });
-            if (course) {
-                course.chapters.forEach(chapter => {
-                    chapter.episodes.forEach(episode => {
-                        if (episode._id == id) {
-                            Object.keys(data).forEach(key => {
-                                episode[key] = data[key]
-                            })
-                        }
+            if (data.chapter !== id) {
+                const course = await courseModel.findOne({ 'chapters._id': data.chapter });
+                if (course) {
+                    course.chapters.forEach(chapter => chapter._id == data.chapter ? chapter.episodes.push({...data }) : chapter)
+                    course.save().then(course => {
+                        course.chapters.forEach(chapter => chapter.episodes = chapter.episodes.filter(episode => episode._id != id))
+                        course.save().then(course => {
+                            if (course) {
+                                return res.json({
+                                    status: true,
+                                    message: "به روز رسانی اپیزود دوره با موفقیت انجام شد"
+                                })
+                            } else {
+                                return res.json({
+                                    status: false,
+                                    message: "به روز رسانی اپیزود انجام نشد لطفا بعدا یا مجددا تلاش بفرمائید"
+                                })
+                            }
+                        })
+
                     })
-                })
-                course.save().then(course => {
-                    if (course) {
-                        return res.json({
-                            status: true,
-                            message: "به روزرسانی اپیزود با موفقیت انجام شد"
-                        })
-                    } else {
-                        return res.json({
-                            status: false,
-                            message: "به روزرسانی اپیزود انجام نشد لطفا بعدا یا مجددا تلاش بفرمائید"
-                        })
-                    }
-                }).catch(err => {
+                } else {
                     return res.json({
                         status: false,
-                        err: err.message,
-                        message: "به روزرسانی اپیزود انجام نشد لطفا بعدا یا مجددا تلاش بفرمائید"
+                        message: "به روز رسانی اپیزود انجام نشد لطفا بعدا یا مجددا تلاش بفرمائید"
                     })
-                })
+                }
             } else {
-                return res.json({
-                    status: false,
-                    message: "دوره ای یافت نشد"
-                })
+                const course = await courseModel.findOne({ 'chapters.episodes._id': id });
+                if (course) {
+                    course.chapters.forEach(chapter => {
+                        chapter.episodes.forEach(episode => {
+                            if (episode._id == id) {
+                                Object.keys(data).forEach(key => {
+                                    episode[key] = data[key]
+                                })
+                            }
+                        })
+                    })
+                    course.save().then(course => {
+                        if (course) {
+                            return res.json({
+                                status: true,
+                                message: "به روزرسانی اپیزود با موفقیت انجام شد"
+                            })
+                        } else {
+                            return res.json({
+                                status: false,
+                                message: "به روزرسانی اپیزود انجام نشد لطفا بعدا یا مجددا تلاش بفرمائید"
+                            })
+                        }
+                    }).catch(err => {
+                        return res.json({
+                            status: false,
+                            err: err.message,
+                            message: "به روزرسانی اپیزود انجام نشد لطفا بعدا یا مجددا تلاش بفرمائید"
+                        })
+                    })
+                } else {
+                    return res.json({
+                        status: false,
+                        message: "دوره ای یافت نشد"
+                    })
+                }
             }
         } else {
             return res.json({
