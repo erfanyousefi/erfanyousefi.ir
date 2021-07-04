@@ -5,7 +5,8 @@ const store = createStore({
         return {
             token: Storage.get("user-token"),
             user: Storage.get("user"),
-            chapterUpdated: false
+            chapterUpdated: false,
+            blogID: null
                 // isLoggedIn: !!Storage.get("user-token"),
         }
     },
@@ -28,11 +29,15 @@ const store = createStore({
         },
         setChapterUpdate(state, status) {
             state.chapterUpdated = status
+        },
+        setBlogId(state, id) {
+            state.blogID = id;
         }
     },
     getters: {
         isLoggedIn: state => !!state.token,
-        isChapterUpdated: state => state.chapterUpdated
+        isChapterUpdated: state => state.chapterUpdated,
+        getBlogID: state => state.blogID
     },
     actions: {}
 })

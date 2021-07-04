@@ -8,6 +8,12 @@ export default [{
         path: "/dashboard/blogs",
         name: "blogsList",
         component: () =>
-            import ("@/views/cms/blog/AddBlog.vue")
+            import ("@/views/cms/blog/Blogs.vue")
+    },
+    {
+        path: "/dashboard/blogs/:id",
+        name: "editBlog",
+        component: () =>
+            import ("@/views/cms/blog/EditBlog.vue")
     },
 ]
