@@ -41,7 +41,10 @@
                 <td>{{ blog.author.name }}</td>
                 <td>{{ new Date(blog.createdAt).toLocaleString("fa") }}</td>
                 <td>
-                  <a class="btn btn-danger btn-sm btn-circle mx-1">
+                  <a
+                    @click.prevent="removeBlog(blog._id)"
+                    class="btn btn-danger btn-sm btn-circle mx-1"
+                  >
                     <i class="fas fa-trash"></i
                   ></a>
                   <router-link
@@ -50,7 +53,10 @@
                   >
                     <i class="fas fa-pen"></i>
                   </router-link>
-                  <router-link :to="{name : 'blogPage', params : {slug : blog.slug}}" class="btn btn-success btn-sm btn-circle mx-1">
+                  <router-link
+                    :to="{ name: 'blogPage', params: { slug: blog.slug } }"
+                    class="btn btn-success btn-sm btn-circle mx-1"
+                  >
                     <i class="fas fa-eye"></i
                   ></router-link>
                 </td>
@@ -64,12 +70,48 @@
 </template>
 
 <script>
+import { HTTP } from "@/controller/http.js";
+import { useStore } from "vuex";
+import Swal from "sweetalert2";
 export default {
   props: {
     blogs: Array,
   },
   setup() {
-    return {};
+    let store = useStore();
+    function removeBlog(id) {
+      Swal.fire({
+        text:
+          "آیا شما مایل به حذف مقاله میباشید؟ در صورت تایید تمامی سرفصل های آن نیز خذف خواهد شد",
+        icon: "question",
+        showCancelButton: true,
+        focusCancel: true,
+        cancelButtonText: "انصراف",
+        confirmButtonText: "حذف",
+      }).then((remove) => {
+        if (remove.isConfirmed) {
+          HTTP.delete(`panel/blog/${id}`).then((blog) => {
+            store.commit("setBlogListUpdate", true);
+            if (blog.data.status) {
+              Swal.fire({
+                text: "حذف مقاله با موفقیت انجام شد",
+                icon: "success",
+                confirmButtonText: "بستن",
+              });
+            } else {
+              Swal.fire({
+                text: "حذف مقاله انجام نشد لطفا بعدا یا مجددا تلاش کنید",
+                icon: "warning",
+                confirmButtonText: "بستن",
+              });
+            }
+          });
+        }
+      });
+    }
+    return {
+      removeBlog,
+    };
   },
 };
 </script>

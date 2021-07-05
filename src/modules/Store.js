@@ -8,6 +8,7 @@ const store = createStore({
             chapterUpdated: false,
             BlogChapterUpdated: false,
             courseListUpdate: false,
+            blogListUpdate: false,
             lessonSlug: null,
             blogID: null
                 // isLoggedIn: !!Storage.get("user-token"),
@@ -45,12 +46,16 @@ const store = createStore({
         setCourseListUpdate(state, status) {
             state.courseListUpdate = status
         },
+        setBlogListUpdate(state, status) {
+            state.blogListUpdate = status;
+        }
     },
     getters: {
         isLoggedIn: state => !!state.token,
         isChapterUpdated: state => state.chapterUpdated,
         getBlogID: state => state.blogID,
         getStateCourseList: state => state.courseListUpdate,
+        getStateBlogList: state => state.blogListUpdate,
     },
     actions: {}
 })
