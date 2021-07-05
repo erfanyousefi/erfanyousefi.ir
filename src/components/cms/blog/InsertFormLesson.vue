@@ -1,9 +1,6 @@
 <template>
   <div>
     <div class="row">
-      <div class="col-12 img">
-        <img :src="dotenv.baseURL + formData.img" alt="" />
-      </div>
       <div class="col-md-6 my-3">
         <input
           type="text"
@@ -40,6 +37,16 @@
           </select>
         </div>
       </div>
+      <div class="col-md-6 my-3">
+        <div v-if="chapters">
+          <select class="form-control" v-model="formData.chapter">
+            <option value="">یک فصل را انتخاب کنید</option>
+            <option v-for:="chapter in chapters" :value="chapter._id">
+              {{ chapter.title }}
+            </option>
+          </select>
+        </div>
+      </div>
       <div class="col-12 my-2">
         <editor
           api-key="kmejpui4sop678znt638riic90zeeqnseey5gun4uupeuo78"
@@ -56,13 +63,10 @@
           v-model="formData.text"
         />
       </div>
-      <div class="col-12 my-3" v-if="chapters">
-        <BlogChapters :chapters="chapters" />
-      </div>
       <div class="col-12 my-2">
         <Button
           :setting="{
-            title: 'به روز رسانی مقاله',
+            title: 'افزودن بخش',
             loading,
             disabled: loading,
             class: 'btn-dark',
@@ -79,34 +83,29 @@ import Button from "@/components/partials/client/Button.vue";
 import { reactive, ref } from "@vue/reactivity";
 import { HTTP } from "@/controller/http.js";
 import Editor from "@tinymce/tinymce-vue";
-import BlogChapters from "@/components/cms/blog/BlogChapters.vue";
 import Multiselect from "@vueform/multiselect";
 import { onBeforeMount, watch } from "@vue/runtime-core";
 import Swal from "sweetalert2";
-import { useStore } from "vuex";
-import dotenv from "@/dotenv.js";
+import { useRoute } from "vue-router";
 export default {
   components: {
     Multiselect,
     Button,
     editor: Editor,
-    BlogChapters,
   },
   setup() {
-    let store = useStore();
-    let blog = ref(null);
-    let chapters = ref(null);
     let tags = ref(null);
-    let blogID = ref(null);
     let categories = ref(null);
+    let chapters = ref(null);
     let loading = ref(false);
+    let route = useRoute();
     let formData = reactive({
       tags: [],
       category: "",
       img: null,
       title: "",
       text: "",
-      chapters: [],
+      chapter: "",
     });
     onBeforeMount(() => {
       HTTP.get("panel/tag/list").then((response) => {
@@ -115,35 +114,21 @@ export default {
       HTTP.get("panel/category/list").then((response) => {
         categories.value = response.data.categories;
       });
-      blogID.value = store.getters.getBlogID;
-      HTTP.get(`panel/blog/${blogID.value}`).then((response) => {
-        if (response.data.status) {
-          blog.value = response.data.blog;
-          chapters.value = blog.value.tagschapters;
-        }
+      HTTP.get(`panel/blog/chapters/${route.params.id}`).then((response) => {
+        console.log(response);
+        chapters.value = response.data.chapters;
       });
     });
     function fileAttach(event) {
       formData.img = event.target.files[0];
     }
-    watch(() => {
-      if (store.state.BlogChapterUpdated) {
-        HTTP.get(`panel/blog/${blogID.value}`).then((response) => {
-          if (response.data.status) {
-            blog.value = response.data.blog;
-            chapters.value = blog.value.tagschapters;
-            store.commit("setBlogChapterUpdate", false)
-          }
-        });
-      }
-    });
-    watch(blog, (value) => {
+    watch(formData, (value) => {
       formData.title = value.title;
       formData.text = value.text;
       formData.tags = value.tags;
       formData.category = value.category;
       formData.img = value.img;
-      chapters.value = value.chapters;
+      formData.chapter = value.chapter;
     });
     function saveBlog() {
       let data = new FormData();
@@ -157,41 +142,57 @@ export default {
       data.append("img", formData.img);
       loading.value = true;
       let errorMessage = "";
-
-      HTTP.put(`panel/blog/${blogID.value}`, data, config).then((response) => {
-        console.log(response);
-        if (response.data.status) {
-          Swal.fire({
-            text: "به روز رسانی مقاله باموفقیت انجام شد",
-            icon: "success",
-          });
-          HTTP.get(`panel/blog/${blogID.value}`).then((response) => {
-            if (response.data.status) {
-              blog.value = response.data.blog;
-              chapters.value = blog.value.chapters;
+      if (formData.chapter) {
+        if (
+          formData.title &&
+          formData.text &&
+          formData.category &&
+          formData.tags.length &&
+          formData.img
+        ) {
+          HTTP.post(`panel/blog/lesson/${formData.chapter}`, data, config).then(
+            (response) => {
+              console.log(response);
+              if (response.data.status) {
+                Swal.fire({
+                  text: "افزودن بخش باموفقیت انجام شد",
+                  icon: "success",
+                });
+              } else {
+                if (response.data.msg) {
+                  Object.keys(response.data.msg).forEach((key) => {
+                    errorMessage += response.data.msg[key] + "<br/>";
+                  });
+                  Swal.fire({
+                    html: `<span class="invalid-feedback">${errorMessage}</span>`,
+                    icon: "warning",
+                  }).then(() => {
+                    errorMessage = "";
+                  });
+                } else {
+                  Swal.fire({
+                    text: "افزودن بخش انجام نشد لطفا بعدا یا مجددا تلاش بفرمائید",
+                    icon: "warning",
+                  });
+                }
+              }
+              loading.value = false;
             }
-          });
-          formData.img = null;
+          );
         } else {
-          if (response.data.msg) {
-            Object.keys(response.data.msg).forEach((key) => {
-              errorMessage += response.data.msg[key] + "<br/>";
-            });
-            Swal.fire({
-              html: `<span class="invalid-feedback">${errorMessage}</span>`,
-              icon: "warning",
-            }).then(() => {
-              errorMessage = "";
-            });
-          } else {
-            Swal.fire({
-              text: "به روز رسانی مقاله انجام نشد لطفا بعدا یا مجددا تلاش بفرمائید",
-              icon: "warning",
-            });
-          }
+          Swal.fire({
+            text: "لطفا تمامی موارد خواسته شده را پر کنید",
+            icon: "info",
+          });
+          loading.value = false;
         }
+      } else {
+        Swal.fire({
+          text: "لطفا ابتدا یک فصل را کنید",
+          icon: "info",
+        });
         loading.value = false;
-      });
+      }
     }
     return {
       tags,
@@ -200,13 +201,13 @@ export default {
       fileAttach,
       saveBlog,
       loading,
-      dotenv,
-      chapters,
+      chapters
     };
   },
 };
 </script>
 <style src="@vueform/multiselect/themes/default.css"></style>
+
 <style>
 .invalid-feedback {
   display: block !important;

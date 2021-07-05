@@ -878,8 +878,8 @@ span.cash {
 }
 
 .course-details {
-    position: sticky;
-    top: 100px;
+    /* position: sticky;
+    top: 100px; */
     /* z-index: 1000; */
     width: 100%;
 }

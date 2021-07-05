@@ -14,7 +14,6 @@
         <BlogContent v-else :blog="blog" />
       </div>
     </div>
-    <BlogControls />
   </div>
 </template>
 
@@ -22,7 +21,6 @@
 import Title from "@/components/partials/client/Title.vue";
 import BlogInfo from "@/components/client/blog/BlogInfo.vue";
 import BlogContent from "@/components/client/blog/BlogContent.vue";
-import BlogControls from "@/components/client/blog/BlogControls.vue";
 import Loading from "@/components/partials/Loading.vue";
 import { computed, onBeforeMount, ref, watch } from "vue";
 import axios from "axios";
@@ -33,7 +31,6 @@ export default {
     BlogInfo,
     BlogContent,
     Loading,
-    BlogControls,
   },
   setup() {
     let router = useRouter().currentRoute.value.name;

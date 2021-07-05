@@ -167,7 +167,6 @@ export default {
     let formData = ref(null);
     let errorMessage = "";
     watch(() => {
-      console.log("hello");
       id = route.params.id;
       if (store.state.chapterUpdated) {
         HTTP.get(`panel/course/${id}`).then((response) => {

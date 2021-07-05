@@ -17,6 +17,8 @@ import { ref } from "@vue/reactivity";
 import { HTTP } from "@/controller/http.js";
 import Swal from "sweetalert2";
 import { useRouter } from "vue-router";
+import { watch } from '@vue/runtime-core';
+import { useStore } from 'vuex';
 export default {
   components: {
     Title,
@@ -24,6 +26,7 @@ export default {
     Loading,
   },
   setup() {
+    let store = useStore();
     let router = useRouter();
     const courses = ref(null);
     const data = ref(null);
@@ -38,10 +41,31 @@ export default {
           router.push({ name: "loginPage" });
         });
       } else {
-        courses.value = data.value.courses
+        courses.value = data.value.courses;
         if (courses.value.length > 0) {
           loading.value = false;
         }
+      }
+    });
+    watch(() => {
+      if (store.getters.getStateCourseList) {
+        HTTP.get("panel/course/all").then((response) => {
+           store.commit("setCourseListUpdate", false)
+          data.value = response.data;
+          if (data.value.statusCode === 403) {
+            Swal.fire({
+              text: "شما ابتدا باید وارد حساب کاربری خود شوید",
+              icon: "warning",
+            }).then(() => {
+              router.push({ name: "loginPage" });
+            });
+          } else {
+            courses.value = data.value.courses;
+            if (courses.value.length > 0) {
+              loading.value = false;
+            }
+          }
+        });
       }
     });
     return {

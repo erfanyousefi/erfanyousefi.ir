@@ -13,7 +13,7 @@
         <strong>نظرات : 140</strong>
       </div>
     </div>
-    <div class="courseInfo my-4">
+    <!-- <div class="courseInfo my-4">
       <div class="userFeedBack">
         <a href="" class="like">
           <i class="fa fa-heart-o"></i>
@@ -24,7 +24,7 @@
           <i class="fa fa-bookmark"></i>
         </a>
       </div>
-    </div>
+    </div> -->
     <div class="courseInfo my-4">
         <BlogChapters :blog="blog" />
     </div>

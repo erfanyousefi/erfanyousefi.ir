@@ -16,4 +16,16 @@ export default [{
         component: () =>
             import ("@/views/cms/blog/EditBlog.vue")
     },
+    {
+        path: "/dashboard/blogs/lesson/:id",
+        name: "addLesson",
+        component: () =>
+            import ("@/views/cms/blog/AddBlogLesson.vue")
+    },
+    {
+        path: "/dashboard/blogs/lesson/:id",
+        name: "editLesson",
+        component: () =>
+            import ("@/views/cms/blog/EditBlogLesson.vue")
+    },
 ]

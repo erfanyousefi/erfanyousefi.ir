@@ -58,7 +58,10 @@
                   }}
                 </td>
                 <td>
-                  <a class="btn btn-danger btn-sm btn-circle mx-1">
+                  <a
+                    @click="removeCourse(course._id)"
+                    class="btn btn-danger btn-sm btn-circle mx-1"
+                  >
                     <i class="fas fa-trash"></i
                   ></a>
                   <router-link
@@ -67,7 +70,10 @@
                   >
                     <i class="fas fa-pen"></i>
                   </router-link>
-                  <router-link :to="{name : 'coursePage', params : {slug : course.slug}}" class="btn btn-success btn-sm btn-circle mx-1">
+                  <router-link
+                    :to="{ name: 'coursePage', params: { slug: course.slug } }"
+                    class="btn btn-success btn-sm btn-circle mx-1"
+                  >
                     <i class="fas fa-eye"></i
                   ></router-link>
                 </td>
@@ -81,12 +87,49 @@
 </template>
 
 <script>
+import Swal from "sweetalert2";
+import { HTTP } from "@/controller/http.js";
+import {useStore} from "vuex";
 export default {
+  components: {},
   props: {
     courses: Array,
   },
   setup() {
-    return {};
+    let store = useStore()
+    function removeCourse(id) {
+      Swal.fire({
+        text:
+          "آیا شما مایل به حذف دوره میباشید؟ در صورت حذف تمامی اپیزود های مربوط به آن دوره حذف خواهند شد",
+        confirmButtonText: "حذف",
+        showCancelButton: true,
+        icon: "question",
+        focusCancel: true,
+        cancelButtonText: "انصراف",
+      }).then((remove) => {
+        if (remove.isConfirmed) {
+          HTTP.delete(`panel/course/${id}`).then((course) => {
+            store.commit("setCourseListUpdate", true)
+            if (course.data.status) {
+              Swal.fire({
+                text: "دوره با موفقیت حذف شد",
+                icon: "success",
+                confirmButtonText: "بستن",
+              });
+            }else{
+              Swal.fire({
+                text: "دوره حذف نشد لطفا بعدا یا مجددا تلاش بفرمائید",
+                icon: "warning",
+                confirmButtonText: "بستن",
+              });
+            }
+          });
+        }
+      });
+    }
+    return {
+      removeCourse,
+    };
   },
 };
 </script>

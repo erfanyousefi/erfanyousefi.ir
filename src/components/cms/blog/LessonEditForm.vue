@@ -40,6 +40,15 @@
           </select>
         </div>
       </div>
+      <div class="col-md-6 my-3">
+        <div v-if="chapters">
+          <select class="form-control" v-model="formData.chapter">
+            <option v-for:="chapter in chapters" :value="chapter._id">
+              {{ chapter.title }}
+            </option>
+          </select>
+        </div>
+      </div>
       <div class="col-12 my-2">
         <editor
           api-key="kmejpui4sop678znt638riic90zeeqnseey5gun4uupeuo78"
@@ -55,9 +64,6 @@
           }"
           v-model="formData.text"
         />
-      </div>
-      <div class="col-12 my-3" v-if="chapters">
-        <BlogChapters :chapters="chapters" />
       </div>
       <div class="col-12 my-2">
         <Button
@@ -79,25 +85,23 @@ import Button from "@/components/partials/client/Button.vue";
 import { reactive, ref } from "@vue/reactivity";
 import { HTTP } from "@/controller/http.js";
 import Editor from "@tinymce/tinymce-vue";
-import BlogChapters from "@/components/cms/blog/BlogChapters.vue";
 import Multiselect from "@vueform/multiselect";
 import { onBeforeMount, watch } from "@vue/runtime-core";
 import Swal from "sweetalert2";
-import { useStore } from "vuex";
 import dotenv from "@/dotenv.js";
+import { useRoute } from "vue-router";
 export default {
   components: {
     Multiselect,
     Button,
     editor: Editor,
-    BlogChapters,
   },
-  setup() {
-    let store = useStore();
+  setup(props, { emit }) {
+    let route = useRoute();
     let blog = ref(null);
     let chapters = ref(null);
     let tags = ref(null);
-    let blogID = ref(null);
+    let lessonID = ref(null);
     let categories = ref(null);
     let loading = ref(false);
     let formData = reactive({
@@ -106,8 +110,10 @@ export default {
       img: null,
       title: "",
       text: "",
-      chapters: [],
+      chapter: "",
+      oldChapter: "",
     });
+    lessonID.value = route.params.id;
     onBeforeMount(() => {
       HTTP.get("panel/tag/list").then((response) => {
         tags.value = response.data.tags;
@@ -115,35 +121,32 @@ export default {
       HTTP.get("panel/category/list").then((response) => {
         categories.value = response.data.categories;
       });
-      blogID.value = store.getters.getBlogID;
-      HTTP.get(`panel/blog/${blogID.value}`).then((response) => {
+      HTTP.get(`panel/blog/lesson/${lessonID.value}`).then((response) => {
         if (response.data.status) {
-          blog.value = response.data.blog;
-          chapters.value = blog.value.tagschapters;
+          blog.value = response.data.lesson;
+          blog.value.chapter = response.data.chapter;
+          blog.value.oldChapter = response.data.chapter;
+          console.log(blog.value);
+          emit("blogID", response.data.blog);
+          HTTP.get(`panel/blog/chapters/${response.data.blog}`).then(
+            (chaptersResponse) => {
+              chapters.value = chaptersResponse.data.chapters;
+            }
+          );
         }
       });
     });
     function fileAttach(event) {
       formData.img = event.target.files[0];
     }
-    watch(() => {
-      if (store.state.BlogChapterUpdated) {
-        HTTP.get(`panel/blog/${blogID.value}`).then((response) => {
-          if (response.data.status) {
-            blog.value = response.data.blog;
-            chapters.value = blog.value.tagschapters;
-            store.commit("setBlogChapterUpdate", false)
-          }
-        });
-      }
-    });
     watch(blog, (value) => {
       formData.title = value.title;
       formData.text = value.text;
       formData.tags = value.tags;
       formData.category = value.category;
       formData.img = value.img;
-      chapters.value = value.chapters;
+      formData.chapter = value.chapter;
+      formData.oldChapter = value.oldChapter;
     });
     function saveBlog() {
       let data = new FormData();
@@ -155,20 +158,23 @@ export default {
       data.append("tags", formData.tags);
       data.append("category", formData.category);
       data.append("img", formData.img);
+      data.append("chapter", formData.chapter);
+      data.append("oldChapter", formData.oldChapter);
       loading.value = true;
       let errorMessage = "";
 
-      HTTP.put(`panel/blog/${blogID.value}`, data, config).then((response) => {
+      HTTP.put(`panel/blog/lesson/${lessonID.value}`, data, config).then((response) => {
         console.log(response);
         if (response.data.status) {
           Swal.fire({
-            text: "به روز رسانی مقاله باموفقیت انجام شد",
+            text: "به روز رسانی جلسه باموفقیت انجام شد",
             icon: "success",
           });
-          HTTP.get(`panel/blog/${blogID.value}`).then((response) => {
+          HTTP.get(`panel/blog/lesson/${lessonID.value}`).then((response) => {
             if (response.data.status) {
-              blog.value = response.data.blog;
-              chapters.value = blog.value.chapters;
+              blog.value = response.data.lesson;
+              blog.value.chapter = response.data.chapter;
+              blog.value.oldChapter = response.data.chapter;
             }
           });
           formData.img = null;
@@ -185,7 +191,7 @@ export default {
             });
           } else {
             Swal.fire({
-              text: "به روز رسانی مقاله انجام نشد لطفا بعدا یا مجددا تلاش بفرمائید",
+              text: "به روز رسانی جلسه انجام نشد لطفا بعدا یا مجددا تلاش بفرمائید",
               icon: "warning",
             });
           }
