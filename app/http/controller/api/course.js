@@ -459,6 +459,7 @@ class courseController extends controller {
         if (this.isObjectID(id)) {
             let data = {}
             this.fetchDataFromBody(req.body, data);
+            const course = await courseModel.findOne({ 'chapters.episodes._id': id })
             if (data.chapter !== id) {
                 const course = await courseModel.findOne({ 'chapters._id': data.chapter });
                 if (course) {

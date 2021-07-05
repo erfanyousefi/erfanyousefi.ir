@@ -5,7 +5,7 @@ let validator = {}
 class blogController extends controller {
 
     async blogs(req, res, next) {
-        const blogs = await blogModel.find({}).populate(["author", "tags", "category"])
+        const blogs = await blogModel.find({}).populate(["author", "tags", "category"]).sort({ createdAt: -1 })
         return res.json({
             status: true,
             blogs
@@ -164,14 +164,13 @@ class blogController extends controller {
                 blog.chapters.find(chapter => {
                     let lesson = chapter.lessons.find(lesson => {
                         if (lesson.slug == slug) {
-                            return lesson
+                            return res.json({
+                                status: true,
+                                lesson,
+                                blog
+                            })
                         }
 
-                    })
-                    return res.json({
-                        status: true,
-                        lesson,
-                        blog
                     })
                 })
             } else {

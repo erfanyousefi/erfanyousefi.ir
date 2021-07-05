@@ -44,7 +44,7 @@ class blogController extends controller {
 
     }
     async blogs(req, res, next) {
-        const blogs = await blogModel.find({}).populate([{ path: 'author', select: { name: 1 } }])
+        const blogs = await blogModel.find({}).populate([{ path: 'author', select: { name: 1 } }]).sort({ createdAt: -1 })
         return res.json({
             status: true,
             blogs
@@ -52,14 +52,15 @@ class blogController extends controller {
     }
     async updateBlog(req, res, next) {
         let image = ""
-        if (req.file) {
-            image = this.checkReqFile(req.file)
-        }
         const id = req.params.id;
         if (this.isObjectID(id)) {
             let data = {};
-            this.fetchDataFromBody(req.body, data)
-            data.img = image
+            this.fetchDataFromBody(req.body, data);
+            delete data.img;
+            if (req.file) {
+                image = this.checkReqFile(req.file)
+                data.img = image
+            }
             await blogModel.findByIdAndUpdate(id, { $set: {...data } }, (err, blog) => {
                 if (blog) {
                     return res.json({
@@ -332,6 +333,7 @@ class blogController extends controller {
                 let data = {}
                 req.body.img = image
                 this.fetchDataFromBody(req.body, data);
+                data.text = req.body.text
                 const blog = await blogModel.findOne({ 'chapters._id': id });
                 if (blog) {
                     blog.chapters.forEach(chapter => chapter._id == id ? chapter.lessons.push({...data }) : chapter)
@@ -404,6 +406,8 @@ class blogController extends controller {
                         if (lesson._id == id) {
                             return res.json({
                                 status: true,
+                                chapter: chapter._id,
+                                blog: blog._id,
                                 lesson
                             })
                         }
@@ -433,6 +437,7 @@ class blogController extends controller {
             req.body.img = image
             let data = {}
             this.fetchDataFromBody(req.body, data);
+            data.text = req.body.text
             const blog = await blogModel.findOne({ 'chapters.lessons._id': id });
             if (blog) {
                 blog.chapters.forEach(chapter => {
@@ -475,9 +480,10 @@ class blogController extends controller {
                 }
                 return res.json({
                     status: false,
-                    message: "مقاله  ای یافت نشد"
+                    message: "بخشی یافت نشد"
                 })
             }
+
         } else {
             if (req.file) {
                 this.removeFile(image)
