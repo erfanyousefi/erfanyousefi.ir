@@ -8,6 +8,7 @@ router.delete("/:id", userController.remove);
 router.get("/:id", userController.find);
 router.put("/profile", upload.single("avatar"), userController.updateProfileLogined);
 router.put("/:id", upload.single("avatar"), userController.updateProfile);
+router.patch("/edit-password", userController.updatePassword);
 // router.delete("/:id", userController.remove);
 
 module.exports = router;

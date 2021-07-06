@@ -129,5 +129,40 @@ class userController extends controller {
             })
         }
     }
+    async updatePassword(req, res, next) {
+        let { password, newPassword, confirmNewPassword } = req.body;
+        let id = req.user._id;
+        let user = await userModel.findById(id);
+        if (user) {
+            // let hashedPasswird = this.hashString(password);
+            const match = this.compareHashString(password, user.password);
+            if (match) {
+                user.password = this.hashString(newPassword);
+                user.save().then(response => {
+                    if (response) {
+                        return res.json({
+                            status: true,
+                            message: "تغییر رمز عبور با موفقیت انجام شد"
+                        })
+                    } else {
+                        return res.json({
+                            status: false,
+                            message: "تغییر رمز عبور انجام نشد لطفا بعدا یا مجددا تلاش کنید"
+                        })
+                    }
+                })
+            } else {
+                return res.json({
+                    status: false,
+                    message: "رمز عبور فعلی را اشتباه وارد کرده اید لطفا در وارد کردن رمز عبور دقت کنید"
+                })
+            }
+        } else {
+            return res.json({
+                status: false,
+                message: "not-found"
+            })
+        }
+    }
 }
 module.exports = new userController();
