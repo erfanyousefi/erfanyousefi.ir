@@ -52,9 +52,9 @@
 <script>
 import Button from "@/components/partials/client/Button.vue";
 import { reactive, ref } from "@vue/reactivity";
-// import { HTTP } from "@/controller/http.js";
-// import Swal from "sweetalert2";
+import { HTTP } from "@/controller/http.js";
 import CardBody from "@/components/partials/cms/CardBody.vue";
+import Swal from "sweetalert2";
 export default {
   components: { Button, CardBody },
   setup() {
@@ -66,11 +66,44 @@ export default {
     let loading = ref(false);
     function updatePassword() {
       loading.value = true;
-      let data = new FormData();
-      Object.keys(formData).forEach((key) => {
-        data.append(`${[key]}`, formData[key]);
-      });
-  console.log(formData);
+      if (formData.newPassword.length < 6 || formData.newPassword.length > 16) {
+        Swal.fire({
+          text: "رمز عبور جدید و تکرار آن نمیتواند کمتر از 6 و بیشتر از 16 کاراکتر باشد",
+          icon: "warning",
+          confirmButtonText: "بستن",
+        });
+      } else {
+        if (formData.newPassword === formData.confirmNewPassword) {
+          HTTP.patch(`panel/user/edit-password`, {
+            password: formData.password,
+            newPassword: formData.newPassword,
+            confirmNewPassword: formData.confirmNewPassword,
+          }).then((response) => {
+            if (response.data.status) {
+              formData.newPassword = formData.confirmNewPassword = formData.password = "";
+              Swal.fire({
+                text: response.data.message,
+                icon: "success",
+                confirmButtonText: "بستن",
+              });
+            } else {
+              Swal.fire({
+                text: response.data.message,
+                icon: "warning",
+                confirmButtonText: "بستن",
+              });
+            }
+            loading.value = false;
+          });
+        } else {
+          Swal.fire({
+            text:
+              "رمز عبور  جدید و تکرار آن باید برابر باشد لطفا در وارد کردن رمز عبور دقت کنید",
+            icon: "warning",
+            confirmButtonText: "بستن",
+          });
+        }
+      }
     }
     return {
       updatePassword,
