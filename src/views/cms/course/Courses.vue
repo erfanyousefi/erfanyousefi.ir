@@ -5,7 +5,7 @@
       <Loading :loading="loading" />
     </div>
     <div v-else>
-      <CourseTable :courses="courses" />
+      <CourseTable v-if="courses" :courses="courses" />
     </div>
   </div>
 </template>

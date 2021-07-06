@@ -148,7 +148,11 @@
           <h6 class="dropdown-header">پیغام ها</h6>
           <a class="dropdown-item d-flex align-items-center" href="#">
             <div class="dropdown-list-image mr-3">
-              <img class="rounded-circle" src="@/assets/dist/cms/img/undraw_profile_1.svg" alt="..." />
+              <img
+                class="rounded-circle"
+                src="@/assets/dist/cms/img/undraw_profile_1.svg"
+                alt="..."
+              />
               <div class="status-indicator bg-success"></div>
             </div>
             <div class="font-weight-bold">
@@ -160,7 +164,11 @@
           </a>
           <a class="dropdown-item d-flex align-items-center" href="#">
             <div class="dropdown-list-image mr-3">
-              <img class="rounded-circle" src="@/assets/dist/cms/img/undraw_profile_2.svg" alt="..." />
+              <img
+                class="rounded-circle"
+                src="@/assets/dist/cms/img/undraw_profile_2.svg"
+                alt="..."
+              />
               <div class="status-indicator"></div>
             </div>
             <div>
@@ -170,7 +178,11 @@
           </a>
           <a class="dropdown-item d-flex align-items-center" href="#">
             <div class="dropdown-list-image mr-3">
-              <img class="rounded-circle" src="@/assets/dist/cms/img/undraw_profile_3.svg" alt="..." />
+              <img
+                class="rounded-circle"
+                src="@/assets/dist/cms/img/undraw_profile_3.svg"
+                alt="..."
+              />
               <div class="status-indicator bg-warning"></div>
             </div>
             <div>
@@ -213,25 +225,35 @@
           aria-haspopup="true"
           aria-expanded="false"
         >
-          <img class="img-profile rounded-circle" src="@/assets/dist/cms/img/undraw_profile.svg" />
-          <span class="mr-2 d-none d-lg-inline text-gray-600 small">{{user.name}}</span>
+          <img
+            class="img-profile rounded-circle"
+            v-if="user.avatar"
+            :src="dotenv.baseURL + user.avatar"
+          />
+          <img
+            v-else
+            class="img-profile rounded-circle"
+            src="@/assets/dist/cms/img/undraw_profile.svg"
+          />
+          <span class="mr-2 d-none d-lg-inline text-gray-600 small">{{ user.name }}</span>
         </a>
         <!-- Dropdown - User Information -->
         <div
           class="dropdown-menu userDropdown dropdown-menu-right shadow animated--grow-in"
           aria-labelledby="userDropdown"
         >
-          <a class="dropdown-item" href="#">
+          <router-link class="dropdown-item" :to ="{name : 'editProfile'}">
             <i class="fas fa-user fa-sm fa-fw mr-2 text-gray-400"></i> پروفایل
-          </a>
-          <a class="dropdown-item" href="#">
-            <i class="fas fa-cogs fa-sm fa-fw mr-2 text-gray-400"></i> تنظیمات
-          </a>
+          </router-link>
+          <router-link class="dropdown-item" :to="{name:'editPassword'}">
+            <i class="fas fa-cogs fa-sm fa-fw mr-2 text-gray-400"></i> ویرایش رمز عبور
+          </router-link>
           <a class="dropdown-item" href="#">
             <i class="fas fa-list fa-sm fa-fw mr-2 text-gray-400"></i> لاگ های فعال
           </a>
           <div class="dropdown-divider"></div>
-          <router-link to="/logout"
+          <router-link
+            to="/logout"
             class="dropdown-item"
             href="#"
             data-toggle="modal"
@@ -246,15 +268,21 @@
 </template>
 
 <script>
-import {useStore} from "vuex"
+import { useStore } from "vuex";
+import dotenv from "@/dotenv.js";
+import { watch } from "@vue/runtime-core";
 export default {
-  setup(){
+  setup() {
     let store = useStore();
-    let user = store.state.user
+    let user = store.state.user;
+    watch(store.state.user, (newValue) => {
+      user = newValue;
+    });
     return {
-      user
-    }
-  }
+      user,
+      dotenv,
+    };
+  },
 };
 </script>
 

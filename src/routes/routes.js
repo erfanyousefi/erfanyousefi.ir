@@ -3,6 +3,7 @@ import blogRoutes from "@/routes/client/blog.js";
 import authRoutes from "@/routes/auth/index.js";
 import coursePanelRoutes from "@/routes/cms/course.js";
 import blogPanelRoutes from "@/routes/cms/blog.js";
+import userPanelRoutes from "@/routes/cms/user.js";
 
 
 export default [{
@@ -44,6 +45,7 @@ export default [{
             },
             ...coursePanelRoutes,
             ...blogPanelRoutes,
+            ...userPanelRoutes,
             {
                 path: '/dashboard/404',
                 component: () =>

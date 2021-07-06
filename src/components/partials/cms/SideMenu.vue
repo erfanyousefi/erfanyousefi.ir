@@ -6,11 +6,16 @@
     <!-- Sidebar - Brand -->
     <a class="sidebar-brand d-flex align-items-center justify-content-center" href="">
       <div class="sidebar-brand-icon">
-        <img
+        <img v-if="user.avatar"
+          class="rounded-circle"
+          :src="dotenv.baseURL + user.avatar"
+          width="50"
+          height="50"
+        />
+        <img v-else
           class="rounded-circle"
           src="@/assets/dist/cms/img/avatar-profile.png"
           width="50"
-          alt="..."
         />
       </div>
       <div class="sidebar-brand-text mx-3">پنل کاربری</div>
@@ -57,9 +62,29 @@
     <hr class="sidebar-divider" />
 
     <!-- Heading -->
-    <div class="sidebar-heading">تصاویر</div>
+    <div class="sidebar-heading">ارتباطات</div>
 
+    <!-- Nav Item - Charts -->
+    <li class="nav-item">
+      <a class="nav-link" href="">
+        <i class="fas fa-fw fa-commenting"></i>
+        <span>نظرات</span></a
+      >
+    </li>
+    <li class="nav-item">
+      <a class="nav-link" href="">
+        <i class="fas fa-fw fa-envelope"></i>
+        <span>پیام ها</span></a
+      >
+    </li>
     <!-- Nav Item - Pages Collapse Menu -->
+    <hr class="sidebar-divider" />
+    <li class="nav-item">
+      <router-link :to="{name : 'usersList'}" class="nav-link" href="">
+        <i class="fas fa-fw fa-users"></i>
+        <span>کاربران</span></router-link
+      >
+    </li>
     <li class="nav-item">
       <a
         class="nav-link collapsed"
@@ -90,23 +115,6 @@
         </div>
       </div>
     </li>
-
-    <!-- Nav Item - Charts -->
-    <li class="nav-item">
-      <a class="nav-link" href="">
-        <i class="fas fa-fw fa-commenting"></i>
-        <span>نظرات</span></a
-      >
-    </li>
-    <li class="nav-item">
-      <a class="nav-link" href="">
-        <i class="fas fa-fw fa-envelope"></i>
-        <span>پیام ها</span></a
-      >
-    </li>
-
-    <!-- Nav Item - Tables -->
-
     <!-- Divider -->
     <hr class="sidebar-divider d-none d-md-block" />
 
@@ -120,8 +128,17 @@
 </template>
 
 <script>
+import dotenv from "@/dotenv.js";
+import {useStore} from "vuex"
 export default {
-  setup() {},
+  setup() {
+    let store = useStore();
+    let user = store.state.user
+    return {
+      dotenv,
+      user
+    }
+  },
 };
 </script>
 

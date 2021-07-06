@@ -11,7 +11,7 @@
             <span class="text">بازگشت</span>
           </router-link>
         </div>
-        <div class="card-body">
+        <div class="card-body" v-if="blogs">
           <BlogTable :blogs="blogs" />
         </div>
       </div>

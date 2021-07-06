@@ -6,10 +6,15 @@
     <Title title="همه دوره ها" />
     <div class="row lastPosts my-2">
       <div
-        v-for:="(course, index) in courses"
+        v-for:="(course, index) in courses" v-if="courses.length > 0"
         class="col-lg-4 col-md-6 col-sm-12 col-xs-12 my-4"
       >
         <Course :course="course" />
+      </div>
+      <div v-else class="col-12">
+        <div class="alert alert-warning">
+          دوره ای یافت نشد
+        </div>
       </div>
     </div>
   </div>

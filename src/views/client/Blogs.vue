@@ -5,10 +5,15 @@
     <Title title="همه ی مقالات" />
     <div class="row lastBlogs my-5">
       <div
-        v-for:="(blog, index) in blogs"
+        v-for:="(blog, index) in blogs" v-if="blogs.length > 0"
         class="col-lg-4 col-md-6 col-sm-12 col-xs-12 my-4"
       >
         <Blog :blog="blog" />
+      </div>
+      <div v-else class="col-12">
+        <div class="alert alert-warning">
+          مقاله ای یافت نشد
+        </div>
       </div>
     </div>
   </div>

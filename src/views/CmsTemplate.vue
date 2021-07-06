@@ -1,5 +1,5 @@
 <template>
-  <main id="page-top" dir="rtl"  v-if="user">
+  <main id="page-top" dir="rtl" v-if="user">
     <div id="wrapper">
       <SideMenu />
       <div id="content-wrapper" class="d-flex flex-column">
@@ -16,7 +16,6 @@
 </template>
 
 <script>
-
 import("@/assets/dist/cms/admin.css");
 import SideMenu from "@/components/partials/cms/SideMenu.vue";
 import TopMenu from "@/components/partials/cms/TopMenu.vue";
@@ -25,47 +24,54 @@ import("jquery");
 import("jquery.easing");
 import("@/assets/dist/cms/js/sb-admin-2.js");
 import("@/assets/dist/cms/vendor/bootstrap/js/bootstrap.bundle.min.js");
-import {useStore} from "vuex"
-import { onBeforeMount, ref } from '@vue/runtime-core';
-import {HTTP} from "@/controller/http.js";
-import {loadProgressBar} from "x-axios-progress-bar";
-import {useRouter} from "vue-router"
-import Storage from "@/controller/LocalStorage.js"
+import { useStore } from "vuex";
+import { onBeforeMount, ref, watch } from "@vue/runtime-core";
+import { HTTP } from "@/controller/http.js";
+import { loadProgressBar } from "x-axios-progress-bar";
+import { useRouter } from "vue-router";
+import Storage from "@/controller/LocalStorage.js";
 export default {
   name: "App",
   components: {
     SideMenu,
-    TopMenu
+    TopMenu,
   },
-  beforeRouteEnter (to, from, next) {
-    let token = Storage.get("user-token")
-    if(token){
+  beforeRouteEnter(to, from, next) {
+    let token = Storage.get("user-token");
+    if (token) {
       next();
-    }else{
-      next({name : "loginPage"})
+    } else {
+      next({ name: "loginPage" });
     }
   },
   setup() {
     let store = useStore();
     let router = useRouter();
-    let user = ref(null)
+    let user = ref(null);
     loadProgressBar();
-    onBeforeMount(() => {
+    function getUser() {
       let token = store.state.token;
       HTTP.post("/user", {
-        token
-      }).then(response => {
-        if(response.data.user){
+        token,
+      }).then((response) => {
+        if (response.data.user) {
           store.commit("setUser", response.data.user);
-          user.value =  response.data.user;
-        }else{
-          router.push({name : "loginPage"})
+          user.value = response.data.user;
+        } else {
+          router.push({ name: "loginPage" });
         }
-      })
-    })
-    return {
-      user
+      });
     }
+    onBeforeMount(() => getUser());
+    watch(() => {
+      if (store.getters.getStateUser) {
+        getUser();
+        store.commit("setStateUserUpdate", false);
+      }
+    });
+    return {
+      user,
+    };
   },
 };
 </script>
