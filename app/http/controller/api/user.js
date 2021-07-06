@@ -2,20 +2,60 @@ const controller = require("app/http/controller/controller");
 const userModel = require("app/models/user");
 class userController extends controller {
     async updateProfile(req, res, next) {
+        const id = req.params.id;
+        const user = await userModel.findById(id);
+
+        if (user) {
+            let data = {}
+            this.fetchDataFromBody(req.body, data);
+            if (req.file) {
+                data.avatar = this.checkReqFile(req.file);
+            }
+            Object.keys(data).forEach(key => {
+                if (["password", "email", "role"].includes(key)) {
+                    delete data[key]
+                } else {
+                    user[key] = data[key]
+                }
+            });
+            user.save().then(user => {
+                if (user) {
+                    return res.json({
+                        status: true,
+                        message: "به روزرسانی با موفقیت انجام شد"
+                    })
+                } else {
+                    return res.json({
+                        status: false,
+                        message: "به روزرسانی انجام نشد لطفا بعدا یا مجددا تلاش کنید"
+                    })
+                }
+            })
+
+        } else {
+            return res.json({
+                status: false,
+                message: "not-found"
+            })
+        }
+    }
+    async updateProfileLogined(req, res, next) {
         const id = req.user._id;
+        console.log(req.user);
         const user = await userModel.findById(id);
         if (user) {
             let data = {}
             this.fetchDataFromBody(req.body, data);
+            if (req.file) {
+                data.avatar = this.checkReqFile(req.file);
+            }
             Object.keys(data).forEach(key => {
-                if (["password", "username", "email"].includes(key)) {
+                if (["password", "email", "role"].includes(key)) {
                     delete data[key]
                 } else {
                     user[key] = data[key]
-                    console.log(key);
                 }
             });
-            // console.log(user);
             user.save().then(user => {
                 if (user) {
                     return res.json({
@@ -44,8 +84,50 @@ class userController extends controller {
             users
         })
     }
+    async remove(req, res, next) {
+        let id = req.params.id;
+        if (this.isObjectID(id)) {
+            await userModel.findByIdAndDelete(id, (err, user) => {
+                if (user) {
+                    return res.json({
+                        status: true,
+                        message: "حذف کاربربا موفقیت انجام شد"
+                    });
+                } else {
+                    return res.json({
+                        status: false,
+                        message: "حذف انجام نشد"
+                    })
+                }
+            })
+        } else {
+            return res.json({
+                status: "false",
+                message: "Not-Found"
+            })
+        }
+    }
     async find(req, res, next) {
-
+        let id = req.params.id;
+        if (this.isObjectID(id)) {
+            let user = await userModel.findById(id);
+            if (user) {
+                return res.json({
+                    status: true,
+                    user
+                });
+            } else {
+                return res.json({
+                    status: false,
+                    message: "کاربری یافت نشد"
+                })
+            }
+        } else {
+            return res.json({
+                status: "false",
+                message: "Not-Found"
+            })
+        }
     }
 }
 module.exports = new userController();
