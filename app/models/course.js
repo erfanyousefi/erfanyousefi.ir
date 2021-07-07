@@ -15,31 +15,26 @@ const chapterSchema = new Schema({
     episodes: [episodeSchema],
 })
 const courseSchema = new Schema({
-        title: { type: String, required: true },
-        text: { type: String, required: true },
-        teacher: { type: mongoose.Types.ObjectId, ref: "user", required: true },
-        tags: [{ type: mongoose.Types.ObjectId, ref: "tag", required: true }],
-        category: { type: mongoose.Types.ObjectId, ref: "category", required: true },
-        img: { type: String, required: true },
-        type: { type: String, required: true },
-        price: { type: Number, required: true },
-        discount: { type: Number, required: true },
-        slug: { type: String, required: false },
-        totalTime: { type: String, required: false },
-        introduction: { type: String, required: false },
-        chapters: [chapterSchema]
-    }, {
-        timestamps: true,
-        toJSON: {
-            virtuals: true
-        }
-    })
-    // courseSchema.pre("find", function() {
-    //     this.chapters.forEach(chapter => {
-    //         course.totalTime = this.getTime(chapter.episodes)
-    //         console.log(course.totalTime);
-    //     })
-    // })
+    title: { type: String, required: true },
+    text: { type: String, required: true },
+    teacher: { type: mongoose.Types.ObjectId, ref: "user", required: true },
+    tags: [{ type: mongoose.Types.ObjectId, ref: "tag", required: true }],
+    category: { type: mongoose.Types.ObjectId, ref: "category", required: true },
+    img: { type: String, required: true },
+    type: { type: String, required: true },
+    price: { type: Number, required: true },
+    discount: { type: Number, required: true },
+    slug: { type: String, required: false },
+    totalTime: { type: String, required: false },
+    introduction: { type: String, required: false },
+    students: [{ type: mongoose.Types.ObjectId, ref: "user" }],
+    chapters: [chapterSchema]
+}, {
+    timestamps: true,
+    toJSON: {
+        virtuals: true
+    }
+})
 courseSchema.virtual("teachers", {
     ref: "user",
     localField: "_id",
