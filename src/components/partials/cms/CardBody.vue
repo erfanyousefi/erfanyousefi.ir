@@ -17,4 +17,10 @@ export default {
 };
 </script>
 
-<style></style>
+<style >
+.courseTable {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+</style>

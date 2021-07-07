@@ -6,13 +6,15 @@
     <!-- Sidebar - Brand -->
     <a class="sidebar-brand d-flex align-items-center justify-content-center" href="">
       <div class="sidebar-brand-icon">
-        <img v-if="user.avatar"
+        <img
+          v-if="user.avatar"
           class="rounded-circle"
           :src="dotenv.baseURL + user.avatar"
           width="50"
           height="50"
         />
-        <img v-else
+        <img
+          v-else
           class="rounded-circle"
           src="@/assets/dist/cms/img/avatar-profile.png"
           width="50"
@@ -41,7 +43,7 @@
     <!-- Nav Item - Pages Collapse Menu -->
     <li class="nav-item">
       <router-link to="/dashboard/courses" class="nav-link" href="">
-        <i class="fas fa-fw fa-commenting"></i>
+        <i class="fas fa-fw fa-video"></i>
         دوره ها
       </router-link>
     </li>
@@ -80,7 +82,7 @@
     <!-- Nav Item - Pages Collapse Menu -->
     <hr class="sidebar-divider" />
     <li class="nav-item">
-      <router-link :to="{name : 'usersList'}" class="nav-link" href="">
+      <router-link :to="{ name: 'usersList' }" class="nav-link" href="">
         <i class="fas fa-fw fa-users"></i>
         <span>کاربران</span></router-link
       >
@@ -115,6 +117,12 @@
         </div>
       </div>
     </li>
+    <li class="nav-item">
+      <router-link to="/dashboard/my-courses" class="nav-link" href="">
+        <i class="fas fa-fw fa-video"></i>
+       دوره های من
+      </router-link>
+    </li>
     <!-- Divider -->
     <hr class="sidebar-divider d-none d-md-block" />
 
@@ -129,15 +137,15 @@
 
 <script>
 import dotenv from "@/dotenv.js";
-import {useStore} from "vuex"
+import { useStore } from "vuex";
 export default {
   setup() {
     let store = useStore();
-    let user = store.state.user
+    let user = store.state.user;
     return {
       dotenv,
-      user
-    }
+      user,
+    };
   },
 };
 </script>

@@ -17,7 +17,7 @@
           </div>
           <div class="card-body">
             <div class="row">
-              <div class="col-md-12 my-3" v-if="formData.title">
+              <div class="col-md-12 my-3">
                 <input
                   type="text"
                   class="form-control"

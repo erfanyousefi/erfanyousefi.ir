@@ -12,6 +12,7 @@ const store = createStore({
             userListUpdate: false,
             userUpdate: false,
             lessonSlug: null,
+            courseRegisterUpdate: false,
             blogID: null
                 // isLoggedIn: !!Storage.get("user-token"),
         }
@@ -48,6 +49,9 @@ const store = createStore({
         setCourseListUpdate(state, status) {
             state.courseListUpdate = status
         },
+        setCourseRegisterUpdate(state, status) {
+            state.courseRegisterUpdate = status
+        },
         setBlogListUpdate(state, status) {
             state.blogListUpdate = status;
         },
@@ -66,6 +70,7 @@ const store = createStore({
         getStateBlogList: state => state.blogListUpdate,
         getStateUserList: state => state.userListUpdate,
         getStateUser: state => state.userListUpdate,
+        getStateCourseRegister: state => state.courseRegisterUpdate,
     },
     actions: {}
 })

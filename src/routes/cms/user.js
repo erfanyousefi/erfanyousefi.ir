@@ -22,4 +22,10 @@ export default [{
         component: () =>
             import ("@/views/cms/user/EditPassword.vue")
     },
+    {
+        path: "/dashboard/my-courses",
+        name: "myCourses",
+        component: () =>
+            import ("@/views/cms/user/MyCourses.vue")
+    },
 ]
