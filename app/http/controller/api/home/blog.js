@@ -38,7 +38,6 @@ class blogController extends controller {
             let slug = new RegExp(this.xssAttak(req.params.slug), "gi");
             if (slug) {
                 const blog = await blogModel.findOne({ slug }).populate([{ path: "author" }, { path: "tags" }, { path: "category" }])
-                console.log(blog);
                 return res.json({
                     status: true,
                     blog
