@@ -1,6 +1,12 @@
+@import url("./primary-iran-yekan.css");
+@import url("./secondary-aviny.css");
 html {
     overflow-x: hidden;
     direction: rtl;
+}
+
+* {
+    font-family: "secondary-font", "primary-font";
 }
 
 body {
@@ -735,12 +741,9 @@ span.cash {
     color: #666;
     width: 98%;
     margin: auto;
-    font-family: "iranSans"!important;
 }
 
-.blog-singlePage-text div {
-    font-family: "iranSans"!important;
-}
+.blog-singlePage-text div {}
 
 .header-blog {
     width: 90%;

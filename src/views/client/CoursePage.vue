@@ -31,6 +31,15 @@
       <div class="row justify-content-center my-2">
         <CourseChapter :chapters="course.chapters" />
       </div>
+      <div v-if="comments">
+        <div class="row my-4">
+          <div class="titleBar my-2">
+            <h3>نظرات ثبت شده</h3>
+            <div class="borderTitle"></div>
+          </div>
+        </div>
+        <Comment :comments="comments" />
+      </div>
     </div>
   </div>
 </template>
@@ -38,6 +47,7 @@
 <script>
 import Title from "@/components/partials/client/Title.vue";
 import Loading from "@/components/partials/Loading.vue";
+import Comment from "@/components/partials/client/Comment.vue";
 import CourseChapter from "@/components/client/course/CourseChapter.vue";
 import CourseDetails from "@/components/client/course/CourseDetails.vue";
 import { useRoute, useRouter } from "vue-router";
@@ -51,6 +61,7 @@ export default {
     CourseChapter,
     CourseDetails,
     Loading,
+    Comment,
   },
   setup() {
     let store = useStore();
@@ -58,12 +69,14 @@ export default {
     let router = useRouter();
     let slug = ref(null);
     let course = ref(null);
+    let comments = ref(null);
     let loading = ref(true);
     slug.value = route.params.slug;
     function findCourseWithSlug() {
       axios.get("http://localhost:3000/course/" + slug.value).then((response) => {
         if (response.data.course && response.data.status) {
           course.value = response.data.course;
+          getComments(course.value._id);
         } else {
           Swal.fire({
             text: "دوره ای یافت نشد",
@@ -77,6 +90,13 @@ export default {
         loading.value = false;
       }
     }
+    function getComments(id) {
+      axios.get("http://localhost:3000/comments/" + id + "/course").then((response) => {
+        if (response.data.comments && response.data.status) {
+          comments.value = response.data.comments;
+        }
+      });
+    }
     onBeforeMount(() => findCourseWithSlug());
     findCourseWithSlug();
     watch(() => {
@@ -88,6 +108,7 @@ export default {
     return {
       course,
       loading,
+      comments,
     };
   },
 };

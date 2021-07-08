@@ -68,9 +68,9 @@
 
     <!-- Nav Item - Charts -->
     <li class="nav-item">
-      <a class="nav-link" href="">
+      <router-link :to="{name : 'comments'}"  class="nav-link" href="">
         <i class="fas fa-fw fa-commenting"></i>
-        <span>نظرات</span></a
+        <span>نظرات</span></router-link 
       >
     </li>
     <li class="nav-item">

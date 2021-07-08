@@ -4,6 +4,7 @@ import authRoutes from "@/routes/auth/index.js";
 import coursePanelRoutes from "@/routes/cms/course.js";
 import blogPanelRoutes from "@/routes/cms/blog.js";
 import userPanelRoutes from "@/routes/cms/user.js";
+import commentPanelRoutes from "@/routes/cms/comment.js";
 
 
 export default [{
@@ -46,6 +47,7 @@ export default [{
             ...coursePanelRoutes,
             ...blogPanelRoutes,
             ...userPanelRoutes,
+            ...commentPanelRoutes,
             {
                 path: '/dashboard/404',
                 component: () =>
