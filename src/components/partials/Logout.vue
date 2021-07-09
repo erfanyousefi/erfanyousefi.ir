@@ -15,9 +15,6 @@ export default {
       store.commit("removeUser");
       router.push({ name: "loginPage" });
     })
-    return {
-
-    }
   }
 }
 </script>

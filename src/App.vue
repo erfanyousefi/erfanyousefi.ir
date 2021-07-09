@@ -9,7 +9,8 @@ import { loadProgressBar } from "x-axios-progress-bar";
 import("x-axios-progress-bar/dist/nprogress.css");
 import {useStore} from "vuex"
 import { onBeforeMount } from '@vue/runtime-core';
-import {HTTP} from "@/controller/http.js";
+import axios from 'axios';
+import dotenv from "@/dotenv.js"
 export default {
   name: "App",
   components: {},
@@ -18,7 +19,7 @@ export default {
     loadProgressBar();
     onBeforeMount(() => {
       let token = store.state.token;
-      HTTP.post("/user", {
+      axios.post(dotenv.baseURL + "user", {
         token
       }).then(response => {
         if(response.data.user){

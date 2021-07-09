@@ -31,12 +31,12 @@
       <div class="row justify-content-center my-2">
         <CourseChapter :chapters="course.chapters" />
       </div>
+      <div class="col-12">
+        <SendComment :target="{course : course._id}" />
+      </div>
       <div v-if="comments">
         <div class="row my-4">
-          <div class="titleBar my-2">
-            <h3>نظرات ثبت شده</h3>
-            <div class="borderTitle"></div>
-          </div>
+          <Title title="نظرات ثبت شده" />
         </div>
         <Comment :comments="comments" />
       </div>
@@ -50,6 +50,7 @@ import Loading from "@/components/partials/Loading.vue";
 import Comment from "@/components/partials/client/Comment.vue";
 import CourseChapter from "@/components/client/course/CourseChapter.vue";
 import CourseDetails from "@/components/client/course/CourseDetails.vue";
+import SendComment from "@/components/partials/client/SendComment.vue";
 import { useRoute, useRouter } from "vue-router";
 import { onBeforeMount, ref, watch } from "vue";
 import { useStore } from "vuex";
@@ -62,6 +63,7 @@ export default {
     CourseDetails,
     Loading,
     Comment,
+    SendComment
   },
   setup() {
     let store = useStore();

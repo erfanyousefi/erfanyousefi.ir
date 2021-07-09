@@ -54,24 +54,47 @@
                 <td @dblclick="showDetails(comment.user.name || comment.user.email)">
                   {{ comment.user.name || comment.user.email }}
                 </td>
-                <td @dblclick="showDetails(new Date(comment.createdAt).toLocaleString('fa') +'<br/>'+ comment.createdAt)">
+                <td
+                  @dblclick="
+                    showDetails(
+                      new Date(comment.createdAt).toLocaleString('fa') +
+                        '<br/>' +
+                        comment.createdAt
+                    )
+                  "
+                >
                   {{ new Date(comment.createdAt).toLocaleString("fa") }}
                 </td>
-                <td @dblclick="showDetails(comment.blog ? comment.blog.title : 'بدون مقاله')">
-                  {{ comment.blog ? comment.blog.title.substr(0, 30) + "..."  : "--" }}
+                <td
+                  @dblclick="
+                    showDetails(comment.blog ? comment.blog.title : 'بدون مقاله')
+                  "
+                >
+                  {{ comment.blog ? comment.blog.title.substr(0, 30) + "..." : "--" }}
                 </td>
-                <td @dblclick="showDetails( comment.course ? comment.course.title : '--' )">
-                  {{ comment.course ? comment.course.title.substr(0, 30) + "..."  : "--" }}
+                <td @dblclick="showDetails(comment.course ? comment.course.title : '--')">
+                  {{ comment.course ? comment.course.title.substr(0, 30) + "..." : "--" }}
                 </td>
                 <td>
-                  <button class="btn-sm mx-1 btn btn-circle btn-danger">
+                  <button
+                    class="btn-sm mx-1 btn btn-circle btn-danger"
+                    @click="deleteComment(comment._id)"
+                  >
                     <i class="fas fa-trash"></i>
                   </button>
-                  
-                  <button v-if="comment.show" class="btn-sm mx-1 btn btn-circle btn-warning">
+
+                  <button
+                    v-if="comment.show"
+                    @click="ignoreComment(comment._id)"
+                    class="btn-sm mx-1 btn btn-circle btn-warning"
+                  >
                     <i class="fas fa-times"></i>
                   </button>
-                  <button v-else class="btn-sm mx-1 btn btn-circle btn-success">
+                  <button
+                    v-else
+                    class="btn-sm mx-1 btn btn-circle btn-success"
+                    @click="acceptComment(comment._id)"
+                  >
                     <i class="fas fa-check"></i>
                   </button>
                 </td>
@@ -90,7 +113,7 @@ import Loading from "@/components/partials/Loading.vue";
 import CardBody from "@/components/partials/cms/CardBody.vue";
 import { HTTP } from "@/controller/http.js";
 import { onBeforeMount, ref } from "@vue/runtime-core";
-import Swal from 'sweetalert2';
+import Swal from "sweetalert2";
 export default {
   components: {
     Title,
@@ -102,7 +125,6 @@ export default {
     let loading = ref(true);
     function getComments() {
       HTTP.get("panel/comment/all").then((response) => {
-        console.log(response);
         if (response.data.status) {
           comments.value = response.data.comments;
         } else {
@@ -113,12 +135,80 @@ export default {
     }
     onBeforeMount(() => getComments());
     function showDetails(value) {
-        Swal.fire({html : value})
+      Swal.fire({ html: value });
+    }
+    function acceptComment(id) {
+      HTTP.get("panel/comment/" + id).then((comment) => {
+        console.log(comment);
+        if (comment.data.status) {
+          Swal.fire({
+            text: "تایید کامنت با موفقیت انجام شد",
+            icon: "success",
+          }).then(() => {
+            getComments();
+          });
+        } else {
+          Swal.fire({
+            text: "تایید نظر انجام نشد لطفا بعدا یا مجددا تلاش کنید ",
+            icon: "warning",
+          });
+        }
+      });
+    }
+    function ignoreComment(id) {
+      HTTP.get("panel/comment/ignore/" + id).then((comment) => {
+        console.log(comment);
+        if (comment.data.status) {
+          Swal.fire({
+            text: "رد کردن کامنت با موفقیت انجام شد",
+            icon: "success",
+          }).then(() => {
+            getComments();
+          });
+        } else {
+          Swal.fire({
+            text: "تایید نظر انجام نشد لطفا بعدا یا مجددا تلاش کنید ",
+            icon: "warning",
+          });
+        }
+      });
+    }
+    function deleteComment(id) {
+      Swal.fire({
+        text: "آیا شما مایل به حذف نظر میباشید؟!",
+        icon: "question",
+        showCancelButton: true,
+        focusCancel: true,
+        cancelButtonText: "انصراف",
+        confirmButtonText: "حذف",
+        iconHtml: "؟",
+      }).then((response) => {
+        if (response.isConfirmed) {
+          HTTP.delete("panel/comment/" + id).then((response) => {
+            if (response.data.status) {
+              Swal.fire({
+                text: "حذف نظر با موفقیت انجام شد",
+                icon: "success",
+              }).then(() => {
+                getComments();
+              });
+            } else {
+              Swal.fire({
+                text: "حذف نظر انجام نشد لطفا بعدا یا مجددا تلاش کنید",
+                icon: "warning",
+              });
+            }
+          });
+        }
+      });
     }
     return {
       comments,
       loading,
       showDetails,
+      ignoreComment,
+      acceptComment,
+      deleteComment,
     };
   },
 };

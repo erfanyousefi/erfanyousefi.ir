@@ -1,9 +1,9 @@
-import { HTTP } from "@/controller/http.js"
+import axios from "axios"
 import storage from "@/controller/LocalStorage.js";
 import Swal from "@/controller/alertSystem.js"
 export default new class authController {
     async register(registerData) {
-        HTTP.post("auth/register", {...registerData })
+        axios.post("auth/register", {...registerData })
             .then((response) => {
                 let text = "";
                 if (!response.data.status) {
