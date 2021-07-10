@@ -52,14 +52,13 @@ class commentController extends controller {
         let flag = req.params.flag;
         if (this.isObjectID(id)) {
             if (flag == "blog") {
-                // let comments = await commentModel.find({ blog: id }).populate([{ path: "user", select: { email: 1, name: 1 } }, { path: "children", populate: [{ path: "children" }, { path: "user", select: { email: 1, name: 1 } }] }])
-                let comments = await commentModel.find({ blog: id }).populate("comment").sort({ createdAt: -1 })
+                let comments = await commentModel.find({ blog: id, show: true }).populate([{ path: "comment", match: { show: true } }, { path: "children", match: { show: { $eq: true } } }]).sort({ createdAt: -1 })
                 return res.json({
                     status: true,
-                    comments
+                    comments: comments.filter(comment => comment.children = comment.children.filter(child => child.show == true))
                 })
-            } else if (flag == " course") {
-                let comments = await commentModel.find({ course: id }).populate([{ path: "user", select: { email: 1, name: 1 } }, { path: "children", populate: { path: "children" } }])
+            } else if (flag == "course") {
+                let comments = await commentModel.find({ course: id, show: true }).populate([{ path: "user", select: { email: 1, name: 1 } }, { path: "children", populate: { path: "parent", match: { show: { $eq: true } } } }])
                 return res.json({
                     status: true,
                     comments

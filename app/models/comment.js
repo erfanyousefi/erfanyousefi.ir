@@ -19,7 +19,7 @@ commentSchema.virtual("children", {
     foreignField: "parent"
 })
 const autoPopulateComment = function(next) {
-    this.populate([{ path: "children" }, { path: "user", select: { email: 1, name: 1, avatar: 1 } }]);
+    this.populate([{ path: "children", match: { show: true } }, { path: "user", select: { email: 1, name: 1, avatar: 1 } }]);
     next()
 }
 commentSchema.pre('findOne', autoPopulateComment).

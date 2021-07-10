@@ -17,6 +17,10 @@ class userController extends controller {
                 } else {
                     user[key] = data[key]
                 }
+
+                if (data[key] == undefined || data[key] == null || data[key] == "undefined" || data[key] == "null") {
+                    data[key] = "";
+                }
             });
             user.save().then(user => {
                 if (user) {
@@ -41,7 +45,6 @@ class userController extends controller {
     }
     async updateProfileLogined(req, res, next) {
         const id = req.user._id;
-        console.log(req.user);
         const user = await userModel.findById(id);
         if (user) {
             let data = {}
@@ -54,6 +57,9 @@ class userController extends controller {
                     delete data[key]
                 } else {
                     user[key] = data[key]
+                }
+                if (data[key] == undefined || data[key] == null || data[key] == "undefined" || data[key] == "null") {
+                    data[key] = "";
                 }
             });
             user.save().then(user => {

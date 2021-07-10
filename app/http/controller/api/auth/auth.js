@@ -63,7 +63,7 @@ class authController extends controller {
             if (user) {
                 const match = this.compareHashString(data.password, user.password);
                 if (match) {
-                    const token = await this.jwtGenerator(user, 3);
+                    const token = await this.jwtGenerator(user._id, 3);
                     user.token = token;
                     user.save().then(user => {
                         return res.json({
