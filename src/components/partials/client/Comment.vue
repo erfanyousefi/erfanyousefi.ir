@@ -53,6 +53,7 @@ export default {
       timer: 5000,
       timerProgressBar: true,
       position: "bottom-right",
+      showConfirmButton : false
     });
     function replayComment(id) {
       console.log(id);

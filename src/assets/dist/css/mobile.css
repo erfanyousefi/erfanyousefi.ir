@@ -45,19 +45,6 @@
         margin-top: -10px;
         display: inline-block;
     }
-    #logo {
-        position: absolute;
-        top: -20px;
-        bottom: unset;
-        z-index: 10001;
-        left: 20px;
-        transition: all 1s ease-in;
-    }
-    #logo img {
-        width: 70px;
-        z-index: 1000;
-        transition: all 1s ease-in;
-    }
     .baner {
         width: 100%;
         height: 100%;
@@ -192,11 +179,6 @@
 }
 
 @media (max-width: 750px) {
-    #logo img {
-        width: 50px;
-        z-index: 1000;
-        transition: all 1s ease-in;
-    }
     .titleUp {
         font-size: 14px;
     }
@@ -232,7 +214,6 @@
     .course-details {
         position: unset;
     }
-    .podcasts {}
     .icon-podcast {
         position: unset;
         width: fit-content;
@@ -264,8 +245,4 @@
     }
 }
 
-@media (max-width: 350px) {
-    #logo {
-        margin-top: 70px;
-    }
-}
+@media (max-width: 350px) {}

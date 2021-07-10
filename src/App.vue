@@ -1,38 +1,44 @@
 <template>
-  <router-view></router-view>
+  <div>
+    <VueGrecaptcha sitekey="6LficoIbAAAAAIbTGZpTpeKw1Sz9QDJw3qeGUkg1"></VueGrecaptcha>
+    <router-view></router-view>
+  </div>
 </template>
 <script>
 import("bootstrap/dist/css/bootstrap.min.css");
 import("bootstrap/dist/js/bootstrap.bundle.js");
 import("@/assets/dist/fonts/font-awesome/css/font-awesome.min.css");
-import { loadProgressBar } from "x-axios-progress-bar";
 import("x-axios-progress-bar/dist/nprogress.css");
-import {useStore} from "vuex"
-import { onBeforeMount } from '@vue/runtime-core';
-import axios from 'axios';
-import dotenv from "@/dotenv.js"
+import VueGrecaptcha from "vue-grecaptcha"
+import { useStore } from "vuex";
+import { onBeforeMount } from "@vue/runtime-core";
+import axios from "axios";
+import dotenv from "@/dotenv.js";
 export default {
   name: "App",
-  components: {},
+  components: {
+    VueGrecaptcha
+  },
   setup() {
     let store = useStore();
-    loadProgressBar();
     onBeforeMount(() => {
       let token = store.state.token;
-      axios.post(dotenv.baseURL + "user", {
-        token
-      }).then(response => {
-        if(response.data.user){
-          store.commit("setUser", response.data.user);
-        }
-      })
-    })
+      axios
+        .post(dotenv.baseURL + "user", {
+          token,
+        })
+        .then((response) => {
+          if (response.data.user) {
+            store.commit("setUser", response.data.user);
+          }
+        });
+    });
   },
 };
 </script>
 
 <style>
-#app{
+#app {
   position: absolute;
   top: 0;
   right: 0;

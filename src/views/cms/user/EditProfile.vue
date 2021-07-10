@@ -1,9 +1,7 @@
 <template>
   <div>
     <CardBody>
-      <template v-slot:title>
-        فرم ویرایش پروفایل کاربری
-      </template>
+      <template v-slot:title> فرم ویرایش پروفایل کاربری </template>
       <template v-slot:card>
         <div class="row">
           <div class="col-md-4">
@@ -108,6 +106,14 @@ export default {
       loading.value = true;
       let data = new FormData();
       Object.keys(formData).forEach((key) => {
+        if (
+          formData[key] == undefined ||
+          formData[key] == null ||
+          formData[key] == "undefined" ||
+          formData[key] == "null"
+        ) {
+          formData[key] = "";
+        }
         data.append(`${[key]}`, formData[key]);
       });
 

@@ -1,15 +1,8 @@
 <template>
   <div>
-    <div id="upMenu">
-      <a href="" class="btn btn-green" id="login">
-        <img src="@/assets/dist/img/login.png" alt="" />
-      </a>
-      <a href="" class="btn btn-blue" id="signup">
-        <img src="@/assets/dist/img/signup.png" alt="" />
-      </a>
-    </div>
+    <div id="upMenu"></div>
     <div id="logo">
-      <img src="@/assets/dist/img/logo.png" alt="" />
+      <img src="@/assets/dist/img/logo.gif" alt="" />
     </div>
     <header class="bg-white">
       <nav id="nav" class="nav">
@@ -40,6 +33,24 @@
               class="hamburger__line-in hamburger__line-in--cross02 hamburger__line-in--demo-5"
             ></div>
           </div>
+          <div class="global-menu">
+            <div class="global-menu__wrap">
+              <router-link class="global-menu__item global-menu__item--demo-3" to="/">خانه</router-link>
+              <router-link :to="{ name: 'blogs' }" class="global-menu__item global-menu__item--demo-3">مقالات</router-link>
+              <router-link :to="{ name: 'courses'}" class="global-menu__item global-menu__item--demo-3">دوره ها</router-link>
+              <router-link :to="{ name: 'podcasts'}" class="global-menu__item global-menu__item--demo-3">پادکست ها</router-link>
+              <router-link v-if="!isLoggedIn" :to="{ name: 'loginPage' }" class="global-menu__item global-menu__item--demo-3">ورود</router-link>
+              <router-link v-if="!isLoggedIn" :to="{ name: 'signupPage' }" class="global-menu__item global-menu__item--demo-3">ثبت نام</router-link>
+              <router-link :to="{ name: 'contactus' }" class="global-menu__item global-menu__item--demo-3">تماس با ما</router-link>
+              <router-link  v-if="isLoggedIn" :to="{ path: 'dashboard' }" class="global-menu__item global-menu__item--demo-3">پنل کاربری</router-link>
+              <router-link v-if="isLoggedIn" to="/logout" class="global-menu__item global-menu__item--demo-3">خروج</router-link>
+            </div>
+          </div>
+          <svg class="shape-overlays" viewBox="0 0 100 100" preserveAspectRatio="none">
+            <path class="shape-overlays__path"></path>
+            <path class="shape-overlays__path"></path>
+            <path class="shape-overlays__path"></path>
+          </svg>
         </div>
         <div class="titleUp">وبسایت آموزشی عرفان یوسفی</div>
         <ul>
@@ -50,9 +61,8 @@
           <li><router-link :to="{ name: 'courses' }">دوره ها</router-link></li>
 
           <li>
-            <router-link to="">تماس با من</router-link>
+            <router-link :to="{ name: 'contactus' }">تماس با من</router-link>
           </li>
-          <li><router-link to="">درباره من</router-link></li>
           <li v-if="!isLoggedIn">
             <router-link :to="{ name: 'signupPage' }">ثبت نام</router-link>
           </li>

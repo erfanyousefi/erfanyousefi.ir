@@ -27,7 +27,6 @@ import("@/assets/dist/cms/vendor/bootstrap/js/bootstrap.bundle.min.js");
 import { useStore } from "vuex";
 import { onBeforeMount, ref, watch } from "@vue/runtime-core";
 import { HTTP } from "@/controller/http.js";
-import { loadProgressBar } from "x-axios-progress-bar";
 import { useRouter } from "vue-router";
 import Storage from "@/controller/LocalStorage.js";
 export default {
@@ -48,7 +47,6 @@ export default {
     let store = useStore();
     let router = useRouter();
     let user = ref(null);
-    loadProgressBar();
     function getUser() {
       let token = store.state.token;
       HTTP.post("/user", {

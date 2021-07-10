@@ -3,16 +3,16 @@
     <div class="courseInfo my-4">
       <a href="" class="teacher">
         <div class="">{{blog.author.name}}</div>
-        <span class="teacher-details"> {{blog.author.describe}} </span>
+        <span class="teacher-details"> {{blog.author.bio}} </span>
       </a>
     </div>
 
-    <div class="courseInfo">
+    <!-- <div class="courseInfo">
       <div class="chart">
         <strong>بازدید : 140</strong>
         <strong>نظرات : 140</strong>
       </div>
-    </div>
+    </div> -->
     <!-- <div class="courseInfo my-4">
       <div class="userFeedBack">
         <a href="" class="like">

@@ -124,7 +124,7 @@ export default {
     let comments = ref(null);
     let loading = ref(true);
     function getComments() {
-      HTTP.get("panel/comment/all").then((response) => {
+      HTTP.get("panel/comment/all",{progress : false}).then((response) => {
         if (response.data.status) {
           comments.value = response.data.comments;
         } else {

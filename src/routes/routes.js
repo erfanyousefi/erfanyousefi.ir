@@ -1,6 +1,8 @@
 import courseRoutes from "@/routes/client/course.js";
 import blogRoutes from "@/routes/client/blog.js";
 import authRoutes from "@/routes/auth/index.js";
+import homeRoutes from "@/routes/client/home.js";
+
 import coursePanelRoutes from "@/routes/cms/course.js";
 import blogPanelRoutes from "@/routes/cms/blog.js";
 import userPanelRoutes from "@/routes/cms/user.js";
@@ -13,21 +15,11 @@ export default [{
         component: () => {
             return import ("@/views/ClientTemplate.vue")
         },
-        children: [{
-                path: "",
-                name: "homePage",
-                component: () => {
-                    return import ("@/views/client/Home.vue")
-                }
-            },
+        children: [
+            ...homeRoutes,
             ...courseRoutes,
             ...blogRoutes,
             ...authRoutes,
-            {
-                path: '/404',
-                component: () =>
-                    import ("@/views/errors/PageNotFound.vue")
-            },
             { path: '/:pathMatch(.*)*', redirect: '/404' },
         ]
     },
