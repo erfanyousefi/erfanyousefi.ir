@@ -45,7 +45,7 @@ class userController extends controller {
     }
     async updateProfileLogined(req, res, next) {
         const id = req.user._id;
-        const user = await userModel.findById(id);
+        const user = await userModel.findById(id)
         if (user) {
             let data = {}
             this.fetchDataFromBody(req.body, data);
@@ -163,6 +163,24 @@ class userController extends controller {
                     message: "رمز عبور فعلی را اشتباه وارد کرده اید لطفا در وارد کردن رمز عبور دقت کنید"
                 })
             }
+        } else {
+            return res.json({
+                status: false,
+                message: "not-found"
+            })
+        }
+    }
+    async userLogined(req, res, next) {
+        const id = req.user._id;
+        const user = await userModel.findById(id).populate({ path: "courses", populate: { path: 'teacher' } })
+        if (user) {
+            user.courses.forEach(course => {
+                course.totalTime = this.getTime(course.chapters)
+            })
+            return res.json({
+                status: true,
+                user
+            })
         } else {
             return res.json({
                 status: false,

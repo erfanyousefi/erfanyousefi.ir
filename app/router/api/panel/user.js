@@ -4,6 +4,7 @@ const titleValidator = require("app/validator/title");
 const userController = require(`${process.env.API}/user`);
 const upload = require("app/http/middleware/uploadImage.js")
 router.get("/list", userController.list);
+router.get("/details", userController.userLogined);
 router.delete("/:id", userController.remove);
 router.get("/:id", userController.find);
 router.put("/profile", upload.single("avatar"), userController.updateProfileLogined);

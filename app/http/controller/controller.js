@@ -173,7 +173,16 @@ module.exports = class controllers {
         hour = Math.floor(second / 3600); //convert seconds to hour
         minute = Math.floor((second / 60) % 60); //convert seconds to minute
         second = Math.floor(second % 60); //convert seconds to second
-        if (hour && minute && second) {
+        if (hour == "0") {
+            hour = "00"
+        }
+        if (minute == "0") {
+            minute = "00"
+        }
+        if (second == "0") {
+            second = "00"
+        }
+        if (hour || minute || second) {
             return `${hour}:${minute}:${second}`;
         } else {
             return "00:00:00"
