@@ -36,7 +36,7 @@
             />
           </div>
           <div class="col-md-6">
-            <label>آدرس</label>
+            <label>عکس پروفایل</label>
             <input type="file" class="form-control my-2" @change="attachFile" />
           </div>
           <div class="col-md-12">
@@ -70,6 +70,7 @@ import { HTTP } from "@/controller/http.js";
 import { useRoute, useRouter } from "vue-router";
 import { onBeforeMount, watch } from "@vue/runtime-core";
 import Swal from "sweetalert2";
+import { useStore } from 'vuex';
 export default {
   components: { Button },
   setup() {
@@ -84,6 +85,7 @@ export default {
     let loading = ref(false);
     let user = ref(null);
     let route = useRoute();
+    let store = useStore();
     let router = useRouter();
     function getUser() {
       HTTP.get(`panel/user/${route.params.id}`).then((response) => {
@@ -105,6 +107,9 @@ export default {
       formData.avatar = event.target.files[0];
     }
     onBeforeMount(() => {
+      if (!store.getters.isAdmin) {
+        router.push({ name: "notFound" });
+      }
       getUser();
     });
     watch(user, (value) => {

@@ -166,6 +166,7 @@ export default {
     let id = route.params.id;
     let formData = ref(null);
     let errorMessage = "";
+
     watch(() => {
       id = route.params.id;
       if (store.state.chapterUpdated) {
@@ -183,6 +184,9 @@ export default {
     });
     if (id) {
       onBeforeMount(() => {
+        if (!store.getters.isAdmin) {
+          router.push({ name: "notFound" });
+        }
         id = route.params.id;
         HTTP.get("panel/tag/list").then((response) => {
           tags.value = response.data.tags;

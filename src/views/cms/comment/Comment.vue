@@ -114,6 +114,8 @@ import CardBody from "@/components/partials/cms/CardBody.vue";
 import { HTTP } from "@/controller/http.js";
 import { onBeforeMount, ref } from "@vue/runtime-core";
 import Swal from "sweetalert2";
+import { useRouter } from "vue-router";
+import { useStore } from "vuex";
 export default {
   components: {
     Title,
@@ -124,7 +126,7 @@ export default {
     let comments = ref(null);
     let loading = ref(true);
     function getComments() {
-      HTTP.get("panel/comment/all",{progress : false}).then((response) => {
+      HTTP.get("panel/comment/all", { progress: false }).then((response) => {
         if (response.data.status) {
           comments.value = response.data.comments;
         } else {
@@ -133,7 +135,14 @@ export default {
         loading.value = false;
       });
     }
-    onBeforeMount(() => getComments());
+    let store = useStore();
+    let router = useRouter();
+    onBeforeMount(() => {
+      if (!store.getters.isAdmin) {
+        router.push({ name: "notFound" });
+      }
+      getComments();
+    });
     function showDetails(value) {
       Swal.fire({ html: value });
     }

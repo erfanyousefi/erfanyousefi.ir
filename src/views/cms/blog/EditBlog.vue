@@ -45,7 +45,7 @@
 <script>
 import Title from "@/components/partials/cms/Title.vue";
 import EditForm from "@/components/cms/blog/EditForm.vue";
-import { useRoute } from "vue-router";
+import { useRoute, useRouter } from "vue-router";
 import { onBeforeMount, ref } from "@vue/runtime-core";
 import { useStore } from "vuex";
 import Swal from "sweetalert2";
@@ -59,8 +59,12 @@ export default {
     let store = useStore();
     let BlogID = ref(null);
     let route = useRoute();
+    let router = useRouter();
     BlogID.value = route.params.id;
     onBeforeMount(() => {
+      if (!store.getters.isAdmin) {
+        router.push({ name: "notFound" });
+      }
       BlogID.value = route.params.id;
       store.commit("setBlogId", BlogID.value);
     });
@@ -73,7 +77,8 @@ export default {
         cancelButtonText: "انصراف",
       }).then((dialog) => {
         if (dialog.isConfirmed) {
-          HTTP.post(`panel/blog/chapter/${BlogID.value}`, { title: dialog.value }).then((chapter) => {
+          HTTP.post(`panel/blog/chapter/${BlogID.value}`, { title: dialog.value }).then(
+            (chapter) => {
               if (chapter.data.status) {
                 Swal.fire({
                   text: "افزودن فصل با موفقیت انجام شد",

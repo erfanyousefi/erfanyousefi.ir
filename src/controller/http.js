@@ -23,7 +23,10 @@ import dotenv from "@/dotenv.js";
 
 const http = axios.create({
     baseURL: dotenv.baseURL,
-    headers: { 'Content-Type': 'application/json' },
+    headers: {
+        'Content-Type': 'application/json',
+        'Access-Control-Allow-Origin': '*'
+    },
 });
 
 http.interceptors.request.use(

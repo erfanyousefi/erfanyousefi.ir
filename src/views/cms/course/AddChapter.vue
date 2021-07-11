@@ -46,6 +46,7 @@ import { HTTP } from "@/controller/http.js";
 import { onBeforeMount, watch } from "@vue/runtime-core";
 import Swal from "sweetalert2";
 import { useRoute, useRouter } from "vue-router";
+import { useStore } from "vuex";
 export default {
   components: {
     Title,
@@ -60,9 +61,13 @@ export default {
     let router = useRouter();
     let route = useRoute();
     let id = route.params.id;
+    let store = useStore();
     onBeforeMount(() => {
+      if (!store.getters.isAdmin) {
+        router.push({ name: "notFound" });
+      }
       formData.course = route.params.id;
-      id = route.params.id
+      id = route.params.id;
     });
     watch(formData, (value) => {
       formData.title = value.title;
@@ -78,7 +83,7 @@ export default {
             text: "افزودن فصل دوره با موفقیت انجام شد",
             icon: "success",
           }).then(() => {
-            router.push({ name: "editCourse", params : {id} });
+            router.push({ name: "editCourse", params: { id } });
           });
         } else {
           Swal.fire({
@@ -92,7 +97,7 @@ export default {
       loading,
       formData,
       saveChapter,
-      id
+      id,
     };
   },
 };

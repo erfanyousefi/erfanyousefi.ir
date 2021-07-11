@@ -40,7 +40,7 @@ export default {
     if (token) {
       next();
     } else {
-      next({ name: "loginPage" });
+      next({ name: "logout" });
     }
   },
   setup() {
@@ -56,7 +56,7 @@ export default {
           store.commit("setUser", response.data.user);
           user.value = response.data.user;
         } else {
-          router.push({ name: "loginPage" });
+          router.push({ name: "logout" });
         }
       });
     }

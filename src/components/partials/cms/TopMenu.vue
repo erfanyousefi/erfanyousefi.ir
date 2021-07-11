@@ -5,213 +5,14 @@
       <i class="fa fa-bars"></i>
     </button>
 
-    <!-- Topbar Search -->
-    <form
-      class="d-none d-sm-inline-block form-inline mr-auto ml-md-3 my-2 my-md-0 mw-100 navbar-search"
-      dir="ltr"
-    >
-      <div class="input-group">
-        <div class="input-group-append" dir="rtl">
-          <button class="btn btn-primary" type="button">
-            <i class="fas fa-search fa-sm"></i>
-          </button>
-        </div>
-        <input
-          type="text"
-          class="form-control bg-light border-0 small"
-          placeholder="جستجو"
-          aria-label="Search"
-          aria-describedby="basic-addon2"
-        />
-      </div>
-    </form>
-
+    <div class="d-inline">
+      <router-link :to="{name : 'homePage'}" class="link">صفحه اصلی وبسایت</router-link>
+    </div>
     <!-- Topbar Navbar -->
     <ul class="navbar-nav ml-auto">
       <!-- Nav Item - Search Dropdown (Visible Only XS) -->
-      <li class="nav-item dropdown no-arrow d-sm-none">
-        <a
-          class="nav-link dropdown-toggle"
-          href="#"
-          id="searchDropdown"
-          role="button"
-          data-toggle="dropdown"
-          aria-haspopup="true"
-          aria-expanded="false"
-        >
-          <i class="fas fa-search fa-fw"></i>
-        </a>
-        <!-- Dropdown - Messages -->
-        <div
-          class="dropdown-menu dropdown-menu-right p-3 shadow animated--grow-in"
-          aria-labelledby="searchDropdown"
-        >
-          <form class="form-inline mr-auto w-100 navbar-search">
-            <div class="input-group" dir="ltr">
-              <div class="input-group-append">
-                <button class="btn btn-primary" type="button">
-                  <i class="fas fa-search fa-sm"></i>
-                </button>
-              </div>
-              <input
-                type="text"
-                class="form-control bg-light border-0 small"
-                placeholder="جستجو "
-                aria-label="Search"
-                aria-describedby="basic-addon2"
-              />
-            </div>
-          </form>
-        </div>
-      </li>
-
       <!-- Nav Item - Alerts -->
-      <li class="nav-item dropdown no-arrow mx-1">
-        <a
-          class="nav-link dropdown-toggle"
-          href="#"
-          id="alertsDropdown"
-          role="button"
-          data-toggle="dropdown"
-          aria-haspopup="true"
-          aria-expanded="false"
-        >
-          <i class="fas fa-bell fa-fw"></i>
-          <!-- Counter - Alerts -->
-          <span class="badge badge-danger badge-counter">3+</span>
-        </a>
-        <!-- Dropdown - Alerts -->
-        <div
-          class="dropdown-list alertsDropdown dropdown-menu dropdown-menu-right shadow animated--grow-in"
-          aria-labelledby="alertsDropdown"
-        >
-          <h6 class="dropdown-header">هشدار ها</h6>
-          <a class="dropdown-item d-flex align-items-center" href="#">
-            <div class="mr-3">
-              <div class="icon-circle bg-primary">
-                <i class="fas fa-file-alt text-white"></i>
-              </div>
-            </div>
-            <div>
-              <div class="small text-gray-500">12 اردیبهشت 1400</div>
-              <span class="font-weight-bold">فایل های دریافتی جدید</span>
-            </div>
-          </a>
-          <a class="dropdown-item d-flex align-items-center" href="#">
-            <div class="mr-3">
-              <div class="icon-circle bg-success">
-                <i class="fas fa-donate text-white"></i>
-              </div>
-            </div>
-            <div>
-              <div class="small text-gray-500">4 خرداد 1400</div>
-              درآمئ این ماه به حسابتون واریز شد
-            </div>
-          </a>
-          <a class="dropdown-item d-flex align-items-center" href="#">
-            <div class="mr-3">
-              <div class="icon-circle bg-warning">
-                <i class="fas fa-exclamation-triangle text-white"></i>
-              </div>
-            </div>
-            <div>
-              <div class="small text-gray-500">8 تیر 1400</div>
-              مشکل در ثبت اخبار جدید
-            </div>
-          </a>
-          <a class="dropdown-item text-center small text-gray-500" href="#"
-            >اعلانات بیشتر</a
-          >
-        </div>
-      </li>
-
       <!-- Nav Item - Messages -->
-      <li class="nav-item dropdown no-arrow mx-1">
-        <a
-          class="nav-link dropdown-toggle"
-          href="#"
-          id="messagesDropdown"
-          role="button"
-          data-toggle="dropdown"
-          aria-haspopup="true"
-          aria-expanded="false"
-        >
-          <i class="fas fa-envelope fa-fw"></i>
-          <!-- Counter - Messages -->
-          <span class="badge badge-danger badge-counter">7</span>
-        </a>
-        <!-- Dropdown - Messages -->
-        <div
-          class="dropdown-list messagesDropdown dropdown-menu dropdown-menu-right shadow animated--grow-in"
-          aria-labelledby="messagesDropdown"
-        >
-          <h6 class="dropdown-header">پیغام ها</h6>
-          <a class="dropdown-item d-flex align-items-center" href="#">
-            <div class="dropdown-list-image mr-3">
-              <img
-                class="rounded-circle"
-                src="@/assets/dist/cms/img/undraw_profile_1.svg"
-                alt="..."
-              />
-              <div class="status-indicator bg-success"></div>
-            </div>
-            <div class="font-weight-bold">
-              <div class="text-truncate">
-                سلام چطور میتونم توی دوره جدیدتون ثبت نام کنم
-              </div>
-              <div class="small text-gray-500">محمد مرامی · 58m</div>
-            </div>
-          </a>
-          <a class="dropdown-item d-flex align-items-center" href="#">
-            <div class="dropdown-list-image mr-3">
-              <img
-                class="rounded-circle"
-                src="@/assets/dist/cms/img/undraw_profile_2.svg"
-                alt="..."
-              />
-              <div class="status-indicator"></div>
-            </div>
-            <div>
-              <div class="text-truncate">میگم پشتیبانی ها به چه شکلی انجام میشه</div>
-              <div class="small text-gray-500">مریم گل آرا · 1d</div>
-            </div>
-          </a>
-          <a class="dropdown-item d-flex align-items-center" href="#">
-            <div class="dropdown-list-image mr-3">
-              <img
-                class="rounded-circle"
-                src="@/assets/dist/cms/img/undraw_profile_3.svg"
-                alt="..."
-              />
-              <div class="status-indicator bg-warning"></div>
-            </div>
-            <div>
-              <div class="text-truncate">سلام ببخشید شما کار آموز قبول میکنید</div>
-              <div class="small text-gray-500">مستر هکر · 2d</div>
-            </div>
-          </a>
-          <a class="dropdown-item d-flex align-items-center" href="#">
-            <div class="dropdown-list-image mr-3">
-              <img
-                class="rounded-circle"
-                src="https://source.unsplash.com/Mv9hjnEUHR4/60x60"
-                alt="..."
-              />
-              <div class="status-indicator bg-success"></div>
-            </div>
-            <div>
-              <div class="text-truncate">
-                سلام هر کاری میکنم نمیتونم توی دوره نود جی استون ثبت نام کنم
-              </div>
-              <div class="small text-gray-500">سعید ایزدی · 2w</div>
-            </div>
-          </a>
-          <a class="dropdown-item text-center small text-gray-500" href="#"
-            >پیغام های بیشتر</a
-          >
-        </div>
-      </li>
-
       <div class="topbar-divider d-none d-sm-block"></div>
 
       <!-- Nav Item - User Information -->
@@ -286,4 +87,12 @@ export default {
 };
 </script>
 
-<style></style>
+<style>
+  a, router-link{
+    text-decoration: none;
+  }
+  .link{
+    text-decoration: none;
+    text-underline-offset: 5px;
+  }
+</style>

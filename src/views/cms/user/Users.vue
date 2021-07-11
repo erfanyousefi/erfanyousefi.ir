@@ -36,6 +36,7 @@ import { HTTP } from "@/controller/http.js";
 import Swal from "sweetalert2";
 import { useStore } from "vuex";
 import CardBody from "@/components/partials/cms/CardBody.vue";
+import { useRouter } from 'vue-router';
 export default {
   components: {
     UserTable,
@@ -47,6 +48,7 @@ export default {
     let store = useStore();
     let loading = ref(true);
     let users = ref(null);
+    let router = useRouter();
     function getUser() {
       HTTP.get("panel/user/list").then((response) => {
         if (response.data.users) {
@@ -58,6 +60,9 @@ export default {
       });
     }
     onBeforeMount(() => {
+      if (!store.getters.isAdmin) {
+        router.push({ name: "notFound" });
+      }
       getUser();
     });
     watch(() => {

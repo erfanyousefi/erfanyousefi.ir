@@ -36,7 +36,7 @@
             />
           </div>
           <div class="col-md-6">
-            <label>آدرس</label>
+            <label>عکس پروفایل</label>
             <input type="file" class="form-control my-2" @change="attachFile" />
           </div>
           <div class="col-md-12">

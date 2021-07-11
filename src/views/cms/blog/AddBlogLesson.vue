@@ -25,6 +25,9 @@
 <script>
 import Title from "@/components/partials/cms/Title.vue";
 import InsertFormLesson from "@/components/cms/blog/InsertFormLesson.vue";
+import { useStore } from 'vuex';
+import { useRouter } from 'vue-router';
+import { onBeforeMount } from '@vue/runtime-core';
 
 export default {
   components: {
@@ -32,6 +35,13 @@ export default {
     InsertFormLesson,
   },
   setup() {
+    let store = useStore();
+    let router = useRouter();
+    onBeforeMount(() => {
+      if(!store.getters.isAdmin){
+        router.push({name : "notFound"})
+      }
+    });
     return {};
   },
 };

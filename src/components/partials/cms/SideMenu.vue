@@ -28,65 +28,65 @@
 
     <!-- Nav Item - Dashboard -->
     <li class="nav-item active">
-      <router-link to="/dashboard/" class="nav-link" href="">
+      <router-link to="/dashboard/" class="nav-link">
         <i class="fas fa-fw fa-tachometer-alt"></i>
         <span>داشبورد</span></router-link
       >
     </li>
+    <div v-if="isAdmin">
+      <!-- Divider -->
+      <hr class="sidebar-divider" />
 
-    <!-- Divider -->
-    <hr class="sidebar-divider" />
+      <!-- Heading -->
+      <div class="sidebar-heading">آموزشی</div>
 
-    <!-- Heading -->
-    <div class="sidebar-heading">آموزشی</div>
+      <!-- Nav Item - Pages Collapse Menu -->
+      <li class="nav-item">
+        <router-link to="/dashboard/courses" class="nav-link">
+          <i class="fas fa-fw fa-video"></i>
+          <span>دوره ها</span>
+        </router-link>
+      </li>
+      <!-- Nav Item - Utilities Collapse Menu -->
+      <li class="nav-item">
+        <router-link to="/dashboard/blogs" class="nav-link">
+          <i class="fas fa-fw fa-newspaper"></i>
+          <span>مقالات</span>
+        </router-link>
+      </li>
+      <li class="nav-item">
+        <router-link to="/dashboard/blogs" class="nav-link">
+          <i class="fas fa-fw fa-microphone"></i>
+          <span>پادکست ها</span>
+        </router-link>
+      </li>
+      <hr class="sidebar-divider" />
 
-    <!-- Nav Item - Pages Collapse Menu -->
-    <li class="nav-item">
-      <router-link to="/dashboard/courses" class="nav-link" href="">
-        <i class="fas fa-fw fa-video"></i>
-        دوره ها
-      </router-link>
-    </li>
-    <!-- Nav Item - Utilities Collapse Menu -->
-    <li class="nav-item">
-      <router-link to="/dashboard/blogs" class="nav-link" href="">
-        <i class="fas fa-fw fa-newspaper"></i>
-        مقالات
-      </router-link>
-    </li>
-    <li class="nav-item">
-      <router-link to="/dashboard/blogs" class="nav-link" href="">
-        <i class="fas fa-fw fa-microphone"></i>
-        پادکست ها
-      </router-link>
-    </li>
-    <!-- Divider -->
-    <hr class="sidebar-divider" />
+      <!-- Heading -->
+      <div class="sidebar-heading">ارتباطات</div>
 
-    <!-- Heading -->
-    <div class="sidebar-heading">ارتباطات</div>
-
-    <!-- Nav Item - Charts -->
-    <li class="nav-item">
-      <router-link :to="{name : 'comments'}"  class="nav-link" href="">
-        <i class="fas fa-fw fa-commenting"></i>
-        <span>نظرات</span></router-link 
-      >
-    </li>
-    <li class="nav-item">
-      <a class="nav-link" href="">
-        <i class="fas fa-fw fa-envelope"></i>
-        <span>پیام ها</span></a
-      >
-    </li>
-    <!-- Nav Item - Pages Collapse Menu -->
-    <hr class="sidebar-divider" />
-    <li class="nav-item">
-      <router-link :to="{ name: 'usersList' }" class="nav-link" href="">
-        <i class="fas fa-fw fa-users"></i>
-        <span>کاربران</span></router-link
-      >
-    </li>
+      <!-- Nav Item - Charts -->
+      <li class="nav-item">
+        <router-link :to="{ name: 'comments' }" class="nav-link">
+          <i class="fas fa-fw fa-commenting"></i>
+          <span>نظرات</span></router-link
+        >
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="">
+          <i class="fas fa-fw fa-envelope"></i>
+          <span>پیام ها</span></a
+        >
+      </li>
+      <!-- Nav Item - Pages Collapse Menu -->
+      <hr class="sidebar-divider" />
+      <li class="nav-item">
+        <router-link :to="{ name: 'usersList' }" class="nav-link">
+          <i class="fas fa-fw fa-users"></i>
+          <span>کاربران</span></router-link
+        >
+      </li>
+      
     <li class="nav-item">
       <a
         class="nav-link collapsed"
@@ -117,10 +117,13 @@
         </div>
       </div>
     </li>
+    </div>
+    <!-- Divider -->
+
     <li class="nav-item">
       <router-link to="/dashboard/my-courses" class="nav-link" href="">
         <i class="fas fa-fw fa-video"></i>
-       دوره های من
+        <span> دوره های من</span>
       </router-link>
     </li>
     <!-- Divider -->
@@ -138,13 +141,16 @@
 <script>
 import dotenv from "@/dotenv.js";
 import { useStore } from "vuex";
+import { computed } from "@vue/runtime-core";
 export default {
   setup() {
     let store = useStore();
     let user = store.state.user;
+    let isAdmin = computed(() => store.getters.isAdmin);
     return {
       dotenv,
       user,
+      isAdmin,
     };
   },
 };

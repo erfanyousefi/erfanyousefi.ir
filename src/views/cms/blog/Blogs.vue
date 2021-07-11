@@ -27,7 +27,7 @@ import { ref } from "@vue/reactivity";
 import { onBeforeMount, watch } from "@vue/runtime-core";
 import Swal from "sweetalert2";
 import { useRouter } from "vue-router";
-import {useStore} from "vuex"
+import { useStore } from "vuex";
 
 export default {
   components: {
@@ -39,6 +39,9 @@ export default {
     let blogs = ref(null);
     let router = useRouter();
     onBeforeMount(() => {
+      if (!store.getters.isAdmin) {
+        router.push({ name: "notFound" });
+      }
       HTTP.get("panel/blog/all").then((response) => {
         if (response.data.status) {
           blogs.value = response.data.blogs;

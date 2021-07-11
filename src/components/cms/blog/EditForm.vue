@@ -85,6 +85,7 @@ import { onBeforeMount, watch } from "@vue/runtime-core";
 import Swal from "sweetalert2";
 import { useStore } from "vuex";
 import dotenv from "@/dotenv.js";
+import { useRouter } from 'vue-router';
 export default {
   components: {
     Multiselect,
@@ -99,6 +100,7 @@ export default {
     let tags = ref(null);
     let blogID = ref(null);
     let categories = ref(null);
+    let router = useRouter();
     let loading = ref(false);
     let formData = reactive({
       tags: [],
@@ -109,6 +111,9 @@ export default {
       chapters: [],
     });
     onBeforeMount(() => {
+      if (!store.getters.isAdmin) {
+        router.push({ name: "notFound" });
+      }
       HTTP.get("panel/tag/list").then((response) => {
         tags.value = response.data.tags;
       });

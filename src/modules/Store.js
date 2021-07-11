@@ -71,6 +71,7 @@ const store = createStore({
         getStateUserList: state => state.userListUpdate,
         getStateUser: state => state.userListUpdate,
         getStateCourseRegister: state => state.courseRegisterUpdate,
+        isAdmin: state => state.user.role === "superadmin"
     },
     actions: {}
 })

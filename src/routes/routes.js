@@ -42,6 +42,7 @@ export default [{
             ...commentPanelRoutes,
             {
                 path: '/dashboard/404',
+                name: "notFound",
                 component: () =>
                     import ("@/views/errors/PageNotFound.vue")
             },

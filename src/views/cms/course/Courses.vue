@@ -3,7 +3,7 @@
     <Title title="دوره ها" />
     <CardBody>
       <template v-slot:title>
-        <div class="courseTable ">
+        <div class="courseTable">
           <h6 class="m-0 font-weight-bold text-primary">لیست دوره ها</h6>
           <router-link
             :to="{ name: 'addCourse' }"
@@ -36,7 +36,7 @@ import { ref } from "@vue/reactivity";
 import { HTTP } from "@/controller/http.js";
 import Swal from "sweetalert2";
 import { useRouter } from "vue-router";
-import { watch } from "@vue/runtime-core";
+import { onBeforeMount, watch } from "@vue/runtime-core";
 import { useStore } from "vuex";
 export default {
   components: {
@@ -51,6 +51,11 @@ export default {
     const courses = ref(null);
     const data = ref(null);
     const loading = ref(true);
+    onBeforeMount(() => {
+      if (!store.getters.isAdmin) {
+        router.push({ name: "notFound" });
+      }
+    });
     HTTP.get("panel/course/all").then((response) => {
       data.value = response.data;
       if (data.value.statusCode === 403) {

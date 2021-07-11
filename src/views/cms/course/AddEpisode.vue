@@ -89,6 +89,7 @@ import { onBeforeMount, reactive, ref, watch } from "vue";
 import { HTTP } from "@/controller/http.js";
 import { useRoute, useRouter } from "vue-router";
 import Swal from "sweetalert2";
+import { useStore } from 'vuex';
 export default {
   components: {
     Button,
@@ -100,7 +101,11 @@ export default {
     let id = route.params.id;
     let chapters = ref(null);
     let loading = ref(false);
+    let store = useStore();
     onBeforeMount(() => {
+      if (!store.getters.isAdmin) {
+        router.push({ name: "notFound" });
+      }
       HTTP.get(`panel/course/chapters/${id}`).then((response) => {
         if (response.data.status) {
           chapters.value = response.data.chapters;

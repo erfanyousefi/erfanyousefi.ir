@@ -117,6 +117,7 @@ import Multiselect from "@vueform/multiselect";
 import { onBeforeMount } from "@vue/runtime-core";
 import Swal from "sweetalert2";
 import { useRouter } from "vue-router";
+import { useStore } from 'vuex';
 export default {
   components: {
     Title,
@@ -141,7 +142,11 @@ export default {
     });
     let router = useRouter();
     let errorMessage = "";
+    let store = useStore();
     onBeforeMount(() => {
+      if (!store.getters.isAdmin) {
+        router.push({ name: "notFound" });
+      }
       HTTP.get("panel/tag/list").then((response) => {
         tags.value = response.data.tags;
       });

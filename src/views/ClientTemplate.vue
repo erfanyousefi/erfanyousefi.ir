@@ -10,7 +10,6 @@
 import("@/assets/dist/css/style.css");
 import("@/assets/dist/css/hamburger.css");
 import("@/assets/dist/css/mobile.css");
-// import("@/assets/dist/css/iranSans.css");
 import("@/assets/dist/js/script.js");
 import { loadProgressBar } from "x-axios-progress-bar";
 import Header from "@/components/partials/client/Header.vue";

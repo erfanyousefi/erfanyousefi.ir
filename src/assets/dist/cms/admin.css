@@ -27,11 +27,7 @@
     --breakpoint-xl: 1200px;
 }
 
-@font-face {
-    font-family: "IRANSans";
-    src: url("./../fonts/iranSans/IRANSansWeb(FaNum).ttf") format("tryetype"), url("./../fonts/iranSans/IRANSansWeb(FaNum).woff") format("woff"), url("./../fonts/iranSans/IRANSansWeb(FaNum).woff2") format("woff2");
-}
-
+@import url("./../css/secondary-aviny.css");
 *,
 ::after,
 ::before {
@@ -41,14 +37,14 @@
 }
 
 * {
-    font-family: "IRANSans";
+    font-family: "secondary-font";
 }
 
 html {
-    font-family: "IRANSans";
     line-height: 1.15;
     -webkit-text-size-adjust: 100%;
-    -webkit-tap-highlight-color: transparent
+    -webkit-tap-highlight-color: transparent;
+    overflow-x: hidden;
 }
 
 article,

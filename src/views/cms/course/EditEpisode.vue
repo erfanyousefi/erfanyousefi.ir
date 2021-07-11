@@ -6,7 +6,7 @@
         <div class="card shadow mb-4">
           <div class="card-header py-3">
             <router-link
-              :to="{ name: 'editCourse', params: { id : course } }"
+              :to="{ name: 'editCourse', params: { id: course } }"
               class="btn btn-sm btn-danger btn-icon-split"
             >
               <span class="icon text-white">
@@ -89,6 +89,7 @@ import { onBeforeMount, reactive, ref, watch } from "vue";
 import { HTTP } from "@/controller/http.js";
 import { useRoute, useRouter } from "vue-router";
 import Swal from "sweetalert2";
+import { useStore } from "vuex";
 export default {
   components: {
     Button,
@@ -102,6 +103,7 @@ export default {
     let episode = ref(null);
     let course = ref(null);
     let loading = ref(false);
+    let store = useStore();
     let formData = reactive({
       title: "",
       number: "",
@@ -111,12 +113,15 @@ export default {
       chapter: "",
     });
     onBeforeMount(() => {
+      if (!store.getters.isAdmin) {
+        router.push({ name: "notFound" });
+      }
       HTTP.get(`panel/course/episode/${id}`).then((response) => {
         console.log(response);
         if (response.data.status) {
           episode.value = response.data.episode;
           episode.value.chapter = response.data.chapter;
-          course.value = response.data.course
+          course.value = response.data.course;
           HTTP.get(`panel/course/chapters/${response.data.course}`).then((response) => {
             if (response.data.status) {
               chapters.value = response.data.chapters;
@@ -189,7 +194,7 @@ export default {
       formData,
       id,
       chapters,
-      course
+      course,
     };
   },
 };

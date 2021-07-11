@@ -1,6 +1,5 @@
 <template>
   <div>
-    <VueGrecaptcha sitekey="6LficoIbAAAAAIbTGZpTpeKw1Sz9QDJw3qeGUkg1"></VueGrecaptcha>
     <router-view></router-view>
   </div>
 </template>
@@ -9,7 +8,6 @@ import("bootstrap/dist/css/bootstrap.min.css");
 import("bootstrap/dist/js/bootstrap.bundle.js");
 import("@/assets/dist/fonts/font-awesome/css/font-awesome.min.css");
 import("x-axios-progress-bar/dist/nprogress.css");
-import VueGrecaptcha from "vue-grecaptcha"
 import { useStore } from "vuex";
 import { onBeforeMount } from "@vue/runtime-core";
 import axios from "axios";
@@ -17,7 +15,6 @@ import dotenv from "@/dotenv.js";
 export default {
   name: "App",
   components: {
-    VueGrecaptcha
   },
   setup() {
     let store = useStore();
