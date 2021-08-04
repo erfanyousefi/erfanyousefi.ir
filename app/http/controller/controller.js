@@ -188,4 +188,16 @@ module.exports = class controllers {
             return "00:00:00"
         }
     }
+    getOptions(url, params) {
+        return {
+            method: "POST",
+            url,
+            headers: {
+                'cache-control': 'no-cache',
+                'content-type': 'application/json'
+            },
+            body: params,
+            json: true
+        }
+    }
 }

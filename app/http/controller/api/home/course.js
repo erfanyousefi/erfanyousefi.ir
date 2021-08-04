@@ -1,6 +1,8 @@
 const courseModel = require("app/models/course");
 const userModel = require("app/models/user");
+const paymentModel = require("app/models/payment");
 const controller = require("app/http/controller/controller");
+const axios = require("axios")
 const { validationResult } = require("express-validator");
 let validator = {}
 class courseController extends controller {
@@ -191,10 +193,54 @@ class courseController extends controller {
                             })
                         }
                     } else if (course.type === "cash") {
-                        return res.json({
-                            status: true,
-                            message: "اتصال به درگاه پرداخت"
-                        })
+                        let params = {
+                            merchant_id : "36e51095-91fd-45ed-8178-43e21ba0b557",
+                            amount: course.price,
+                            callback_url: "http://localhost:3000/courses/payment/callbackurl",
+                            description : `خرید دوره (${course.title}) `,
+                            email: req.user.email,
+                            // Mobile: input.Mobile
+                        }
+                        axios.post("https://api.zarinpal.com/pg/v4/payment/request.json", params)
+                            .then(data => {
+                                let dataResponse = data?.data?.data;
+                                console.log(dataResponse);
+                                if (dataResponse.code == 100) {
+                                    let payment = new paymentModel();
+                                    payment.user = req.user._id;
+                                    payment.course = course._id;
+                                    payment.price = course.price;
+                                    payment.payment = false;
+                                    payment.paymentResult = dataResponse.authority;
+                                    payment.save((err) => {
+                                        if (err) {
+                                            return res.json({
+                                                status: false,
+                                                message: "از سرور پاسخی دریافت نگردید"
+                                            })
+                                        } else {
+                                            return res.json({
+                                                status : true,
+                                                dataResponse,
+                                                url :`https://www.zarinpal.com/pg/StartPay/${dataResponse.authority}`
+                                            });
+                                        }
+                                    })
+                                } else {
+                                    return res.status(400).json({
+                                        code : dataResponse.code,
+                                        message : "انتقال به سایت پذیرنده انجام نشد"
+                                    })
+                                }
+                            })
+                            .catch(err => {
+                                console.log(err.code);
+                                console.log(err.message);
+                                return res.status(400).json({
+                                    status : false,
+                                    message : "انتقال به درگاه پرداخت انجام نشد، لطفا بعدا یا مجددا امتحان کنید . باتشکر",
+                                })
+                            })
                     } else {
                         return res.json({
                             status: true,
