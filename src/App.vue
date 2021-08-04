@@ -14,8 +14,7 @@ import axios from "axios";
 import dotenv from "@/dotenv.js";
 export default {
   name: "App",
-  components: {
-  },
+  components: {},
   setup() {
     let store = useStore();
     onBeforeMount(() => {

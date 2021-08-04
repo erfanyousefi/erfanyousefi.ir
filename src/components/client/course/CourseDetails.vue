@@ -129,6 +129,7 @@ export default {
     });
     onBeforeMount(() => {
       user.value = store.state.user;
+      
     });
     function saveCourse(course) {
       let token = store.state.token;
@@ -137,6 +138,7 @@ export default {
         course,
       }).then((response) => {
         if (response.data.status) {
+          window.location.href = response.data.url
           Toast.fire({
             text: response.data.message,
             icon: "success",

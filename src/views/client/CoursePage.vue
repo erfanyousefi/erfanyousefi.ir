@@ -29,7 +29,7 @@
         <Title title="سرفصل ها و عناوین دوره" />
       </div>
       <div class="row justify-content-center my-2">
-        <CourseChapter :chapters="course.chapters" />
+        <CourseChapter :chapters="course.chapters" :courseID="course._id" />
       </div>
       <div class="col-12">
         <SendComment :target="{course : course._id}" />
