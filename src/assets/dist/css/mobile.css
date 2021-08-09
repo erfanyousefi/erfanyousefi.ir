@@ -1,0 +1,248 @@
+.openMenuBtn {
+    background-color: rgba(3, 133, 255, 0.932);
+    display: none;
+    width: 50px;
+    color: white;
+    height: 50px;
+    line-height: 50px;
+    text-align: center;
+    border-radius: 50px 100px 100px 50px;
+    margin-right: 10px;
+    margin-top: 10px;
+    text-decoration: none;
+    font-weight: bolder
+}
+
+.openMenuBtn {
+    background-color: rgba(3, 133, 255, 0.932);
+    display: none;
+    width: 50px;
+    color: white;
+    height: 50px;
+    line-height: 50px;
+    text-align: center;
+    border-radius: 50px 100px 100px 50px;
+    margin-right: 10px;
+    margin-top: 10px;
+    text-decoration: none;
+    font-weight: bolder
+}
+
+@media (max-width: 950px) {
+    .baner .cover {
+        font-size: 16px;
+    }
+}
+
+@media (max-width: 850px) {
+    .hamburger {
+        display: block;
+    }
+    .nav ul {
+        display: none;
+    }
+    .titleUp {
+        margin-top: -10px;
+        display: inline-block;
+    }
+    .baner {
+        width: 100%;
+        height: 100%;
+        max-height: 250px;
+        margin-bottom: 50px;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+    }
+    .baner img {
+        width: 100%;
+        height: 100%;
+        max-height: 200px;
+        display: block;
+    }
+    .baner .cover {
+        background: none;
+        transform: scale(1);
+        opacity: 1;
+        position: unset;
+        display: block;
+        color: rgb(49, 48, 48);
+        background: #fafafa;
+        height: 50px;
+        padding: 5px;
+        border-radius: 50px;
+        box-shadow: 3px 3px 5px #999;
+        margin: 10px 0 0 0;
+        transition: all 1s ease-in-out;
+        text-align: center;
+        line-height: 50px;
+    }
+    .baner .cover:hover {
+        transition: all 1s ease-in-out;
+        transition: all 500ms linear;
+    }
+    .baner .cover i {
+        margin: 0;
+        color: rgb(41, 40, 40)
+    }
+    .titleBar {
+        width: 100%;
+    }
+    .faq {
+        display: block;
+        position: unset;
+    }
+    .faq span {
+        height: auto;
+        position: unset;
+        display: block;
+    }
+    .faq span a {
+        position: unset;
+        display: block;
+        width: 100%;
+    }
+    .episode {
+        width: 99%;
+    }
+    .episode .info-episod {
+        display: block;
+    }
+    .episode .info-episod .title-episod {
+        font-size: 13px;
+        margin: 0 15px;
+        text-align: center;
+    }
+    .episode .info-episod .type-time-episode {
+        width: 100%;
+        text-align: center;
+    }
+}
+
+@media (max-width: 970px) {
+    .selectRoute img {
+        margin-top: 25px;
+        margin-bottom: 25px;
+    }
+    .banerRoute {
+        flex-direction: column;
+    }
+    .banerRoute:nth-child(4),
+    .banerRoute:nth-child(8) {
+        flex-direction: column-reverse
+    }
+    .routeText {
+        line-height: 30px;
+        margin-top: 40px;
+    }
+    .titleBarRoute {
+        width: 90%;
+        margin-right: 30px;
+    }
+    .titleBarRoute h3 {
+        font-size: 1.5em;
+        font-weight: bolder;
+    }
+    .courseInfo .price strong {
+        border-left: 5px solid #fff;
+        padding: 0;
+        font-size: 13px;
+        height: 50px;
+    }
+    .courseInfo .chart {
+        margin: 5px;
+        padding: 0 10px;
+        background-color: #eee;
+        font-size: 14px;
+    }
+}
+
+@media (max-width: 1050px) {
+    .writer {
+        text-align: center;
+    }
+    .footerCard {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        text-align: center;
+    }
+    .priceInfo {
+        margin-top: 3px;
+        margin-bottom: 10px;
+    }
+    .card-title {
+        font-size: 15px;
+    }
+}
+
+@media (max-width: 750px) {
+    .titleUp {
+        font-size: 14px;
+    }
+    .image-index img {
+        max-height: 300px;
+        min-height: 300px;
+    }
+    .image-index {
+        width: 100%;
+        height: 100%;
+        min-height: 300px;
+        max-height: 300px;
+    }
+    .comments {
+        padding: 5px;
+        font-size: 13px;
+    }
+    .comment {
+        margin: 5px 0;
+    }
+    .comment-body {
+        padding: 5px;
+    }
+    .comment-childrens {
+        margin-right: 10px;
+        width: 99%
+    }
+    .answer-children-comment {
+        width: 99%;
+        margin-right: 5px;
+        padding: 5px;
+    }
+    .course-details {
+        position: unset;
+    }
+    .icon-podcast {
+        position: unset;
+        width: fit-content;
+        display: inline-block;
+        margin-bottom: 6px;
+        margin-top: -5px
+    }
+}
+
+@media (max-width: 650px) {
+    #upMenu {
+        display: flex;
+        bottom: 0;
+        justify-content: center;
+        align-items: center;
+        width: 100%;
+        left: 0;
+    }
+    #upMenu a {
+        margin: 0!important;
+        bottom: 0;
+        width: 100%!important;
+        flex-grow: 1;
+        border: none!important;
+        border-radius: 0!important;
+        animation: none!important;
+        background-color: teal!important;
+        box-shadow: none!important;
+    }
+}
+
+@media (max-width: 350px) {}
