@@ -1,0 +1,30 @@
+{
+    "name": "coffeelearn",
+    "version": "1.0.0",
+    "description": "",
+    "main": "index.js",
+    "scripts": {
+        "start": "nodemon app.js"
+    },
+    "keywords": [],
+    "author": "",
+    "license": "ISC",
+    "dependencies": {
+        "app-module-path": "^2.2.0",
+        "auto-bind": "^4.0.0",
+        "bcrypt": "^5.0.1",
+        "body-parser": "^1.19.0",
+        "connect-history-api-fallback": "^1.6.0",
+        "cors": "^2.8.5",
+        "dotenv": "^10.0.0",
+        "express": "^4.17.1",
+        "express-validator": "^6.12.0",
+        "jsonwebtoken": "^8.5.1",
+        "mkdirp": "^1.0.4",
+        "mongoose": "^5.12.14",
+        "multer": "^1.4.2",
+        "request": "^2.88.2",
+        "request-promise": "^4.2.6",
+        "xss": "^1.0.9"
+    }
+}
